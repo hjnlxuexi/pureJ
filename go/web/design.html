@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>服务设计工具</title>
+    <link rel="stylesheet" href="css/all.css">
+    <script src="js/jquery/jquery-3.2.1.min.js"></script>
+    <script src="js/design.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <div class="top-menu">
+        <ul class="menus">
+        </ul>
+        <div class="module-input">
+            <input id="module_name" type="text" placeholder="请输入模块名称">
+            <button id="add_module" class="add">✚</button>
+        </div>
+    </div>
+    <div class="main">
+        <hr>
+        <div class="item-input">
+            <input id="service_name" type="text" placeholder="请输入服务名称">
+            <input id="service_code" type="text" placeholder="请输入服务路径">
+            <button id="add_service">✚</button>
+        </div>
+        <div class="left-menu"></div>
+        <div class="content">
+            <div class="base-info">
+                <div class="prop">
+                    <label>服务路径</label>
+                    <input id="service_path" type="text" placeholder="请输入服务路径">
+                </div>
+                <div class="prop">
+                    <label for="service_id">服务ID</label>
+                    <input id="service_id" type="text" placeholder="请输入服务ID">
+                </div>
+                <div class="prop">
+                    <label for="service_desc">服务描述</label>
+                    <input id="service_desc" type="text" placeholder="请输入服务描述">
+                </div>
+                <div class="prop">
+                    <label>是否过路服务</label>
+                    <label>
+                        <input type="radio" name="isDirect" value="true" checked>是
+                    </label>
+                    <label>
+                        <input type="radio" name="isDirect" value="false">否
+                    </label>
+                </div>
+                <div class="prop" id="direct_type">
+                    <label>过路服务类型</label>
+                    <label>
+                        <input type="radio" name="directType" value="database" checked>数据库
+                    </label>
+                    <label>
+                        <input type="radio" name="directType" value="protocol">外部接口
+                    </label>
+                </div>
+                <div class="prop hide" id="normal_service">
+                    <!--<a href="./designFlow.html" target="_blank">设计服务流程</a>-->
+                    <button id="design_flow">设计服务流程</button>
+                </div>
+                <div class="prop">
+                    <button id="save_service">保存</button>
+                </div>
+            </div>
+            <hr>
+            <div class="input">
+                <div class="title">服务请求</div>
+                <table>
+                    <thead>
+                    <tr>
+                        <td class="add-field first-level">✚</td>
+                        <td>字段名称</td>
+                        <td>字段类型</td>
+                        <td>是否必需</td>
+                        <td>字段描述</td>
+                    </tr>
+                    </thead>
+                    <tbody id="input_body"></tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="output">
+                <div class="title">服务响应</div>
+                <table>
+                    <thead>
+                    <tr>
+                        <td class="add-field">✚</td>
+                        <td>字段名称</td>
+                        <td>字段类型</td>
+                        <td>是否必需</td>
+                        <td>字段描述</td>
+                    </tr>
+                    </thead>
+                    <tbody id="output_body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

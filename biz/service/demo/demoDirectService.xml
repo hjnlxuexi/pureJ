@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+  <name>过路服务</name>
+  <desc>测试过路服务</desc>
+    <direct>true</direct>
+    <directtype>database</directtype>
+    <id>testDao/findAllDept</id>
+    <input/>
+    <output>
+        <field name="DEPTNO" type="S" regexp="" required="true" desc="部门编号"/>
+        <field name="DNAME" type="S" regexp="" required="true" desc="部门名称"/>
+        <field name="LOC" type="S" regexp="" required="true" desc="地区"/>
+    </output>
+</service>

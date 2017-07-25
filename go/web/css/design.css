@@ -1,0 +1,110 @@
+
+.wrap .top-menu .module-input{
+    float: left;
+    margin: 0 0 0 10px;
+    line-height: 30px;
+}
+.wrap .top-menu .module-input .add{
+    width: 50px;
+    text-align: center;
+    border: 1px solid brown;
+    border-radius: 3px;
+    padding: 0 0 2px 0;
+    cursor: pointer;
+    background-color: indianred;
+    color: white;
+    font-size: 16px;
+    height: 30px;
+ }
+.wrap .top-menu .module-input input{
+    height: 24px;
+}
+.main .content {
+    float: left;
+    min-height: 860px;
+    border-left: 1px solid gray;
+    padding: 20px 10px;
+    width: 1042px;
+    margin-top: -80px;
+    margin-left: 10px;
+}
+.main .left-menu span{
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
+}
+.main .item-input{
+    width: 240px;
+    height: 80px;
+    line-height: 36px;
+}
+.main .item-input input{
+    height: 25px;
+    width: 195px;
+    border-radius: 5px;
+}
+.main .item-input button{
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+    color: white;
+}
+.main .content .base-info{
+    height: 80px;
+}
+.main .content .base-info .prop{
+    float: left;
+    line-height: 40px;
+    width: 345px;
+    text-align: right;
+}
+.main .content .base-info .prop label {
+    font-size: 16px;
+    color: gray;
+}
+.main .content .base-info .prop input[type='radio'] {
+    height: 16px;
+    width: 30px;
+}
+.main .content .base-info .prop input:not([type='radio']) {
+    height: 25px;
+    width: 240px;
+}
+
+.main .content table{
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+.main .content .title{
+    line-height: 30px;
+    font-size: 16px;
+    color: cornflowerblue;
+    font-weight: 600;
+}
+.main .content table .add-field{
+    color: green;
+    font-size: 24px;
+    cursor: pointer;
+}
+.main .content table .del-field{
+    color: red;
+    font-size: 24px;
+    cursor: pointer;
+}
+.main .content table input,select{
+    width: 90%;
+}
+
+.hide{
+    display: none;
+}
+
+#save_service{
+    background-color: #5599ee;
+    color: white;
+    font-size: 20px;
+    border-radius: 4px;
+    font-weight: 600;
+}

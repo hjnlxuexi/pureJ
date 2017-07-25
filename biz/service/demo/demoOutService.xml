@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <!--服务名称-->
+    <name>过路外部服务</name>
+    <!--服务描述-->
+    <desc>外部过路服务描述</desc>
+    <!--是否过路交易，默认false-->
+    <direct>true</direct>
+    <!--过路交易类型，database：数据库操作，protocol：外部服务；仅当 direct==true 时生效-->
+    <directtype>protocol</directtype>
+    <!--指定服务类，值为beanId-->
+    <id>demo/demoAdapter</id>
+
+    <input/>
+
+    <output>
+        <!--<field name="list" type="E">
+            <field name="NAME" type="S" regexp="" required="true" desc="栏目名称"/>
+        </field>-->
+        <field name="NAME" type="S" regexp="" required="true" desc="栏目名称"/>
+    </output>
+</service>

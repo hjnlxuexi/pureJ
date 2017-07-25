@@ -1,0 +1,24 @@
+[
+    {
+        "name": "测试服务",
+        "items": [
+            {
+                "name": "过路服务",
+                "service": "demo/demoDirectService"
+            },
+            {
+                "name": "流程服务",
+                "service": "demo/demoFlowService"
+            }
+        ]
+    },
+    {
+        "name": "其他服务",
+        "items": [
+            {
+                "name": "过路外部服务",
+                "service": "demo/demoOutService"
+            }
+        ]
+    }
+]
