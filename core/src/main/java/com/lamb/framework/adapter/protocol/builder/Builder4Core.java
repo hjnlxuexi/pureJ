@@ -32,10 +32,14 @@ public class Builder4Core implements IBuilder {
     public void build(Context context  , Map adapterConfig) {
         logger.debug("组装外部服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，开始...");
         long start = System.currentTimeMillis();
+        //0、请求报文
+        Map data = new HashMap();
         //1、组装报文头
-        this.buildHeader(context , adapterConfig);
+        this.buildHeader(context , adapterConfig , data);
         //2、组装报文体
-        this.buildBody(context , adapterConfig);
+        this.buildBody(context , adapterConfig, data);
+        //3、请求报文放入总线
+        context.setRequestData(data);
         long end = System.currentTimeMillis();
         logger.debug("组装外部服务服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，结束【"+(end-start)+"毫秒】");
     }
@@ -45,7 +49,7 @@ public class Builder4Core implements IBuilder {
      * @param context 数据总线
      * @param adapterConfig 适配器配置对象
      */
-    private void buildHeader(Context context  , Map adapterConfig){
+    private void buildHeader(Context context  , Map adapterConfig , Map data){
         Map header = new HashMap();
         Object _service = adapterConfig.get(AdapterConfConstants.SERVICE_TAG);
         if (_service==null)//服务配置结构不正确
@@ -53,7 +57,7 @@ public class Builder4Core implements IBuilder {
         String service = _service.toString();
         header.put("service" , service);
         //放入到总线外部请求报文区域
-        context.getRequestData().put("header" , header);
+        data.put("header" , header);
     }
 
     /**
@@ -61,7 +65,7 @@ public class Builder4Core implements IBuilder {
      * @param context 数据总线
      * @param adapterConfig 适配器配置对象
      */
-    private void buildBody(Context context  , Map adapterConfig){
+    private void buildBody(Context context  , Map adapterConfig , Map data){
         Map body = new HashMap();
         Map params = context.getParams();
         Object inputObj = adapterConfig.get(AdapterConfConstants.INPUT_TAG);
@@ -83,6 +87,6 @@ public class Builder4Core implements IBuilder {
             //6、将字段键值对放入总线
             body.put(name, value);
         }
-        context.getRequestData().put("body", body);
+        data.put("body", body);
     }
 }

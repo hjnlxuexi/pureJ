@@ -31,11 +31,11 @@ public class Context {
     /**
      * 外部服务请求报文
      */
-    private Map requestData = new HashMap();
+    private Object requestData = new Object();
     /**
      * 外部服务响应报文
      */
-    private Map responseData = new HashMap();
+    private Object responseData = new Object();
     /**
      * 动态数据区
      */
@@ -77,19 +77,19 @@ public class Context {
         this.serviceOutput = serviceOutput;
     }
 
-    public Map getRequestData() {
+    public Object getRequestData() {
         return requestData;
     }
 
-    public void setRequestData(Map requestData) {
+    public void setRequestData(Object requestData) {
         this.requestData = requestData;
     }
 
-    public Map getResponseData() {
+    public Object getResponseData() {
         return responseData;
     }
 
-    public void setResponseData(Map responseData) {
+    public void setResponseData(Object responseData) {
         this.responseData = responseData;
     }
 

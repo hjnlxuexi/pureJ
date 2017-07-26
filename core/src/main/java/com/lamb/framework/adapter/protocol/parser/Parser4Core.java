@@ -58,7 +58,7 @@ public class Parser4Core implements IParser {
      * @param adapterConfig 适配器配置
      */
     private void parseHeader(Context context, Map adapterConfig){
-        Map data = context.getResponseData();
+        Map data = (Map)context.getResponseData();
         Map header = (Map)data.get(ServicePacketConstants.HEADER);
         Object _status = header.get(ServicePacketConstants.STATUS);
         //1、状态码为空则表示失败
@@ -78,7 +78,7 @@ public class Parser4Core implements IParser {
      * @param adapterConfig 适配器配置
      */
     private void parseBody(Context context, Map adapterConfig){
-        Map data = context.getResponseData();
+        Map data = (Map)context.getResponseData();
         Map body = (Map)data.get(ServicePacketConstants.BODY);
         Object outputObj = adapterConfig.get(AdapterConfConstants.OUTPUT_TAG);
         if (outputObj==null)//服务配置结构不正确
