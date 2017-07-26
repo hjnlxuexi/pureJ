@@ -41,16 +41,6 @@ public class FlowEngineService implements IService {
      */
     @Value("${flow.start.index:1}")
     private String startIndex;
-    /**
-     * 数据库原子服务beanID
-     */
-    @Value("${service.op.database}")
-    private String databaseOP;
-    /**
-     * 外部原子服务beanID
-     */
-    @Value("${service.op.protocol}")
-    private String protocolOP;
 
     /**
      * 执行流程服务
