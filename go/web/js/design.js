@@ -145,7 +145,15 @@ $(document).ready(function () {
                 //保存完整目录
                 $.post("/saveMenuData", data, function (d) {
                     console.log(d);
-                    window.location.reload();
+                    var serviceConf = {};
+                    //1、组装基本信息
+                    serviceConf['servicePath'] = code;
+                    serviceConf['name'] = name;//服务名称
+                    //5、保存服务配置
+                    $.post("/saveServiceConf", serviceConf, function (d) {
+                        alert(d);
+                        window.location.reload();
+                    });
                 });
             });
         },

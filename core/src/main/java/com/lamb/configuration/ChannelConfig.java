@@ -40,11 +40,10 @@ public class ChannelConfig {
     @Bean
     public static PropertyPlaceholder properties() {
         PropertyPlaceholder propertyPlaceholder = new PropertyPlaceholder();
-        final List<Resource> resourceLst = new ArrayList<>();
+        final List<Resource> resourceLst = new ArrayList<Resource>();
         resourceLst.add(new ClassPathResource("config/application.properties"));
         resourceLst.add(new ClassPathResource("config/application-message.properties"));
-        resourceLst.add(new ClassPathResource("config/application-dev.properties"));
-        resourceLst.add(new ClassPathResource("config/application-prod.properties"));
+        resourceLst.add(new ClassPathResource("config/application-app.properties"));
         propertyPlaceholder.setLocations(resourceLst.toArray(new Resource[]{}));
         return propertyPlaceholder;
     }
@@ -56,6 +55,6 @@ public class ChannelConfig {
     @Bean
     public List<IListener> listeners(){
         //TODO  监听器待维护
-        return new ArrayList<>();
+        return new ArrayList<IListener>();
     }
 }

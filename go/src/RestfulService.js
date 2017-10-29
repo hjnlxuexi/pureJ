@@ -38,7 +38,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: '/loadServiceConf',
+                path: RestfulService.config.context+'/loadServiceConf',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -71,7 +71,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: '/',
+                path: RestfulService.config.context+'/',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -215,7 +215,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: '/loadFlowConf',
+                path: RestfulService.config.context+'/loadFlowConf',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -271,7 +271,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: '/loadOPList',
+                path: RestfulService.config.context+'/loadOPList',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType

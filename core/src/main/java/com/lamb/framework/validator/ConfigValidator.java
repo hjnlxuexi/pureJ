@@ -80,7 +80,7 @@ public class ConfigValidator {
             if (!(value instanceof List)) //字段必须为列表类型
                 throw new ServiceRuntimeException("1007" , ConfigValidator.class , field.get(ServiceConfConstants.NAME_PROP));
             List<Map> list = (List<Map>)value;//数据列表
-            List<Map> newList = new ArrayList<>();
+            List<Map> newList = new ArrayList<Map>();
             for (Map record : list) {//每条记录
                 Map newParam = new HashMap();
                 List<Map> fields = (List<Map>)field.get(ServiceConfConstants.FIELD_KEY_LIST);//字段列表

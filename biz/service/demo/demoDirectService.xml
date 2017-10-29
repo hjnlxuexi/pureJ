@@ -4,7 +4,9 @@
   <desc>测试过路服务</desc>
     <direct>true</direct>
     <directtype>database</directtype>
-    <id>testDao/findAllDept</id>
+    <!--<id>testDao/findAllDept</id>-->
+    <!--<id>testDao/findAllDeptCnt+testDao/findAllDept</id>-->
+    <id>com.lamb.app.dao.TestDao.findAllDeptCnt!+com.lamb.app.dao.TestDao.findAllDept</id>
     <input/>
     <output>
         <field name="DEPTNO" type="S" regexp="" required="true" desc="部门编号"/>

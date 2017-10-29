@@ -39,7 +39,7 @@ public class Step {
     /**
      * 步骤跳转映射列表
      */
-    private List<Forward> mapping = new ArrayList<>();
+    private List<Forward> mapping = new ArrayList<Forward>();
 
     public String getIndex() {
         return index;

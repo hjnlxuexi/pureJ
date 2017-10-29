@@ -99,10 +99,10 @@ public class CoreDataParser implements ICoreChannelParser {
             context.setDirectType(ServiceConfConstants.DIRECT_TYPE_PROTOCOL);
         }
         //4、判断服务ID合法性，数据库过路交易，必须为：***Dao/xxx
-        if (isDirect && context.getDirectType().equals(ServiceConfConstants.DIRECT_TYPE_DB)
+        /*if (isDirect && context.getDirectType().equals(ServiceConfConstants.DIRECT_TYPE_DB)
                 && serviceID.split("/").length!=2){//数据库过路交易服务ID配置不正确
             throw new ServiceRuntimeException("1009" , this.getClass());
-        }
+        }*/
         context.setServiceId(serviceID);
     }
 

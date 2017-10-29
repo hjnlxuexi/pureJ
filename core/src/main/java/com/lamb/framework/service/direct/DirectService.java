@@ -58,7 +58,7 @@ public class DirectService implements IService {
             logger.debug("执行过路服务【" + context.getServiceName() + "】，结束【" + (end - start) + "毫秒】");
         } catch (Exception e) {
             if (e instanceof ServiceRuntimeException)
-                throw e;
+                throw (ServiceRuntimeException)e;
             throw new ServiceRuntimeException("4000" , this.getClass(), e, context.getServiceName());
         }
     }

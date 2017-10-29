@@ -5,23 +5,26 @@
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+var bizConfDir = "/Users/home/Desktop/HJ/pureJ/biz";
+
 var Config = {
     host : 'localhost',
-    port : '9100',
+    port : '8080',
+    context:'/pureJ',
     method : 'post',
     contentType : 'application/json',
     encode : 'utf8',
 
     //服务输入数据路径
-    inputDataPath : '/Users/home/Desktop/HJ/pureJ/biz/data/channel/input/',
+    inputDataPath : bizConfDir+'/data/channel/input/',
     //服务输出数据路径
-    outputDataPath : '/Users/home/Desktop/HJ/pureJ/biz/data/channel/output/',
+    outputDataPath : bizConfDir+'/data/channel/output/',
     //目录数据文件路径
-    menuPath : "/Users/home/Desktop/HJ/pureJ/biz/data/menu/menus.json",
+    menuPath : bizConfDir+"/data/menu/menus.json",
     //服务配置路径
-    servicePath : "/Users/home/Desktop/HJ/pureJ/biz/service/",
+    servicePath : bizConfDir+"/service/",
     //服务流程配置
-    serviceFlowPath : "/Users/home/Desktop/HJ/pureJ/biz/flow/"
+    serviceFlowPath : bizConfDir+"/flow/"
 
 };
 

@@ -29,7 +29,7 @@ public class PropertyPlaceholder extends PropertyPlaceholderConfigurer {
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
             throws BeansException {
         super.processProperties(beanFactoryToProcess, props);
-        propertyMap = new HashMap<>();
+        propertyMap = new HashMap<String, String>();
         for (Object key : props.keySet()) {
             String keyStr = key.toString();
             String value = props.getProperty(keyStr);

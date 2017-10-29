@@ -66,7 +66,7 @@ public class FlowEngineService implements IService {
             logger.debug("执行流程服务【"+context.getServiceName()+"】，结束【" + (endTime - startTime) + "毫秒】");
         } catch (Exception e) {
             if (e instanceof ServiceRuntimeException)
-                throw e;
+                throw (ServiceRuntimeException)e;
             throw new ServiceRuntimeException("4000" , this.getClass() , e , context.getServiceName());
         }
     }

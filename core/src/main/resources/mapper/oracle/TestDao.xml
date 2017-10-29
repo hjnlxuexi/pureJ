@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lamb.app.dao.TestDao">
+	<!--查询所有部门数据总数-->
+	<select id="findAllDeptCnt" resultType="java.util.Map">
+		SELECT count(*) total from scott.DEPT
+	</select>
+	<!--查询所有部门数据-->
+	<select id="findAllDept" resultType="java.util.Map">
+		SELECT * from DEPT
+	</select>
+	<!--修改地区名称-->
+	<update id="updateDeptLocById">
+	<if test="1==1">update DEPT set LOC = 'BeiJing' where DEPTNO=40</if>
+
+	</update>
+</mapper>
