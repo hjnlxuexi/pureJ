@@ -161,11 +161,13 @@ public class FlowEngineService implements IService {
         String operator = meta[1]; //操作符
         String right = meta[2];//右表达式
 
-        //两个字符串比较
+        //两个字符串比较:相等
         if (operator.equals(FlowConfigConstants.OPERATOR_EQ)) {
-            String var1 = this.getStringVar(left, context);
-            String var2 = this.getStringVar(right, context);
-            return (var1 == null && var2 == null) || (var1 != null && var2 != null && var1.equals(var2) );
+            return isEqual(context,left,right);
+        }
+        //两个字符串比较:不相等
+        if (operator.equals(FlowConfigConstants.OPERATOR_UN_EQ)) {
+            return !isEqual(context,left,right);
         }
         //两个布尔值比较
         Boolean var1 = getSingleParamExpress(left, context);
@@ -177,6 +179,13 @@ public class FlowEngineService implements IService {
         return operator.equals(FlowConfigConstants.OPERATOR_OR) && (var1 || var2);
 
     }
+
+    private boolean isEqual(Context context,String left,String right){
+        String var1 = this.getStringVar(left, context);
+        String var2 = this.getStringVar(right, context);
+        return (var1 == null && var2 == null) || (var1 != null && var2 != null && var1.equals(var2) );
+    }
+
 
     /**
      * 获取单布尔表达式的值

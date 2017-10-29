@@ -48,6 +48,8 @@ public class FlowConfigConstants {
     public static final char OPERATOR_NOT = '!';
     //相等
     public static final String OPERATOR_EQ = "eq";
+    //不相等
+    public static final String OPERATOR_UN_EQ = "uneq";
     //变量前缀
     public static final char OPERATOR_AT = '@';
 
