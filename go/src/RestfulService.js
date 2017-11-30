@@ -130,7 +130,7 @@ var RestfulService = {
             resp.end("测试数据保存成功！");
         });
         /**
-         * 获取请求测试数据
+         * 获取测试数据
          */
         express.post('/getReqTestData', function (req, resp) {
             var fs = RestfulService.fs;
@@ -160,27 +160,6 @@ var RestfulService = {
                 console.log(bytes);
                 resp.end(bytes);
             });
-        });
-        /**
-         * 保存目录数据
-         */
-        express.post('/saveMenuData', function (req, resp) {
-            var fs = RestfulService.fs;
-            //1、获取请求数据
-            var data = req.body;
-            var menus = data['menus'];
-            var menuPath = RestfulService.config.menuPath;
-            //2、保存目录数据
-            fs.exists(menuPath, function (exist) {
-                //文件不存在，则创建文件
-                if (!exist) RestfulService.createFile(menuPath, fs);
-                //写入内容
-                fs.writeFile(menuPath, JSON.stringify(menus , null ,4), function (err) {
-                    if (err) resp.end(err);
-                    console.log("目录数据写入成功！");
-                });
-            });
-            resp.end("目录数据保存成功！");
         });
         /**
          * 保存服务配置
@@ -347,8 +326,8 @@ var RestfulService = {
         array.push('<?xml version="1.0" encoding="UTF-8"?>');
         array.push('<service>');
         //1、组装基本信息
-        data["name"]&&array.push('  <name>'+data["name"]+'</name>');
-        data["desc"]&&array.push('  <desc>'+data["desc"]+'</desc>');
+        data["name"]&&array.push('    <name>'+data["name"]+'</name>');
+        data["desc"]&&array.push('    <desc>'+data["desc"]+'</desc>');
         data["direct"]&&array.push('    <direct>'+data["direct"]+'</direct>');
         data["directtype"]&&array.push('    <directtype>'+data["directtype"]+'</directtype>');
         data["id"]&&array.push('    <id>'+data["id"]+'</id>');

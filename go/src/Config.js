@@ -20,7 +20,7 @@ var Config = {
     //服务输出数据路径
     outputDataPath : bizConfDir+'/data/channel/output/',
     //目录数据文件路径
-    menuPath : bizConfDir+"/data/menu/menus.json",
+    menuPath : bizConfDir+"/data/menu/tree.json",
     //服务配置路径
     servicePath : bizConfDir+"/service/",
     //服务流程配置
