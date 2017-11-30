@@ -4,15 +4,28 @@
         "status": "0000"
     },
     "body": {
-        "STATUS": 0,
-        "PARENTID": "8e3beffc-3b9e-4666-b49c-f561121e2688",
-        "UNIQUEID": "c75e7f91-7254-4314-9c37-53d2520e6204",
-        "CREATOR": "000000000000000000000000000000000000",
-        "ISLATEST": "N",
-        "ID": "a7cb77bd-6e0c-4195-a88b-b12d9587a801",
-        "CREATETIME": 1491038013000,
-        "CHECKOUTOR": "000000000000000000000000000000000000",
-        "NAME": "temp.txt",
-        "DOCVERSION": "A.2"
+        "TOTAL": 4,
+        "list": [
+            {
+                "LOC": "NEW YORK",
+                "DEPTNO": 10,
+                "DNAME": "ACCOUNTING"
+            },
+            {
+                "LOC": "DALLAS",
+                "DEPTNO": 20,
+                "DNAME": "RESEARCH"
+            },
+            {
+                "LOC": "CHICAGO",
+                "DEPTNO": 30,
+                "DNAME": "SALES"
+            },
+            {
+                "LOC": "BOSTON",
+                "DEPTNO": 40,
+                "DNAME": "OPERATIONS"
+            }
+        ]
     }
 }

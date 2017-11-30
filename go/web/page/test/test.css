@@ -85,6 +85,7 @@
 }
 .main .content .column .list table input{
     height: 20px;
+    width: 90%;
 }
 .main .content .column .field{
     margin-left: 10%;

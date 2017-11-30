@@ -3,7 +3,7 @@
 <HEAD>
     <TITLE> GO </TITLE>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="../../js/zTree_v3/css/metroStyle/metroStyle.css" type="text/css">
+    <link rel="stylesheet" href="../js/zTree_v3/css/metroStyle/metroStyle.css" type="text/css">
     <style>
         body {
             background-color: white;
@@ -16,8 +16,8 @@
             margin-left: 10px;
         }
     </style>
-    <script type="text/javascript" src="../../js/jquery/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../js/zTree_v3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/zTree_v3/js/jquery.ztree.core.js"></script>
     <SCRIPT type="text/javascript">
       var demoIframe;
       var type = getQueryString('type');
@@ -40,7 +40,7 @@
               zTree.expandNode(treeNode);
               return false;
             } else {
-              demoIframe.attr("src", type+".html?service=" + treeNode.service+"&name="+treeNode.name);
+              demoIframe.attr("src", type+"/"+type+".html?service=" + treeNode.service+"&name="+treeNode.name);
               return true;
             }
           }
@@ -56,7 +56,7 @@
           var zTree = $.fn.zTree.getZTreeObj("tree");
           var current = zTree.getNodeByParam("id", 101);
           zTree.selectNode(current);
-          demoIframe.attr("src", type+".html?service=" + current.service+"&name="+current.name);
+          demoIframe.attr("src", type+"/"+type+".html?service=" + current.service+"&name="+current.name);
         });
       });
 
