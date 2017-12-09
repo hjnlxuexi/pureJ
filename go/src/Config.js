@@ -22,9 +22,9 @@ var Config = {
     //目录数据文件路径
     menuPath : bizConfDir+"/data/menu/tree.json",
     //服务配置路径
-    servicePath : bizConfDir+"/service/",
+    servicePath : bizConfDir+"/channel/service/",
     //服务流程配置
-    serviceFlowPath : bizConfDir+"/flow/"
+    serviceFlowPath : bizConfDir+"/channel/flow/"
 
 };
 

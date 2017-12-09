@@ -28,8 +28,8 @@ public class MyBatisConfig {
     /**
      * 数据库产品类型
      */
-    @Value("${jdbc.database.type}")
-    private String databaseType;
+    @Value("${sql.path}")
+    private String sqlPath;
     /**
      * 配置数据源
      * @return Druid数据源
@@ -53,7 +53,7 @@ public class MyBatisConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean
                 .setMapperLocations(resolver
-                        .getResources("classpath*:mapper/"+databaseType+"/*Dao.xml"));
+                        .getResources(sqlPath));
         return sqlSessionFactoryBean.getObject();
     }
 
