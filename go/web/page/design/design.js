@@ -71,6 +71,7 @@ $(document).ready(function () {
                 $_tr.length == 0 && $tBody.append($tr)
                 && $tr.find(".del-field").click(app.bindDelFieldEvent) && $tr.find(".in_type").change(app.bindTypeChangeEvent);
                 $tr.find('.in_type').val(type);
+                $tr.find('.regexp').val(field['regexp']);
                 $tr.find(".in_name").val(field['name']);
                 $tr.find('.in_required').val(field['required'] || 'false');
                 $tr.find('.in_desc').val(field['desc']);
@@ -89,6 +90,7 @@ $(document).ready(function () {
                         $tr_sub_tr.length == 0 && $tr_body.append($tr_subtr)
                         && $tr_subtr.find(".del-field").click(app.bindDelFieldEvent) && $tr_subtr.find(".in_type").change(app.bindTypeChangeEvent);
                         $tr_subtr.find('.in_type').val(item['type']);
+                        $tr_subtr.find('.regexp').val(item['regexp']);
                         $tr_subtr.find(".in_name").val(item['name']);
                         $tr_subtr.find('.in_required').val(item['required'] || 'false');
                         $tr_subtr.find('.in_desc').val(item['desc']);
@@ -225,7 +227,7 @@ $(document).ready(function () {
             field['type'] = $el.find(".in_type").val();
             field['required'] = $el.find(".in_required").val();
             field['desc'] = $el.find(".in_desc").val();
-            field['regexp'] = "";
+            field['regexp'] = $el.find(".regexp").val();
             return field;
         },
         /**
@@ -269,6 +271,7 @@ $(document).ready(function () {
             '<option value="E">列表型</option>',
             '</select>',
             '</td>',
+            '<td><input type="text" class="regexp" placeholder="正则表达式"></td>',
             '<td>',
             '<select class="in_required">',
             '<option value="true">是</option>',
@@ -280,12 +283,13 @@ $(document).ready(function () {
         /**
          * 列表字段信息，表格模板
          */
-        table_tpl: ['<tr class="sub"><td></td><td colspan="4" style="border: 1px solid #ddd;"><table>',
+        table_tpl: ['<tr class="sub"><td></td><td colspan="5" style="border: 1px solid #ddd;"><table>',
             '<thead>',
             '<tr>',
             '<td class="add-field second-level">✚</td>',
             '<td>字段名称</td>',
             '<td>字段类型</td>',
+            '<td>正则表达式</td>',
             '<td>是否必需</td>',
             '<td>字段描述</td>',
             '</tr>',
@@ -304,6 +308,7 @@ $(document).ready(function () {
             '<option value="E">列表型</option>',
             '</select>',
             '</td>',
+            '<td><input type="text" class="regexp" placeholder="正则表达式"></td>',
             '<td>',
             '<select class="in_required">',
             '<option value="true">是</option>',

@@ -5,6 +5,8 @@
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+
+var RandExp = require('randexp');
 var RestfulService = {
     /**
      * 常量配置
@@ -38,7 +40,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: RestfulService.config.context+'/loadServiceConf',
+                path: RestfulService.config.context + '/loadServiceConf',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -52,9 +54,11 @@ var RestfulService = {
                 res.setEncoding(RestfulService.config.encode);
                 res.on('data', function (chunk) {
                     ouput += chunk;
-                    console.log('Response: ' + chunk);
+                });
+                res.on('end',function(){
                     //2、返回数据
                     resp.end(ouput);
+                    console.log('Response: ' + ouput);
                 });
             });
             //发送数据
@@ -71,7 +75,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: RestfulService.config.context+'/',
+                path: RestfulService.config.context + '/',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -132,18 +136,27 @@ var RestfulService = {
         /**
          * 获取测试数据
          */
-        express.post('/getReqTestData', function (req, resp) {
+        express.post('/getTestData', function (req, resp) {
             var fs = RestfulService.fs;
             var data = req.body;
-            var servicePath = data.servicePath + ".json";
-            var inputFilePath = RestfulService.config.inputDataPath + servicePath;
-                fs.readFile(inputFilePath,  {encoding: 'utf-8'},  function (err, bytes) {
+            var servicePath = data.service + ".json";
+            var filePath = data["type"] == "input" ?
+                            RestfulService.config.inputDataPath + servicePath :
+                            RestfulService.config.outputDataPath + servicePath;
+            fs.exists(filePath, function (exist) {
+                //文件不存在，生成挡板数据
+                if (!exist) {
+                    RestfulService.generateBaffleData(http,data,data["type"],resp);
+                    return;
+                }
+                fs.readFile(filePath, {encoding: 'utf-8'}, function (err, bytes) {
                     if (err) {
                         resp.end(false);
                         return console.error(err);
                     }
                     console.log(bytes);
                     resp.end(bytes);
+                });
             });
         });
         /**
@@ -169,7 +182,7 @@ var RestfulService = {
             //1、获取请求数据
             var data = req.body;
             var serviceCode = data['servicePath'];
-            var servicePath = RestfulService.config.servicePath+serviceCode+".xml";
+            var servicePath = RestfulService.config.servicePath + serviceCode + ".xml";
             //2、组装服务配置
             var serviceConf = RestfulService.buildServiceConf(data);
             //3、保存服务配置
@@ -194,7 +207,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: RestfulService.config.context+'/loadFlowConf',
+                path: RestfulService.config.context + '/loadFlowConf',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -226,7 +239,7 @@ var RestfulService = {
             //1、获取请求数据
             var data = req.body;
             var serviceId = data['serviceFlowPath'];
-            var serviceFlowPath = RestfulService.config.serviceFlowPath+serviceId+".xml";
+            var serviceFlowPath = RestfulService.config.serviceFlowPath + serviceId + ".xml";
             //2、组装服务配置
             var serviceFlowConf = RestfulService.buildServiceFlowConf(data);
             //3、保存服务配置
@@ -250,7 +263,7 @@ var RestfulService = {
             var options = {
                 host: RestfulService.config.host,
                 port: RestfulService.config.port,
-                path: RestfulService.config.context+'/loadOPList',
+                path: RestfulService.config.context + '/loadOPList',
                 method: RestfulService.config.method,
                 headers: {
                     'Content-Type': RestfulService.config.contentType
@@ -282,28 +295,28 @@ var RestfulService = {
     buildServiceFlowConf: function (data) {
         var array = [];
         array.push('<?xml version="1.0" encoding="UTF-8"?>');
-        array.push('<flow title="'+data.title+'">');
+        array.push('<flow title="' + data.title + '">');
         var nodes = data.nodes;
         var lines = data.lines;
         for (var id in nodes) {
             var index = id.substr(-1);
             var node = nodes[id];
-            array.push('    <step index="'+index+'" ref="'+node["ref"]+'" desc="'+node["name"]+'" left="'+node["left"]+'" top="'+node["top"]+'" ');
+            array.push('    <step index="' + index + '" ref="' + node["ref"] + '" desc="' + node["name"] + '" left="' + node["left"] + '" top="' + node["top"] + '" ');
             var forwards = [];
             var hasForward = false;
             for (var key in lines) {
                 var line = lines[key];
-                if (id!=line["from"])continue;
+                if (id != line["from"])continue;
                 //next 映射
-                if (!line['condition']){
-                    array.push('next="'+line["to"].substr(-1)+'"')
+                if (!line['condition']) {
+                    array.push('next="' + line["to"].substr(-1) + '"')
                     continue;
                 }
                 hasForward = true;
                 //普通条件
-                forwards.push('     <forward condition="'+line["condition"]+'" desc="'+line["name"]+'" to="'+line["to"].substr(-1)+'"/>')
+                forwards.push('     <forward condition="' + line["condition"] + '" desc="' + line["name"] + '" to="' + line["to"].substr(-1) + '"/>')
             }
-            if(hasForward){
+            if (hasForward) {
                 array.push(' >');
                 array = array.concat(forwards);
                 array.push('    </step>');
@@ -326,27 +339,27 @@ var RestfulService = {
         array.push('<?xml version="1.0" encoding="UTF-8"?>');
         array.push('<service>');
         //1、组装基本信息
-        data["name"]&&array.push('    <name>'+data["name"]+'</name>');
-        data["desc"]&&array.push('    <desc>'+data["desc"]+'</desc>');
-        data["direct"]&&array.push('    <direct>'+data["direct"]+'</direct>');
-        data["directtype"]&&array.push('    <directtype>'+data["directtype"]+'</directtype>');
-        data["id"]&&array.push('    <id>'+data["id"]+'</id>');
+        data["name"] && array.push('    <name>' + data["name"] + '</name>');
+        data["desc"] && array.push('    <desc>' + data["desc"] + '</desc>');
+        data["direct"] && array.push('    <direct>' + data["direct"] + '</direct>');
+        data["directtype"] && array.push('    <directtype>' + data["directtype"] + '</directtype>');
+        data["id"] && array.push('    <id>' + data["id"] + '</id>');
         //2、组装请求信息
         var input = data["input"];
-        if(input&&input.length>0){
+        if (input && input.length > 0) {
             array.push('    <input>');
-            RestfulService.buildFields(input , array);
+            RestfulService.buildFields(input, array);
             array.push('    </input>');
-        }else {
+        } else {
             array.push('    <input/>');
         }
         //3、组装响应信息
         var output = data["output"];
-        if (output&&output.length>0){
+        if (output && output.length > 0) {
             array.push('    <output>');
-            RestfulService.buildFields(output , array);
+            RestfulService.buildFields(output, array);
             array.push('    </output>');
-        }else {
+        } else {
             array.push('    <output/>');
         }
         array.push('</service>');
@@ -358,19 +371,19 @@ var RestfulService = {
      * @param array
      * @private
      */
-    buildFields: function (fields , array) {
+    buildFields: function (fields, array) {
         for (var i in fields) {
             var field = fields[i];
             var type = field["type"];
-            if (type != "E"){
-                array.push('        <field name="'+field["name"]+'" type="'+field["type"]+'" regexp="'+(field["regexp"]||"")+'" required="'+field["required"]+'" desc="'+(field["desc"]||"")+'"/>');
+            if (type != "E") {
+                array.push('        <field name="' + field["name"] + '" type="' + field["type"] + '" regexp="' + (field["regexp"] || "") + '" required="' + field["required"] + '" desc="' + (field["desc"] || "") + '"/>');
                 continue;
             }
-            array.push('        <field name="'+field["name"]+'" type="'+type+'" regexp="'+(field["regexp"]||"")+'" required="'+field["required"]+'" desc="'+(field["desc"]||"")+'">');
+            array.push('        <field name="' + field["name"] + '" type="' + type + '" regexp="' + (field["regexp"] || "") + '" required="' + field["required"] + '" desc="' + (field["desc"] || "") + '">');
             var list = field['list'];
             for (var idx in list) {
                 var sub = list[idx];
-                array.push('            <field name="'+sub["name"]+'" type="'+sub["type"]+'" regexp="'+(sub["regexp"]||"")+'" required="'+sub["required"]+'" desc="'+(sub["desc"]||"")+'"/>');
+                array.push('            <field name="' + sub["name"] + '" type="' + sub["type"] + '" regexp="' + (sub["regexp"] || "") + '" required="' + sub["required"] + '" desc="' + (sub["desc"] || "") + '"/>');
             }
             array.push('        </field>');
         }
@@ -394,6 +407,92 @@ var RestfulService = {
         }
         //2、创建文件
         fs.createWriteStream(filePath);
+    },
+    /**
+     * 生成挡板数据
+     * @param http 连接对象
+     * @param param 获取服务配置的服务路径
+     * @param type 类型：输入参数、输出参数
+     * @param resp http响应对象
+     */
+    generateBaffleData: function (http,param,type,resp) {
+        //1、调用java rest服务
+        //请求参数
+        var options = {
+            host: RestfulService.config.host,
+            port: RestfulService.config.port,
+            path: RestfulService.config.context + '/loadServiceConf',
+            method: RestfulService.config.method,
+            headers: {
+                'Content-Type': RestfulService.config.contentType
+            }
+        };
+        //请求数据
+        var input = JSON.stringify(param);
+        var output = '';
+        //创建连接，并设置事件回调接受数据
+        var connect = http.request(options, function (res) {
+            res.setEncoding(RestfulService.config.encode);
+            res.on('data', function (chunk) {
+                output += chunk;
+            });
+            res.on('end',function(){
+                console.log('Response: ' + output);
+                //2、返回数据
+                output = JSON.parse(output);
+                //3、根据正则表达式生成挡板数据
+                var data = RestfulService.generateBaffleDataByRegex(output[type]);
+                var result = {};
+                result["header"] = {
+                    "msg": "服务执行成功",
+                    "status": "0000"
+                };
+                result["body"] = data;
+                resp.end(JSON.stringify(result));
+            });
+        });
+        //发送数据
+        connect.write(input);
+        //请求结束
+        connect.end();
+    },
+    /**
+     * 根据正则表达式生成挡板数据
+     * @param config 服务配置
+     */
+    generateBaffleDataByRegex: function (config) {
+        var default_regex = /[0-9A-Za-z]\w{0,20}/;//默认正则
+        var baffleData = {};
+        for (var i=0; i<config.length;i++){
+            var field = config[i];
+            var type = field.type;
+            var regex = field.regexp;
+
+            switch (type) {
+                case 'S':
+                    regex = regex ? new RegExp(regex) : default_regex;
+                    baffleData[field.name]=new RandExp(regex).gen();break;
+                case 'I':
+                    regex = regex ? new RegExp(regex) : /[1-9]\d{1,10}/;
+                    baffleData[field.name]=new RandExp(regex).gen();break;
+                case 'F':
+                    regex = regex ? new RegExp(regex) : /[1-9]\d{0,5}\.\d{2}|0\.[1-9]\d/;
+                    baffleData[field.name]=new RandExp(regex).gen();break;
+                case 'B':
+                    baffleData[field.name]=false;break;
+                case 'E':
+                    var list = [];
+                    var fields = field.list;
+                    //生成5条列表数据
+                    for(var n = 0;n<5;n++){
+                        //递归处理
+                        list.push(RestfulService.generateBaffleDataByRegex(fields));
+                    }
+                    baffleData[field.name]=list;
+                    break;
+            }
+        }
+        return baffleData;
     }
 };
 module.exports = RestfulService;

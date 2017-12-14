@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <service>
-    <!--服务名称-->
     <name>流程服务</name>
-    <!--服务描述-->
     <desc>流程服务描述</desc>
-    <!--指定服务类，值为beanId-->
+    <direct>false</direct>
     <id>demo/demoFlow</id>
-
     <input>
         <field name="p1" type="S" regexp="" required="true" desc="条件参数-1"/>
         <field name="p2" type="S" regexp="" required="true" desc="条件参数-2"/>
@@ -15,11 +12,10 @@
             <field name="p2" type="S" regexp="" required="true" desc="条件参数-2"/>
         </field>
     </input>
-
     <output>
         <field name="param1" type="B" regexp="" required="true" desc="条件参数-1"/>
         <field name="p3" type="E" regexp="" required="true" desc="列表参数">
-            <field name="p1" type="S" regexp="" required="true" desc="条件参数-1"/>
+            <field name="p1" type="S" regexp="[1-9]\d{1,10}" required="true" desc="条件参数-1"/>
             <field name="p2" type="S" regexp="" required="true" desc="条件参数-2"/>
         </field>
         <field name="param2" type="S" regexp="" required="true" desc="条件参数-2"/>

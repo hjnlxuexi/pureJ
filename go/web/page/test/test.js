@@ -19,45 +19,6 @@ $(document).ready(function () {
          * 初始化方法
          */
         init: function () {
-            //1、加载目录信息
-            // $.post("/getMenuData" , {} , function (menus) {
-            //     if (!menus) {
-            //         alert("未找到目录数据！");
-            //         return;
-            //     }
-            //     app.menus = menus = JSON.parse(menus);
-            //     //一级菜单
-            //     for (var i = 0; i < menus.length; i++) {
-            //         var menu = menus[i];
-            //         $(".menus").append("<li class='menu' data-index='" + i + "'>" + menu['name'] + "</li>");
-            //         var items = menu['items'];
-            //         if (!items)continue;
-            //         //二级菜单
-            //         for (var j = 0; j < items.length; j++) {
-            //             var item = items[j];
-            //             $(".left-menu")
-            //                 .append("<button class='item' data-service='" + item['service'] + "'>" + item['name'] + "</button>");
-            //             app.items.push(item);
-            //         }
-            //     }
-            //     //2、绑定一级菜单事件
-            //     app.bindMenuEvent();
-            //     //3、绑定二级菜单事件
-            //     app.bindItemEvent();
-            //     //4、模拟点击第一个二级菜单
-            //     var $item = $(".item:eq(0)");
-            //     $item.trigger("click");
-            //     //5、点击测试
-            //     app.doTest();
-            //     //6、清空
-            //     app.clearData();
-            //     //7、保存测试数据
-            //     app.saveData();
-            //     //8、填充测试数据
-            //     app.fillData();
-            // });
-
-
           //0、获取服务路径
           var serice = app.getQueryString("service");
           //4、加载服务配置
@@ -70,58 +31,6 @@ $(document).ready(function () {
           app.saveData();
           //8、填充测试数据
           app.fillData();
-        },
-        /**
-         * 绑定一级菜单事件
-         */
-        bindMenuEvent: function () {
-            $(".menu").click(function () {
-                //1、已选中的菜单忽略
-                if ($(this).hasClass("active"))return;
-                //2、菜单样式切换
-                $(".active").removeClass("active");
-                $(this).addClass("active");
-                //3、清空二级菜单
-                $(".left-menu").empty();
-                //4、获得对应的子菜单
-                if ($(this).hasClass("all")) {
-                    var items = app.items;
-                } else {
-                    var index = $(this).data("index");
-                    var menu = app.menus[index];
-                    items = menu['items'];
-                    if (!items)return;
-                }
-                //5、显示子菜单
-                for (var j = 0; j < items.length; j++) {
-                    var item = items[j];
-                    $(".left-menu")
-                        .append("<button class='item' data-service='" + item['service'] + "'>" + item['name'] + "</button>");
-                }
-                //6、绑定二级菜单事件
-                app.bindItemEvent();
-                //7、模拟点击第一个子菜单
-                var $item = $(".item:eq(0)");
-                $item.trigger("click");
-            });
-        },
-        /**
-         * 绑定二级菜单事件
-         */
-        bindItemEvent: function () {
-            $(".item").click(function () {
-                //1、已选中的菜单忽略
-                if ($(this).hasClass("choose"))return;
-                //2、菜单样式切换
-                $(".choose").removeClass("choose");
-                $(this).addClass("choose");
-                //3、显示服务路径
-                $("#service").val($(this).data("service"));
-                //4、加载服务配置
-                app.loadServiceConf();
-                //5、调整布局
-                app.reLayout();
-            });
         },
         /**
          * 加载服务配置内容
@@ -356,9 +265,27 @@ $(document).ready(function () {
                     return;
                 }
                 var req_data = JSON.parse(req);
-                $.post("/execute" , req_data , function (data) {
-                    $("#resp_data").val(JSON.stringify(JSON.parse(data), null , 4));
-                });
+                //是否挡板数据
+                if ($("#isBaffle").prop("checked")){
+                    var param = {};
+                    param['service'] = $("#service").val();
+                    param['type'] = "output";
+                    $.post("/getTestData" , param , function (d) {
+                        if (!d){
+                            alert("未找到挡板数据！");return;
+                        }
+                        var data = JSON.parse(d);
+                        //2、回显挡板数据
+                        $("#resp_data").val(JSON.stringify(data , null , 4));
+                        //调整布局
+                        app.reLayout();
+                    });
+                }else {
+                    $.post("/execute" , req_data , function (data) {
+                        $("#resp_data").val(JSON.stringify(JSON.parse(data), null , 4));
+                    });
+                }
+
             });
         },
         /**
@@ -399,8 +326,9 @@ $(document).ready(function () {
                 //1、获取请求测试数据
                 var data = {};
                 var param = {};
-                param['servicePath'] = $("#service").val();
-                $.post("/getReqTestData" , param , function (d) {
+                param['service'] = $("#service").val();
+                param['type'] = "input";
+                $.post("/getTestData" , param , function (d) {
                     if (!d){
                         alert("未找到测试数据！");return;
                     }

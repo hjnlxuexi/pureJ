@@ -5,7 +5,7 @@
 .main .content .base-info .prop{
     float: left;
     line-height: 40px;
-    width: 345px;
+    width: 30%;
     text-align: right;
 }
 .main .content .base-info .prop label {
