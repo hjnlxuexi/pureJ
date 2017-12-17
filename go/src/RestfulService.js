@@ -479,7 +479,8 @@ var RestfulService = {
                     regex = regex ? new RegExp(regex) : /[1-9]\d{0,5}\.\d{2}|0\.[1-9]\d/;
                     baffleData[field.name]=new RandExp(regex).gen();break;
                 case 'B':
-                    baffleData[field.name]=false;break;
+                    baffleData[field.name]= regex ? new Boolean(regex) : false;
+                    break;
                 case 'E':
                     var list = [];
                     var fields = field.list;
@@ -490,6 +491,9 @@ var RestfulService = {
                     }
                     baffleData[field.name]=list;
                     break;
+                default :
+                    regex = regex ? new RegExp(regex) : default_regex;
+                    baffleData[field.name]=new RandExp(regex).gen();break;
             }
         }
         return baffleData;
