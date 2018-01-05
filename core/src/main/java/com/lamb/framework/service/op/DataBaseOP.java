@@ -42,17 +42,12 @@ public class DataBaseOP implements OP{
         String[] sqlArray = serviceId.split(SQL_JOIN_MARK);
         for (String s : sqlArray) {
             String[] serviceArray = s.split("/");
-            if (serviceArray.length==1){
-                String sql = serviceArray[0];
-                data = MyBatisMapperProxyUtil.invokeProxySimpled(sql,params);
-            }else{
-                //3.2、执行sql，通过映射接口定义
-                String serviceName = serviceArray[0];//服务BeanID
-                String methodName = serviceArray[1];//服务方法
-                Object proxy = Framework.getBean(serviceName);
-                //原子数据库服务，参数必须以map形式传入
-                data = MyBatisMapperProxyUtil.invokeProxy(proxy, methodName, params, Map.class);
-            }
+            //3.1、执行sql，通过映射接口定义
+            String serviceName = serviceArray[0];//服务BeanID
+            String methodName = serviceArray[1];//服务方法
+            Object proxy = Framework.getBean(serviceName);
+            //3.2原子数据库服务，参数必须以map形式传入
+            data = MyBatisMapperProxyUtil.invokeProxy(proxy, methodName, params, Map.class);
 
             if(data==null)return;
             if (data instanceof List) {
