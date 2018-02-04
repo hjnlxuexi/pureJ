@@ -1,7 +1,8 @@
 package com.lamb.framework.exception;
 
-import com.lamb.framework.base.PropertyPlaceholder;
+import com.lamb.framework.base.Framework;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 
 /**
  * <p>Title : 服务运行时异常</p>
@@ -86,8 +87,10 @@ public class ServiceRuntimeException extends RuntimeException {
      * @return 消息内容
      */
     public String resolveMsg(){
+        //获取环境变量
+        Environment env = (Environment)Framework.getBean("environment");
         //原始定义的消息内容
-        String msg = PropertyPlaceholder.getProperty(messageKey);
+        String msg = env.getProperty(messageKey);
         //解析后的消息内容
         String resolveMsg = msg;
         for (int i = 0; i < args.length; i++) {

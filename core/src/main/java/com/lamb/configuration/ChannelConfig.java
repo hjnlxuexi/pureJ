@@ -1,13 +1,10 @@
 package com.lamb.configuration;
 
-import com.lamb.framework.base.PropertyPlaceholder;
 import com.lamb.framework.channel.convert.JsonConverter;
 import com.lamb.framework.listener.IListener;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.converter.HttpMessageConverter;
 
 import java.util.ArrayList;
@@ -31,21 +28,6 @@ public class ChannelConfig {
     public HttpMessageConverters jsonConverter() {
         HttpMessageConverter<Object> jsonHttpMsgConvert = new JsonConverter();
         return new HttpMessageConverters(jsonHttpMsgConvert);
-    }
-
-    /**
-     * 自定义属性文件加载方式，方便属性读取
-     * @return PropertyPlaceholder实例
-     */
-    @Bean
-    public static PropertyPlaceholder properties() {
-        PropertyPlaceholder propertyPlaceholder = new PropertyPlaceholder();
-        final List<Resource> resourceLst = new ArrayList<Resource>();
-        resourceLst.add(new ClassPathResource("config/application.properties"));
-        resourceLst.add(new ClassPathResource("config/application-message.properties"));
-        resourceLst.add(new ClassPathResource("config/application-app.properties"));
-        propertyPlaceholder.setLocations(resourceLst.toArray(new Resource[]{}));
-        return propertyPlaceholder;
     }
 
     /**
