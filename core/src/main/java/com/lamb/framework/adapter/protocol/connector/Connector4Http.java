@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -84,7 +81,7 @@ public class Connector4Http implements IConnector {
             httpConn = (HttpURLConnection) urlClient.openConnection();
             this.setHttpConnection(httpConn , connTimeout , respTimeout , contentType);
             //2、发送请求数据
-            out = new PrintWriter(httpConn.getOutputStream());
+            out = new PrintWriter(new OutputStreamWriter(httpConn.getOutputStream(),charset));
             out.print(reqStr);
             out.flush();
 

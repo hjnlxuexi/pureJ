@@ -172,7 +172,7 @@ public class FlowEngineService implements IService {
         //两个布尔值比较
         Boolean var1 = getSingleParamExpress(left, context);
         Boolean var2 = getSingleParamExpress(right, context);
-        if (var1 == null || var2 == null) return false;
+        //if (var1 == null || var2 == null) return false;
         //与
         if (operator.equals(FlowConfigConstants.OPERATOR_AND)) return var1 && var2;
         //或
@@ -225,7 +225,7 @@ public class FlowEngineService implements IService {
         //判断变量值合法性
         String key = var.substring(1);
         Object value = context.getParams().get(key);
-        if (value == null) return null;
+        if (value == null) return false;
         return (value instanceof Boolean) ? (Boolean) value : Boolean.valueOf(value.toString());
     }
 
