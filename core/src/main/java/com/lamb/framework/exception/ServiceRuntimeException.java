@@ -52,7 +52,8 @@ public class ServiceRuntimeException extends RuntimeException {
         super(cause);
         this.messageKey = messageKey;
         this.args = new Object[]{};
-        LoggerFactory.getLogger(clazz).error(cause.getMessage());
+        LoggerFactory.getLogger(clazz).error(this.resolveMsg());
+        cause.printStackTrace();
     }
 
     /**
@@ -79,7 +80,8 @@ public class ServiceRuntimeException extends RuntimeException {
         super(cause);
         this.messageKey = messageKey;
         this.args = args;
-        LoggerFactory.getLogger(clazz).error(cause.getMessage());
+        LoggerFactory.getLogger(clazz).error(this.resolveMsg());
+        cause.printStackTrace();
     }
 
     /**
