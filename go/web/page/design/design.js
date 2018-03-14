@@ -28,7 +28,7 @@ $(document).ready(function () {
          */
         loadServiceConf: function (service) {
             $.post("/loadServiceConf", {service: service}, function (data) {
-                var result = JSON.parse(data);
+                var result = !!data ? JSON.parse(data) : {};
                 //0、重置内容
                 var $tbody = $(".main .content tbody");
                 var $tr = $(app.tr_tpl.join(''));
@@ -40,8 +40,8 @@ $(document).ready(function () {
                 $('input:radio').removeProp("checked");
                 //1、显示基本信息
                 $("#service_path").val(service);
-                $("#service_id").val(result['id']);
-                $("#service_desc").val(result['desc']);
+                $("#service_id").val(result['id']||'');
+                $("#service_desc").val(result['desc'] || '');
                 var isDirect = result["direct"] || 'false';
                 $('input:radio[name="isDirect"][value=' + isDirect + ']').prop("checked", 'checked');
                 if (isDirect == "true") {
