@@ -76,6 +76,20 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/lib/ojdbc6-11.2.0.3.jar</systemPath>
         </dependency>
+
+        <!-- zookeeper -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.3.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
 
     <!--

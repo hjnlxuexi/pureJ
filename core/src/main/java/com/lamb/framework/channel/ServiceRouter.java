@@ -79,9 +79,10 @@ public class ServiceRouter {
             logger.debug("执行服务【" + context.getServiceCode() + "】，结束【" + (end - start) + "毫秒】");
             //5、返回响应报文
             return context.getServiceOutput();
-        } catch (ServiceRuntimeException e) {
-            //6、返回失败响应报文
-            return coreDataBuilder.buildError(e);
+        }catch (Exception e) {
+            if (e instanceof ServiceRuntimeException)
+                return coreDataBuilder.buildError((ServiceRuntimeException)e);
+            return coreDataBuilder.buildError(new ServiceRuntimeException("4000" , this.getClass(), e, context.getServiceName()));
         }
     }
 
