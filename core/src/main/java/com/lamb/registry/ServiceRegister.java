@@ -56,12 +56,12 @@ public class ServiceRegister {
             //1、获取zk连接
             zk = zkConn.getZk();
 
-            //2、创建服务节点，节点结构 /demo_demoDirectService/127.0.0.1:8080_pureJ : demo/demoDirectService
+            //2、创建服务节点，节点结构 /demo|demoDirectService/127.0.0.1:8080|pureJ : demo/demoDirectService
             serviceIp = serviceIp==null ? ZookeeperHelper.getInetAddress() : serviceIp;
-            // /127.0.0.1:8080_pureJ
-            String serverNode = "/"+serviceIp+":"+servicePort+serviceContext.replaceAll("/","_");
-            // /demo_demoDirectService
-            String serviceRootNode = "/"+serviceCode.replaceAll("/","_");
+            // /127.0.0.1:8080|pureJ
+            String serverNode = "/"+serviceIp+":"+servicePort+serviceContext.replaceAll("/","|");
+            // /demo|demoDirectService
+            String serviceRootNode = "/"+serviceCode.replaceAll("/","|");
             // /demo_demoDirectService/127.0.0.1:8080_pureJ
             String serviceNode = serviceRootNode + serverNode;
             // demo/demoDirectService
