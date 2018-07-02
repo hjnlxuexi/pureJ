@@ -12,5 +12,6 @@
     <modules>
         <module>core</module>
         <module>demo</module>
+        <module>service-API-gateway</module>
     </modules>
 </project>

@@ -1,4 +1,4 @@
-package com.lamb.registry.util;
+package com.lamb.discover.util;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;

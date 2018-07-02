@@ -10,7 +10,7 @@ var bizConfDir = "/Users/home/Desktop/HJ/pureJ/biz";
 var Config = {
     host : 'localhost',
     port : '8080',
-    context:'/pureJ',
+    context:'/demo',
     method : 'post',
     contentType : 'application/json',
     encode : 'utf8',

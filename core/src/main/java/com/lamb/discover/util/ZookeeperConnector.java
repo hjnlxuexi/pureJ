@@ -1,4 +1,4 @@
-package com.lamb.registry;
+package com.lamb.discover.util;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;

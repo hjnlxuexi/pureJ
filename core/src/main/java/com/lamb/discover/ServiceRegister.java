@@ -1,7 +1,8 @@
-package com.lamb.registry;
+package com.lamb.discover;
 
 import com.lamb.framework.exception.ServiceRuntimeException;
-import com.lamb.registry.util.ZookeeperHelper;
+import com.lamb.discover.util.ZookeeperConnector;
+import com.lamb.discover.util.ZookeeperHelper;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
@@ -56,22 +57,27 @@ public class ServiceRegister {
             //1、获取zk连接
             zk = zkConn.getZk();
 
-            //2、创建服务节点，节点结构 /demo|demoDirectService/127.0.0.1:8080|pureJ : demo/demoDirectService
+            //2、创建服务节点，节点结构 /service/demo|demoDirectService/127.0.0.1:8080|pureJ : demo/demoDirectService
             serviceIp = serviceIp==null ? ZookeeperHelper.getInetAddress() : serviceIp;
             // /127.0.0.1:8080|pureJ
             String serverNode = "/"+serviceIp+":"+servicePort+serviceContext.replaceAll("/","|");
-            // /demo|demoDirectService
-            String serviceRootNode = "/"+serviceCode.replaceAll("/","|");
-            // /demo_demoDirectService/127.0.0.1:8080_pureJ
-            String serviceNode = serviceRootNode + serverNode;
-            // demo/demoDirectService
+            //服务根节点 /service
+            String serviceRootNode = "/service";
+            //服务名称节点 /service/demo|demoDirectService
+            String serviceNameNode = serviceRootNode+"/"+serviceCode.replaceAll("/","|");
+            //服务提供节点 /service/demo_demoDirectService/127.0.0.1:8080_pureJ
+            String serviceNode = serviceNameNode + serverNode;
+            //服务节点内容 demo/demoDirectService
             String seerviceContent = serviceCode+"|"+version;
 
             switch (type){
                 case 'C':
-                    //创建服务根节点，持久节点
+                    //创建服务根目录，持久节点
                     if (!ZookeeperHelper.isExists(serviceRootNode,zk))
                         zk.create(serviceRootNode, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+                    //创建服务名称节点，持久节点
+                    if (!ZookeeperHelper.isExists(serviceNameNode,zk))
+                        zk.create(serviceNameNode, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
                     //创建服务provider节点，临时节点，内容为：serviceCode|version
                     if (!ZookeeperHelper.isExists(serviceNode,zk))
                         zk.create(serviceNode, seerviceContent.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
