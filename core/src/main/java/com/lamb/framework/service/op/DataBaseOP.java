@@ -33,7 +33,7 @@ public class DataBaseOP implements OP{
     @Override
     public void execute(Context context) {
         Map result = new HashMap();
-        Object data = null;
+        Object data;
         //1、提取参数
         Map params = context.getParams();
         params = params.isEmpty() ? new HashMap() : params;
@@ -41,13 +41,19 @@ public class DataBaseOP implements OP{
         String serviceId = context.getServiceId();
         String[] sqlArray = serviceId.split(SQL_JOIN_MARK);
         for (String s : sqlArray) {
-            String[] serviceArray = s.split("/");
-            //3.1、执行sql，通过映射接口定义
-            String serviceName = serviceArray[0];//服务BeanID
-            String methodName = serviceArray[1];//服务方法
-            Object proxy = Framework.getBean(serviceName);
-            //3.2原子数据库服务，参数必须以map形式传入
-            data = MyBatisMapperProxyUtil.invokeProxy(proxy, methodName, params, Map.class);
+            if(!s.contains("/")){
+                //通过sql的id 执行数据库操作
+                data = MyBatisMapperProxyUtil.executeSql(s , params);
+            }else {
+                //通过mapper，执行数据库操作
+                String[] serviceArray = s.split("/");
+                //3.1、执行sql，通过映射接口定义
+                String serviceName = serviceArray[0];//服务BeanID
+                String methodName = serviceArray[1];//服务方法
+                Object proxy = Framework.getBean(serviceName);
+                //3.2原子数据库服务，参数必须以map形式传入
+                data = MyBatisMapperProxyUtil.invokeProxy(proxy, methodName, params, Map.class);
+            }
 
             if(data==null)return;
             if (data instanceof List) {

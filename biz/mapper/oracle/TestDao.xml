@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lamb.app.dao.TestDao">
 	<!--查询所有部门数据总数-->
-	<select id="findAllDeptCnt" resultType="java.util.Map">
+	<select id="findAllDeptCnt" resultType="map">
 		SELECT count(*) total from scott.DEPT
 	</select>
 	<!--查询所有部门数据-->
@@ -14,5 +14,14 @@
 	<update id="updateDeptLocById">
 	<if test="1==1">update DEPT set LOC = 'BeiJing' where DEPTNO=40</if>
 
+	</update>
+
+
+	<insert id="addBonus" parameterType="map">
+		INSERT into BONUS VALUES (#{eName},#{job},#{sal},#{comm})
+	</insert>
+
+	<update id="updateBonus" parameterType="map">
+		update BONUS set ENAME  = #{eName}  where ENAME=#{oldName} ;
 	</update>
 </mapper>

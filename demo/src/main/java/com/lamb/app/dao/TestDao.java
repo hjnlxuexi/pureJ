@@ -29,4 +29,6 @@ public interface TestDao extends IBaseDao {
      * 修改部门地区
      */
     public void updateDeptLocById();
+
+    public void addBonus(Map param);
 }
