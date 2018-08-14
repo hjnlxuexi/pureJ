@@ -1,11 +1,12 @@
 package com.lamb.framework.channel.builder;
 
+import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.channel.constant.ServicePacketConstants;
-import com.lamb.framework.validator.ConfigValidator;
 import com.lamb.framework.channel.helper.ServiceConfigParser;
 import com.lamb.framework.exception.ServiceRuntimeException;
+import com.lamb.framework.validator.ConfigValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -106,6 +107,9 @@ public class CoreDataBuilder implements ICoreChannelBuilder {
             //4、验证字段值
             value = ConfigValidator.validateField(value, field);
             //5、将字段键值对放入总线
+            Object target_name = field.get(AdapterConfConstants.TARGET_NAME_PROP);
+            if (target_name!=null&&!target_name.toString().isEmpty()) //name --> targetName
+                name = target_name.toString();
             body.put(name, value);
         }
         context.getServiceOutput().put(ServicePacketConstants.BODY, body);

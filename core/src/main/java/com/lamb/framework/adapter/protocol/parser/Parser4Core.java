@@ -103,6 +103,9 @@ public class Parser4Core implements IParser {
             //4、验证字段值
             value = ConfigValidator.validateField(value, field);
             //5、将字段键值对放入总线
+            Object target_name = field.get(AdapterConfConstants.TARGET_NAME_PROP);
+            if (target_name!=null&&!target_name.toString().isEmpty()) //name --> targetName
+                name = target_name.toString();
             context.getParams().put(name, value);
         }
     }
