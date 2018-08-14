@@ -41,6 +41,8 @@ public class DataBaseOP implements OP{
         String serviceId = context.getServiceId();
         String[] sqlArray = serviceId.split(SQL_JOIN_MARK);
         for (String s : sqlArray) {
+            //   xxxx/yyyy  形式为面向接口的mapper访问数据库
+            //   xxxx.yyyy  形式为通过namespace.sql，执行sql语句
             if(!s.contains("/")){
                 //通过sql的id 执行数据库操作
                 data = MyBatisMapperProxyUtil.executeSql(s , params);

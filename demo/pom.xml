@@ -26,6 +26,11 @@
             <!--<scope>system</scope>
             <systemPath>${basedir}/src/main/resources/lib/core-1.0-SNAPSHOT.jar</systemPath>-->
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
     </dependencies>
 
     <build>
