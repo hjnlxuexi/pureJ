@@ -6,7 +6,7 @@
     <!--通讯协议：http、socket-->
     <protocol>http</protocol>
     <!--自定义连接地址：http协议时为url，socket协议时为ip:port；默认采用 adapter.host 属性定义全局地址-->
-    <host>http://localhost:8080/pureJ/</host>
+    <host>http://localhost:8080/demo/</host>
     <!--自定义连接超时时间（毫秒）；默认采用 adapter.connectTimeout 属性定义全局地址-->
     <!--<connectTimeout>30000</connectTimeout>-->
     <!--自定义响应超时时间（毫秒）；默认采用 adapter.responseTimeout 属性定义全局地址-->

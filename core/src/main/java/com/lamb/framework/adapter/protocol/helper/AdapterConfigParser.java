@@ -39,6 +39,11 @@ public class AdapterConfigParser {
      */
     @Resource
     private ConfigCache configCache;
+    /**
+     * 是否缓存外部服务配置
+     */
+    @Value("${cache.adapter.conf}")
+    private boolean isCacheAdapterConf;
 
     /**
      * 解析服务配置
@@ -51,7 +56,7 @@ public class AdapterConfigParser {
         String serviceId = serviceConfPath + context.getServiceId();
         logger.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
         //0、缓存中获取配置对象
-        if (configCache.hasConfig(serviceId)){
+        if (isCacheAdapterConf && configCache.hasConfig(serviceId)){
             logger.debug("解析外部服务配置文件【"+serviceId+"】，结束【命中缓存】");
             return (Map) configCache.getConfig(serviceId);
         }
