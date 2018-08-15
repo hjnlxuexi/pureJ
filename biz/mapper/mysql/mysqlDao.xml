@@ -4,6 +4,6 @@
 <mapper namespace="mysqlDao">
 	<!--查询所有部门数据总数-->
 	<select id="getUser" resultType="map">
-		SELECT * FROM user
+		SELECT Host,User FROM user
 	</select>
 </mapper>
