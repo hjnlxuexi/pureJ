@@ -32,6 +32,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class MybatisMapperHotLoading {
     private static Logger logger = LoggerFactory.getLogger(MybatisMapperHotLoading.class);
+    /**
+     * 是否启用mapper热加载
+     */
     @Value("${mapper.hot.loading}")
     private boolean isMapperHotLoading;
     @Autowired
@@ -46,6 +49,7 @@ public class MybatisMapperHotLoading {
 
     @PostConstruct
     private void schedule() {
+        if (!isMapperHotLoading) return;
         //1、创建计划实例
         final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(2);
         //2、创建任务实例
@@ -80,6 +84,10 @@ public class MybatisMapperHotLoading {
                 // step.2.2 重新加载
                 for (Resource configLocation : mapperLocations) {
                     try {
+                        /*
+                        new XMLMapperBuilder中，第三个测试  resource名称 可以自定义
+                        todo   尝试将配置中心单独拎出来，做为配置服务，包含：服务配置，mapper，系统运行参数配置
+                         */
                         XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configLocation.getInputStream(), configuration, configLocation.toString(), configuration.getSqlFragments());
                         xmlMapperBuilder.parse();
                         logger.info("mapper文件[" + configLocation.getFilename() + "]缓存加载成功");
