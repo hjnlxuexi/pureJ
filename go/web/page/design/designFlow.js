@@ -165,7 +165,7 @@ $(document).ready(function () {
                 if (!id)return;
                 //1、获取当前节点
                 var item;
-                if ("node" == type) {
+                if ("node" === type) {
                     item = app.demo.$nodeData[id];
                     var ref = $("#ele_ref").val();
                     item['ref'] = ref;
@@ -173,7 +173,7 @@ $(document).ready(function () {
                     item['top'] = $("#ele_top").val();
                     item['width'] = $("#ele_width").val();
                     item['height'] = $("#ele_height").val();
-                } else if ("line" == type) {
+                } else if ("line" === type) {
                     item = app.demo.$lineData[id];
                     item["condition"] = $("#ele_condition").val();
                 }
@@ -190,7 +190,7 @@ $(document).ready(function () {
                     var commonOP = "";
                     for (var i in opArray) {
                         var op = opArray[i];
-                        if (op=="dataBaseOP"||op=="protocolOP"){
+                        if (op==="dataBaseOP"||op==="protocolOP" || op==="exceptionOP"){
                             commonOP += '<div class="op" id="' + op + '">' + op + '</div>';
                             continue;
                         }
@@ -204,6 +204,8 @@ $(document).ready(function () {
                     var ref = $ref.val();
                     if (!!ref) {
                         try {
+                            if(ref.indexOf(':')>-1)
+                                ref = ref.substring(0,ref.indexOf(':'));
                             $('#' + ref).addClass("choosed");
                         } catch (e) {
                         }
@@ -214,7 +216,7 @@ $(document).ready(function () {
                         $(this).addClass("choosed");
                         var op = $(this).text();
                         $ref.val(op);
-                        if (op=="dataBaseOP"||op=="protocolOP"){
+                        if (op==="dataBaseOP"||op==="protocolOP" || op==="exceptionOP"){
                             $ref.focus();
                         }
                         $opPanel.hide();

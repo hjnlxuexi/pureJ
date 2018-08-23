@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <service>
-  <name>过路服务</name>
-  <desc>测试过路服务</desc>
+    <name>过路服务</name>
+    <desc>测试过路服务</desc>
     <direct>true</direct>
     <directtype>database</directtype>
-    <!--<id>testDao/findAllDept</id>-->
-    <id>mysqlDao.getUser</id>
+    <id>mysqlDao.getUser#ONE</id>
     <input/>
     <output>
         <field name="DEPTNO" type="S" regexp="" required="true" desc="部门编号"/>

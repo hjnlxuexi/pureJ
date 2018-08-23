@@ -295,13 +295,13 @@ var RestfulService = {
     buildServiceFlowConf: function (data) {
         var array = [];
         array.push('<?xml version="1.0" encoding="UTF-8"?>');
-        array.push('<flow title="' + data.title + '">');
+        array.push('\n<flow title="' + data.title + '">');
         var nodes = data.nodes;
         var lines = data.lines;
         for (var id in nodes) {
             var index = id.substr(-1);
             var node = nodes[id];
-            array.push('    <step index="' + index + '" ref="' + node["ref"] + '" desc="' + node["name"] + '" left="' + node["left"] + '" top="' + node["top"] + '" ');
+            array.push('\n    <step index="' + index + '" ref="' + node["ref"] + '" desc="' + node["name"] + '" left="' + node["left"] + '" top="' + node["top"] + '" ');
             var forwards = [];
             var hasForward = false;
             for (var key in lines) {
@@ -314,19 +314,19 @@ var RestfulService = {
                 }
                 hasForward = true;
                 //普通条件
-                forwards.push('     <forward condition="' + line["condition"] + '" desc="' + line["name"] + '" to="' + line["to"].substr(-1) + '"/>')
+                forwards.push('\n        <forward condition="' + line["condition"] + '" desc="' + line["name"] + '" to="' + line["to"].substr(-1) + '"/>');
             }
             if (hasForward) {
                 array.push(' >');
                 array = array.concat(forwards);
-                array.push('    </step>');
+                array.push('\n    </step>');
             } else {
                 array.push(' />');
             }
         }
 
-        array.push('</flow>');
-        return array.join('\n');
+        array.push('\n</flow>');
+        return array.join('');
     },
     /**
      * 组装服务配置

@@ -3,50 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.3.RELEASE</version>
+        <groupId>com.lamb</groupId>
+        <artifactId>pureJ</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo</artifactId>
-    <groupId>com.lamb</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.lamb</groupId>
             <artifactId>core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <!--<scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/lib/core-1.0-SNAPSHOT.jar</systemPath>-->
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>demo</finalName>
-        <plugins>
-            <!--此插件将项目打包为可执行的超级JAR/war-->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                    <includeSystemScope>true</includeSystemScope>
-                    <mainClass>com.lamb.Application</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

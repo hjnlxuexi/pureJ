@@ -18,8 +18,14 @@ import java.util.Map;
  */
 @Service
 public class DataBaseOP implements OP{
-
+    /**
+     * 多条sql连接符
+     */
     private final static String SQL_JOIN_MARK = "\\+";
+    /**
+     * 查询单条数据模式
+     */
+    private final static String SELECT_ONE_PATTERN = "#ONE";
     /**
      * 原子数据库服务
      *
@@ -32,7 +38,7 @@ public class DataBaseOP implements OP{
      */
     @Override
     public void execute(Context context) {
-        Map result = new HashMap();
+        Map<String,Object> result = new HashMap<>();
         Object data;
         //1、提取参数
         Map params = context.getParams();
@@ -40,15 +46,21 @@ public class DataBaseOP implements OP{
         //2、分解sql
         String serviceId = context.getServiceId();
         String[] sqlArray = serviceId.split(SQL_JOIN_MARK);
-        for (String s : sqlArray) {
+        for (String sql : sqlArray) {
+            //查询单条数据
+            boolean isSelectOne = false;
+            if (sql.endsWith(SELECT_ONE_PATTERN)){
+                isSelectOne = true;
+                sql = sql.substring(0,sql.indexOf(SELECT_ONE_PATTERN));
+            }
             //   xxxx/yyyy  形式为面向接口的mapper访问数据库
             //   xxxx.yyyy  形式为通过namespace.sql，执行sql语句
-            if(!s.contains("/")){
+            if(!sql.contains("/")){
                 //通过sql的id 执行数据库操作
-                data = MyBatisMapperProxyUtil.executeSql(s , params);
+                data = MyBatisMapperProxyUtil.executeSql(sql , params);
             }else {
                 //通过mapper，执行数据库操作
-                String[] serviceArray = s.split("/");
+                String[] serviceArray = sql.split("/");
                 //3.1、执行sql，通过映射接口定义
                 String serviceName = serviceArray[0];//服务BeanID
                 String methodName = serviceArray[1];//服务方法
@@ -57,11 +69,19 @@ public class DataBaseOP implements OP{
                 data = MyBatisMapperProxyUtil.invokeProxy(proxy, methodName, params, Map.class);
             }
 
-            if(data==null)return;
+            if(data==null)continue;
+
             if (data instanceof List) {
-                result.put(ServicePacketConstants.LIST, data);
+                //查询单条数据
+                if (isSelectOne){
+                    List<Map<String,Object>> list = (List<Map<String,Object>>)data;
+                    if (list.size()>0)result.putAll(list.get(0));
+                }else {
+                    //查询列表
+                    result.put(ServicePacketConstants.LIST, data);
+                }
             } else {
-                result = (Map) data;
+                result = (Map<String,Object>) data;
             }
             context.getParams().putAll(result);
         }

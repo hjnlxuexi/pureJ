@@ -76,10 +76,7 @@ public class MyBatisMapperProxyUtil {
         if (resultType == null) throw new ServiceRuntimeException("3001" , MyBatisMapperProxyUtil.class , "resultType");
         //查询
         if (resultType.equals("java.util.Map") || resultType.equals("java.util.HashMap")){
-            List list = sqlSessionTemplate.selectList(sqlId , params);
-            return list==null||list.size()==0 ? null
-                    : list.size()==1 ? list.get(0)
-                    : list;
+            return sqlSessionTemplate.selectList(sqlId , params);
         }
 
         throw new ServiceRuntimeException("3001" , MyBatisMapperProxyUtil.class , "resultType应配置为Map");

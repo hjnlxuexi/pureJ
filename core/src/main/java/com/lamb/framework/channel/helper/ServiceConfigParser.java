@@ -32,10 +32,10 @@ public class ServiceConfigParser {
     /**
      * 服务配置根目录
      */
-    @Value("${service.conf.dir}")
+    @Value("${biz.conf.service}")
     private String serviceConfPath;
 
-    @Value("${cache.service.conf}")
+    @Value("${cache.conf.service}")
     private boolean isCacheServiceConf;
     /**
      * 服务配置对象缓存

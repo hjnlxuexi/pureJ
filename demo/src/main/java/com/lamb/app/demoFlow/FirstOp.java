@@ -22,6 +22,5 @@ public class FirstOp implements OP{
         context.getParams().put("param1" , "1234");
         context.getParams().put("param2" , "23");
         logger.debug("步骤一【FirstOp】，执行结束");
-        System.out.println("11233456");
     }
 }

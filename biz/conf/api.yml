@@ -1,0 +1,23 @@
+#==========开发环境配置==========
+server:
+  display-name: api
+  port: 8899
+  context-path: /api
+#静态资源路径
+spring:
+  resources:
+    static-locations: file:/Users/home/Desktop/HJ/pureJ/service-API-gateway/src/main/web/
+
+
+#Zookeeper配置
+zk:
+  #url可配置多个逗号分隔
+  urls: 127.0.0.1:2181
+  session:
+    #会话超时时间
+    timeout: 30000
+
+
+
+
+

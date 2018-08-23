@@ -32,7 +32,7 @@ public class Parser4Core implements IParser {
     /**
      * 服务执行成功状态码
      */
-    @Value("${service.success.code:0000}")
+    @Value("${channel.service.success.code:0000}")
     private String successCode;
     /**
      * 解析报文，数据总线中流向  ResponseData--->params

@@ -35,14 +35,14 @@ public class MybatisMapperHotLoading {
     /**
      * 是否启用mapper热加载
      */
-    @Value("${mapper.hot.loading}")
+    @Value("${jdbc.mapper.hotLoading}")
     private boolean isMapperHotLoading;
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
     /**
      * mapper文件位置
      */
-    @Value("${sql.path}")
+    @Value("${jdbc.mapper.location}")
     private String sqlPath;
     private Resource[] mapperLocations;
     private HashMap<String, Long> fileMapping = new HashMap<>();// 记录文件是否变化
@@ -85,7 +85,7 @@ public class MybatisMapperHotLoading {
                 for (Resource configLocation : mapperLocations) {
                     try {
                         /*
-                        new XMLMapperBuilder中，第三个测试  resource名称 可以自定义
+                        new XMLMapperBuilder中，第三个参数  resource名称 可以自定义
                         todo   尝试将配置中心单独拎出来，做为配置服务，包含：服务配置，mapper，系统运行参数配置
                          */
                         XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configLocation.getInputStream(), configuration, configLocation.toString(), configuration.getSqlFragments());

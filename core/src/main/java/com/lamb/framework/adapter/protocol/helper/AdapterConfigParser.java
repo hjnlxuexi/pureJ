@@ -32,7 +32,7 @@ public class AdapterConfigParser {
     /**
      * 服务配置根目录
      */
-    @Value("${adapter.conf.dir}")
+    @Value("${biz.conf.adapter}")
     private String serviceConfPath;
     /**
      * 服务配置对象缓存
@@ -42,7 +42,7 @@ public class AdapterConfigParser {
     /**
      * 是否缓存外部服务配置
      */
-    @Value("${cache.adapter.conf}")
+    @Value("${cache.conf.adapter}")
     private boolean isCacheAdapterConf;
 
     /**

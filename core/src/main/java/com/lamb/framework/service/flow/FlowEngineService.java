@@ -39,7 +39,7 @@ public class FlowEngineService implements IService {
     /**
      * 服务流程开始索引
      */
-    @Value("${flow.start.index:1}")
+    @Value("${channel.flow.start.index:1}")
     private String startIndex;
 
     /**
@@ -104,6 +104,7 @@ public class FlowEngineService implements IService {
             if (!isForward(forward, context)) continue;
             //执行下一个节点
             Step nextStep = steps.get(forward.getTo());
+            nextStep.setPreviousStep(step);
             run(nextStep, context, steps);
             //结束流程
             return;
@@ -116,6 +117,7 @@ public class FlowEngineService implements IService {
             throw new ServiceRuntimeException("2000" , this.getClass());
         //5、执行下一步骤
         Step nextStep = steps.get(next);
+        nextStep.setPreviousStep(step);
         run(nextStep, context, steps);
     }
 

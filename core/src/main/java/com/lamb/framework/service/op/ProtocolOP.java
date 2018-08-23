@@ -19,6 +19,12 @@ public class ProtocolOP implements OP {
      */
     @Resource
     private ProtocolBaseAdapter protocolBaseAdapter;
+
+    /**
+     * 通过适配器调用外部服务
+     *
+     * @param context 数据总线
+     */
     @Override
     public void execute(Context context) {
         protocolBaseAdapter.execute(context);

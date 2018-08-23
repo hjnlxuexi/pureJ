@@ -1,0 +1,120 @@
+server:
+  display-name: pureJ
+  port: 8080
+  context-path: /pureJ
+
+#启用profile
+spring:
+  profiles:
+    active: message
+
+#业务配置路径
+biz:
+  conf:
+    dir: /Users/home/Desktop/HJ/pureJ/biz/
+    service: ${biz.conf.dir}channel/service/
+    flow: ${biz.conf.dir}channel/flow/
+    adapter: ${biz.conf.dir}adapter/
+
+#缓存配置
+cache:
+  conf:
+    service: true
+    flow: true
+    adapter: true
+
+#渠道服务配置
+channel:
+  service:
+    success:
+      #服务执行成功状态码，默认：0000
+      code: '0000'
+      msg: 服务执行成功
+  flow:
+    start:
+      #服务流程开始索引，默认：1
+      index: 1
+  validate:
+    #是否验证渠道服务输出数据，默认false，不验证
+    output: false
+
+#外部服务适配器配置
+adapter:
+  host: http://localhost:8080/pureJ/
+  connectTimeout: 30000
+  responseTimeout: 60000
+  charset: UTF-8
+  validate:
+    #是否验证适配器服务数据数据，默认false，不验证
+    output: false
+
+#数据源配置
+jdbc:
+  database:
+    #数据库类型：oracle、mysql、db2
+    type: oracle
+  mapper:
+    #sql文件路径
+    location: file:${biz.conf.dir}mapper/${jdbc.database.type}/*.xml
+    #是否开启mapper文件热加载，默认false，关闭
+    hotLoading: false
+  #连接池配置
+  initialSize: 5
+  maxActive: 20
+  minIdle: 5
+  maxWait: 60000
+  testOnBorrow: false
+  testOnReturn: false
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 25200000
+  removeAbandoned: true
+  removeAbandonedTimeout: 1800
+  logAbandoned: true
+  filters: mergeStat
+  #数据库连接
+  url: jdbc:oracle:thin:@172.16.193.136:1521:orcl
+  username: scott
+  password: 123456
+  driver-Class-Name: oracle.jdbc.OracleDriver
+  validationQuery: SELECT 1 FROM dual
+
+#日志配置
+logging:
+  file: ${server.display-name}.log
+  level:
+    org.springframework.web: ERROR
+    com.lamb: DEBUG
+  #日志配置
+  #config: logback.xml
+
+
+
+#============================++服务发现++=======================
+#服务发现
+service:
+  discover:
+    #是否开启服务发现，默认关闭
+    open: false
+  auto-discover:
+    #是否开启服务自动发现，线程定时扫描，默认关闭
+    open: false
+    #服务自动发现，维持线程数，默认为2
+    threads: 2
+    #服务自动发现，首次延迟时间，默认30s(秒)，不能小于zk.session.timeout
+    delay: 30
+    #服务自动发现，执行周期，默认30s(秒)
+    period: 30
+  registry:
+    #服务提供者ip地址，不配置则默认为本机地址
+    ip: 127.0.0.1
+
+
+#Zookeeper配置
+zk:
+  #url可配置多个逗号分隔
+  urls: 127.0.0.1:2181
+  session:
+    #会话超时时间
+    timeout: 30000
+

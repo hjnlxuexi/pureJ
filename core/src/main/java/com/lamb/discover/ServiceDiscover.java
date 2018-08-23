@@ -24,13 +24,11 @@ public class ServiceDiscover {
      */
     @Value("${service.discover.open}")
     public boolean discoverOpen;
-    //public boolean discoverOpen=true;
     /**
      * 服务配置目录
      */
-    @Value("${service.conf.dir}")
+    @Value("${biz.conf.service}")
     private String watchedDir;
-    //private String watchedDir="/Users/home/Desktop/HJ/pureJ/biz/channel/service";
     /**
      * 允许的文件后缀
      */

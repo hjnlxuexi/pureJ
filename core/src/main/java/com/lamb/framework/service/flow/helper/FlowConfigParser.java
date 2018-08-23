@@ -36,12 +36,12 @@ public class FlowConfigParser {
     /**
      * 是否缓存服务流程配置
      */
-    @Value("${cache.flow.conf}")
+    @Value("${cache.conf.flow}")
     private boolean isCacheFlowConf;
     /**
      * 流程配置根目录
      */
-    @Value("${flow.conf.dir}")
+    @Value("${biz.conf.flow}")
     private String flowConfPath;
     /**
      * 流程配置对象缓存

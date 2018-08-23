@@ -40,6 +40,10 @@ public class Step {
      * 步骤跳转映射列表
      */
     private List<Forward> mapping = new ArrayList<Forward>();
+    /**
+     * 上一步骤
+     */
+    private Step previousStep;
 
     public String getIndex() {
         return index;
@@ -96,4 +100,13 @@ public class Step {
     public void setTop(String top) {
         this.top = top;
     }
+
+    public Step getPreviousStep() {
+        return previousStep;
+    }
+
+    public void setPreviousStep(Step previousStep) {
+        this.previousStep = previousStep;
+    }
+
 }

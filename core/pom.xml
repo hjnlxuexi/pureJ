@@ -5,20 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.3.RELEASE</version>
+        <groupId>com.lamb</groupId>
+        <artifactId>pureJ</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.lamb</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-
-    <properties>
-        <java.version>1.8</java.version>
-        <start.class>com.lamb.Application</start.class>
-    </properties>
 
     <dependencies>
         <!--Spring MVC-->
@@ -36,15 +30,8 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
         </dependency>
 
-        <!--内嵌TOMCAT-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--<scope>provided</scope>-->
-        </dependency>
         <!--热部署组件-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,13 +41,11 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.0.12</version>
         </dependency>
         <!--JSON工具库-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.4</version>
         </dependency>
         <!--xml文档解析库-->
         <dependency>
@@ -68,42 +53,11 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
-        <!--默认使用Oracle数据库-->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/lib/ojdbc6-11.2.0.3.jar</systemPath>
-        </dependency>
-
         <!-- zookeeper -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.3.6</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     </dependencies>
-
-    <!--
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <configuration>
-                        <fork>true</fork>
-                        <includeSystemScope>true</includeSystemScope>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    -->
 </project>

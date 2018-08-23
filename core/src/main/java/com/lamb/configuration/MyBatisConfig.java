@@ -26,9 +26,9 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class MyBatisConfig {
     /**
-     * 数据库产品类型
+     * mapper的位置
      */
-    @Value("${sql.path}")
+    @Value("${jdbc.mapper.location}")
     private String sqlPath;
     /**
      * 配置数据源
