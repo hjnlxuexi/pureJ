@@ -2,7 +2,7 @@ package com.lamb.framework.adapter.protocol;
 
 import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.adapter.protocol.helper.AdapterConfigParser;
-import com.lamb.framework.adapter.protocol.nettool.INetTool;
+import com.lamb.framework.adapter.protocol.nettool.IProtocolTool;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.exception.ServiceRuntimeException;
@@ -38,7 +38,7 @@ public class ProtocolBaseAdapter {
             throw new ServiceRuntimeException("5001" , ProtocolBaseAdapter.class);
         String netToolStr = net_tool.toString();
         //2、执行外部服务
-        INetTool netTool = (INetTool)Framework.getBean(netToolStr);
+        IProtocolTool netTool = (IProtocolTool)Framework.getBean(netToolStr);
         netTool.execute(context , config);
     }
 }

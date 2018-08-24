@@ -2,6 +2,11 @@ server:
   display-name: pureJ
   port: 8080
   context-path: /pureJ
+  config:
+    #是否开启系统配置热加载，默认true，开启
+    hotLoading: true
+    #热加载的配置文件路径
+    path: ${biz.conf.dir}conf/app.yml
 
 #启用profile
 spring:
@@ -56,8 +61,8 @@ jdbc:
   mapper:
     #sql文件路径
     location: file:${biz.conf.dir}mapper/${jdbc.database.type}/*.xml
-    #是否开启mapper文件热加载，默认false，关闭
-    hotLoading: false
+    #是否开启mapper文件热加载，默认true，开启
+    hotLoading: true
   #连接池配置
   initialSize: 5
   maxActive: 20
@@ -109,12 +114,11 @@ service:
     #服务提供者ip地址，不配置则默认为本机地址
     ip: 127.0.0.1
 
-
 #Zookeeper配置
 zk:
   #url可配置多个逗号分隔
   urls: 127.0.0.1:2181
   session:
-    #会话超时时间
+    #会话超时时间(毫秒)
     timeout: 30000
 

@@ -50,11 +50,11 @@ public class ServiceAutoDiscover {
     private void init(){
         //0、是否开启自动发现
         if (!serviceDiscover.discoverOpen) {
-            logger.info("====================**服务发现未开启！**====================");
+            logger.info("【服务发现】未开启！");
             return;
         }
         if (!isAutoDiscover) {
-            logger.info("====================**服务自动发现未开启！**====================");
+            logger.info("【服务发现】自动扫描未开启！");
             return;
         }
         //1、创建计划实例

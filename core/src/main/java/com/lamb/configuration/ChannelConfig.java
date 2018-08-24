@@ -37,6 +37,6 @@ public class ChannelConfig {
     @Bean
     public List<IListener> listeners(){
         //TODO  监听器待维护
-        return new ArrayList<IListener>();
+        return new ArrayList<>();
     }
 }

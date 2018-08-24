@@ -1,6 +1,7 @@
 package com.lamb.framework.channel.helper;
 
 import com.lamb.framework.base.Context;
+import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
@@ -11,7 +12,6 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -30,14 +30,6 @@ import java.util.*;
 public class ServiceConfigParser {
     private static Logger logger = LoggerFactory.getLogger(ServiceConfigParser.class);
     /**
-     * 服务配置根目录
-     */
-    @Value("${biz.conf.service}")
-    private String serviceConfPath;
-
-    @Value("${cache.conf.service}")
-    private boolean isCacheServiceConf;
-    /**
      * 服务配置对象缓存
      */
     @Resource
@@ -51,10 +43,10 @@ public class ServiceConfigParser {
      */
     public Map parseServiceConf(Context context) {
         long start = System.currentTimeMillis();
-        String serviceCode = serviceConfPath + context.getServiceCode();
+        String serviceCode = Framework.getProperty("biz.conf.service") + context.getServiceCode();
         logger.debug("解析服务配置文件【"+serviceCode+"】，开始...");
         //0、缓存中获取配置对象
-        if (isCacheServiceConf && configCache.hasConfig(serviceCode)){
+        if (Boolean.valueOf(Framework.getProperty("cache.conf.service")) && configCache.hasConfig(serviceCode)){
             logger.debug("解析服务配置文件【"+serviceCode+"】，结束【命中缓存】");
             return (Map) configCache.getConfig(serviceCode);
         }

@@ -2,6 +2,7 @@ package com.lamb.framework.adapter.protocol.helper;
 
 import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
+import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import org.dom4j.Attribute;
@@ -11,7 +12,6 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -30,20 +30,10 @@ import java.util.*;
 public class AdapterConfigParser {
     private static Logger logger = LoggerFactory.getLogger(AdapterConfigParser.class);
     /**
-     * 服务配置根目录
-     */
-    @Value("${biz.conf.adapter}")
-    private String serviceConfPath;
-    /**
      * 服务配置对象缓存
      */
     @Resource
     private ConfigCache configCache;
-    /**
-     * 是否缓存外部服务配置
-     */
-    @Value("${cache.conf.adapter}")
-    private boolean isCacheAdapterConf;
 
     /**
      * 解析服务配置
@@ -53,10 +43,10 @@ public class AdapterConfigParser {
      */
     public Map parseAdapterConf(Context context) {
         long start = System.currentTimeMillis();
-        String serviceId = serviceConfPath + context.getServiceId();
+        String serviceId = Framework.getProperty("biz.conf.adapter") + context.getServiceId();
         logger.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
         //0、缓存中获取配置对象
-        if (isCacheAdapterConf && configCache.hasConfig(serviceId)){
+        if (Boolean.valueOf(Framework.getProperty("cache.conf.adapter")) && configCache.hasConfig(serviceId)){
             logger.debug("解析外部服务配置文件【"+serviceId+"】，结束【命中缓存】");
             return (Map) configCache.getConfig(serviceId);
         }

@@ -58,7 +58,7 @@ public class ServiceDiscover {
     public void discover(){
         //0、判断是否开启服务发现
         if ( !discoverOpen ) {
-            logger.info("====================**服务发现未开启！**====================");
+            logger.info("【服务发现】未开启！");
             return;
         }
         //1、目录扫描

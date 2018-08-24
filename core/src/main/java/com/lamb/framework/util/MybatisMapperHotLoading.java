@@ -53,16 +53,19 @@ public class MybatisMapperHotLoading {
         //1、创建计划实例
         final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(2);
         //2、创建任务实例
-        final TimerTask getCurFilesTask = new TimerTask() {
+        final TimerTask refreshMapperTask = new TimerTask() {
             @Override
             public void run() {
                 refreshMapper();
             }
         };
         //3、执行定时任务
-        schedule.scheduleAtFixedRate(getCurFilesTask, 30, 30, TimeUnit.SECONDS);
+        schedule.scheduleAtFixedRate(refreshMapperTask, 60, 30, TimeUnit.SECONDS);
     }
 
+    /**
+     * 刷新Mapper
+     */
     private void refreshMapper() {
         try {
             Configuration configuration = this.sqlSessionFactory.getConfiguration();
@@ -77,7 +80,6 @@ public class MybatisMapperHotLoading {
 
             // step.2 判断是否有文件发生了变化
             if (this.isChanged()) {
-                logger.debug("==============刷新mapper开始......===============");
                 // step.2.1 清理
                 this.removeConfig(configuration);
 
@@ -90,18 +92,15 @@ public class MybatisMapperHotLoading {
                          */
                         XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configLocation.getInputStream(), configuration, configLocation.toString(), configuration.getSqlFragments());
                         xmlMapperBuilder.parse();
-                        logger.info("mapper文件[" + configLocation.getFilename() + "]缓存加载成功");
                     } catch (IOException e) {
                         logger.error("mapper文件[" + configLocation.getFilename() + "]不存在或内容格式不对");
                     }
                 }
 
-                logger.debug("==============刷新后mapper中的内容===============");
-                for (String name : configuration.getMappedStatementNames()) {
-                    logger.debug(name);
-                }
+                logger.debug("【mapper文件】热加载成功！");
             }
         } catch (Exception e) {
+            logger.debug("【mapper文件】热加载失败！");
             e.printStackTrace();
         }
     }

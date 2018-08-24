@@ -1,6 +1,7 @@
 package com.lamb.framework.service.flow.helper;
 
 import com.lamb.framework.base.Context;
+import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.service.flow.constant.FlowConfigConstants;
@@ -14,7 +15,6 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -34,16 +34,6 @@ import java.util.List;
 public class FlowConfigParser {
     private static Logger logger = LoggerFactory.getLogger(FlowConfigParser.class);
     /**
-     * 是否缓存服务流程配置
-     */
-    @Value("${cache.conf.flow}")
-    private boolean isCacheFlowConf;
-    /**
-     * 流程配置根目录
-     */
-    @Value("${biz.conf.flow}")
-    private String flowConfPath;
-    /**
      * 流程配置对象缓存
      */
     @Resource
@@ -57,10 +47,10 @@ public class FlowConfigParser {
      */
     public Flow parseFlowConfig(Context context) {
         long start = System.currentTimeMillis();
-        String serviceId = flowConfPath + context.getServiceId();
+        String serviceId = Framework.getProperty("biz.conf.flow") + context.getServiceId();
         logger.debug("解析流程配置文件【"+serviceId+"】，开始...");
         //1、缓存中查找对象
-        if (isCacheFlowConf && configCache.hasConfig(serviceId)){
+        if (Boolean.valueOf(Framework.getProperty("cache.conf.flow")) && configCache.hasConfig(serviceId)){
             logger.debug("解析流程配置文件【"+serviceId+"】，结束【命中缓存】");
             return (Flow) configCache.getConfig(serviceId);
         }

@@ -12,7 +12,6 @@ import com.lamb.framework.service.flow.model.Forward;
 import com.lamb.framework.service.flow.model.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,11 +35,6 @@ public class FlowEngineService implements IService {
      */
     @Resource
     private FlowConfigParser flowConfigParser;
-    /**
-     * 服务流程开始索引
-     */
-    @Value("${channel.flow.start.index:1}")
-    private String startIndex;
 
     /**
      * 执行流程服务
@@ -59,7 +53,7 @@ public class FlowEngineService implements IService {
             Map<String, Step> steps = flow.getSteps();
             if (steps.isEmpty()) return;
             //3、开始节点
-            Step start = steps.get(startIndex);
+            Step start = steps.get( Framework.getProperty("channel.flow.start.index") );
             //4、执行流程
             this.run(start, context, steps);
             long endTime = System.currentTimeMillis();

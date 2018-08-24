@@ -2,6 +2,7 @@ package com.lamb.framework.base;
 
 import com.lamb.framework.service.OP;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 /**
@@ -50,5 +51,17 @@ public class Framework {
      */
     public static String[] getBeanNames4OP(){
         return springCtx.getBeanNamesForType(OP.class);
+    }
+
+    /**
+     * 获取系统配置
+     * @param key key
+     * @return 属性值
+     */
+    public static String getProperty(String key){
+        //获取环境变量
+        Environment env = (Environment)Framework.getBean("environment");
+        //返回属性值
+        return env.getProperty(key);
     }
 }

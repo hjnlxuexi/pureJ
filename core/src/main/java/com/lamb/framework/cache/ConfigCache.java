@@ -18,7 +18,7 @@ public class ConfigCache {
     /**
      * 缓存容器
      */
-    private Map configMap = new HashMap();
+    private Map<String,Object> configMap = new HashMap<>();
 
     /**
      * 添加服务配置对象到缓存
