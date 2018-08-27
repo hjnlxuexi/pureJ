@@ -1,9 +1,9 @@
 package com.lamb.discover.util;
 
+import com.lamb.framework.base.Framework;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,22 +16,6 @@ import java.util.concurrent.CountDownLatch;
  */
 @Component
 public class ZookeeperConnector {
-    /**
-     * zookeeper连接串
-     */
-    @Value("${zk.urls}")
-    private String connectionString;
-
-    /**
-     * zookeeper回话超时时间
-     */
-    @Value("${zk.session.timeout}")
-    private int sessionTimeout;
-
-    /**
-     * zookeeper实例
-     */
-    private ZooKeeper zk = null;
 
     /**
      * 获取Zookeeper实例
@@ -39,13 +23,13 @@ public class ZookeeperConnector {
      * @throws IOException
      * @throws InterruptedException
      */
-    private ZooKeeper getInstance() throws IOException, InterruptedException {
+    public static ZooKeeper getInstance() throws IOException, InterruptedException {
         //--------------------------------------------------------------
         // 为避免连接还未完成就执行zookeeper的get/create/exists操作引起的（KeeperErrorCode = ConnectionLoss)
         // 这里等Zookeeper的连接完成才返回实例
         //--------------------------------------------------------------
         final CountDownLatch connectedSignal = new CountDownLatch(1);
-        ZooKeeper zk = new ZooKeeper(connectionString, sessionTimeout, new Watcher() {
+        ZooKeeper zk = new ZooKeeper(Framework.getProperty("zk.urls"), Integer.valueOf(Framework.getProperty("zk.session.timeout")), new Watcher() {
             @Override
             public void process(WatchedEvent event) {
                 if  (event.getState()  ==  Event.KeeperState.SyncConnected) {
@@ -55,13 +39,5 @@ public class ZookeeperConnector {
         });
         connectedSignal.await();
         return zk;
-    }
-
-    /**
-     * 获取Zookeeper实例
-     * @return 返回Zookeeper实例
-     */
-    public ZooKeeper getZk() throws IOException, InterruptedException {
-        return zk!=null ? zk : this.getInstance();
     }
 }

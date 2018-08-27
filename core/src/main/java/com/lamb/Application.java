@@ -1,6 +1,9 @@
 package com.lamb;
 
+import com.lamb.discover.ServiceAutoDiscover;
 import com.lamb.framework.base.Framework;
+import com.lamb.framework.util.MybatisMapperHotLoading;
+import com.lamb.framework.util.PropertySourceHotLoading;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +30,30 @@ public class Application  {
         logger.debug("启动App...");
         ApplicationContext applicationContext = SpringApplication.run(Application.class , args);
         Framework.setSpringCtx(applicationContext);
+        //启动热加载
+        hotLoading();
+        //服务发现
+        discovery();
+    }
+
+    /**
+     * 热加载
+     * 1、mapper文件热加载
+     * 2、系统配置热加载
+     */
+    private static void hotLoading(){
+        //启动 mapper文件热加载
+        MybatisMapperHotLoading.init(2 , 60 , 30);
+        //启动 系统配置文件热加载
+        PropertySourceHotLoading.init(2 , 60 , 30);
+    }
+
+    /**
+     * 启动服务发现
+     * 通过特定的数据结构注册到zookeeper
+     */
+    private static void discovery(){
+        ServiceAutoDiscover.init();
     }
 
 }

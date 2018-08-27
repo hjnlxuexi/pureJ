@@ -1,16 +1,15 @@
 package com.lamb.discover;
 
-import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.discover.util.ZookeeperConnector;
 import com.lamb.discover.util.ZookeeperHelper;
+import com.lamb.framework.base.Framework;
+import com.lamb.framework.exception.ServiceRuntimeException;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -20,30 +19,10 @@ import java.io.IOException;
  */
 @Component
 public class ServiceRegister {
-    /**
-     * 服务IP
-     */
-    @Value("${service.registry.ip}")
-    private String serviceIp;
-    /**
-     * 服务端口
-     */
-    @Value("${server.port}")
-    private String servicePort;
-    /**
-     * 服务上下文
-     */
-    @Value("${server.context-path}")
-    private String serviceContext;
-    /**
-     * zk连接对象
-     */
-    @Resource
-    private ZookeeperConnector zkConn;
 
-    public static final char REGISTRY_TYPE_ADD = 'C';
-    public static final char REGISTRY_TYPE_DEL = 'D';
-    public static final char REGISTRY_TYPE_UPD = 'U';
+    static final char REGISTRY_TYPE_ADD = 'C';
+    static final char REGISTRY_TYPE_DEL = 'D';
+    static final char REGISTRY_TYPE_UPD = 'U';
 
     /**
      * 注册服务信息
@@ -51,11 +30,17 @@ public class ServiceRegister {
      * @param version 版本：时间戳
      * @param type C：新增，D：删除，U：修改
      */
-    public void register (String serviceCode, String version,char type){
+    public static void register (String serviceCode, String version,char type){
         ZooKeeper zk;
+        //服务提供者 IP地址
+        String serviceIp = Framework.getProperty("service.registry.ip");
+        //服务提供者 端口
+        String servicePort = Framework.getProperty("server.port");
+        //服务提供者 上下文
+        String serviceContext = Framework.getProperty("server.context-path");
         try {
             //1、获取zk连接
-            zk = zkConn.getZk();
+            zk = ZookeeperConnector.getInstance();
 
             //2、创建服务节点，节点结构 /service/demo|demoDirectService/127.0.0.1:8080|pureJ : demo/demoDirectService
             serviceIp = serviceIp==null ? ZookeeperHelper.getInetAddress() : serviceIp;
@@ -93,9 +78,9 @@ public class ServiceRegister {
             }
 
         } catch (IOException | InterruptedException e) {
-            throw new ServiceRuntimeException("6000" , this.getClass() , e , "zookeeper");
+            throw new ServiceRuntimeException("6000" , ServiceRegister.class , e , "zookeeper");
         } catch (KeeperException e) {
-            throw new ServiceRuntimeException("6001" , this.getClass() , e , "zookeeper");
+            throw new ServiceRuntimeException("6001" , ServiceRegister.class , e , "zookeeper");
         }
 
     }

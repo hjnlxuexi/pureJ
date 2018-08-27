@@ -1,11 +1,10 @@
 package com.lamb.discover;
 
+import com.lamb.framework.base.Framework;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,45 +19,32 @@ import java.util.Map;
 public class ServiceDiscover {
     private static Logger logger = LoggerFactory.getLogger(ServiceDiscover.class);
     /**
-     * 是否开启服务发现
-     */
-    @Value("${service.discover.open}")
-    public boolean discoverOpen;
-    /**
-     * 服务配置目录
-     */
-    @Value("${biz.conf.service}")
-    private String watchedDir;
-    /**
      * 允许的文件后缀
      */
-    private String[] suffixs = {"xml"};
+    private static String[] suffixs = {"xml"};
     //当前文件列表
-    private final ArrayList<String> curFiles = new ArrayList<String>();
+    private static final ArrayList<String> curFiles = new ArrayList<String>();
 
     //上一版本的文件列表
-    private final Map<String, String> oldMap = new HashMap<String, String>();
+    private static final Map<String, String> oldMap = new HashMap<String, String>();
     //当前文件列表，对应更新时间
-    private final Map<String, String> curMap = new HashMap<String, String>();
+    private static final Map<String, String> curMap = new HashMap<String, String>();
     //当前新增文件
-    private final Map<String, String> addMap = new HashMap<String, String>();
+    private static final Map<String, String> addMap = new HashMap<String, String>();
     //当前删除文件
-    private final Map<String, String> delMap = new HashMap<String, String>();
+    private static final Map<String, String> delMap = new HashMap<String, String>();
     //当前更新
-    private final Map<String, String> updMap = new HashMap<String, String>();
+    private static final Map<String, String> updMap = new HashMap<String, String>();
 
     //目录扫描计数器
     private static long loop = 0;
-
-    @Resource
-    private ServiceRegister serviceRegister;
     /**
      * 服务发现，更新
      */
-    public void discover(){
+    public static void discover(){
         //0、判断是否开启服务发现
-        if ( !discoverOpen ) {
-            logger.info("【服务发现】未开启！");
+        if ( !Boolean.valueOf(Framework.getProperty("service.discover.open")) ) {
+            logger.debug("【服务发现】未开启！");
             return;
         }
         //1、目录扫描
@@ -73,11 +59,11 @@ public class ServiceDiscover {
     /**
      * 扫描目录变化
      */
-    private void dirScanner(){
+    private static void dirScanner(){
         logger.debug("====================**开始扫描服务配置**====================");
         if (0 == ServiceDiscover.loop) {
             //首次获取文件列表
-            getFiles(curFiles, watchedDir, suffixs);
+            getFiles(curFiles, Framework.getProperty("biz.conf.service"), suffixs);
             for (String ss : curFiles) {
                 //记录当前所有文件更新时间
                 curMap.put(ss, "" + (new File(ss)).lastModified());
@@ -85,7 +71,7 @@ public class ServiceDiscover {
                 oldMap.put(ss, "" + (new File(ss)).lastModified());
             }
         } else {
-            getFiles(curFiles, watchedDir, suffixs);
+            getFiles(curFiles, Framework.getProperty("biz.conf.service"), suffixs);
             for (String fileName : curFiles) {
                 //获取上次更新时间
                 String lastValue = oldMap.get(fileName);
@@ -120,7 +106,7 @@ public class ServiceDiscover {
     /**
      * 更新服务注册信息
      */
-    private void updateServiceRegistry(){
+    private static void updateServiceRegistry(){
         //1、首次扫描，注册所有服务
         if (loop==1){
             updateServiceBatch(curMap, ServiceRegister.REGISTRY_TYPE_ADD);
@@ -143,7 +129,7 @@ public class ServiceDiscover {
     /**
      * 清理扫描数据
      */
-    private void clearScanResult(){
+    private static void clearScanResult(){
         curFiles.clear();
         curMap.clear();
         addMap.clear();
@@ -189,15 +175,15 @@ public class ServiceDiscover {
      * @param serviceMap 服务集合
      * @param type C：新增，D：删除，U：修改
      */
-    private void updateServiceBatch(Map<String, String> serviceMap, char type){
+    private static void updateServiceBatch(Map<String, String> serviceMap, char type){
 
         for (String serviceFile : serviceMap.keySet()) {
             //服务编码
-            String serviceCode = serviceFile.substring(watchedDir.length(),serviceFile.lastIndexOf("."));
+            String serviceCode = serviceFile.substring(Framework.getProperty("biz.conf.service").length(),serviceFile.lastIndexOf("."));
             //服务版本，更新时间
             String version = serviceMap.get(serviceFile);
 
-            serviceRegister.register(serviceCode,version,type);
+            ServiceRegister.register(serviceCode,version,type);
         }
 
     }

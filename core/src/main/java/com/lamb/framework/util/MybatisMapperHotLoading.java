@@ -1,17 +1,15 @@
 package com.lamb.framework.util;
 
+import com.lamb.framework.base.Framework;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -33,25 +31,22 @@ import java.util.concurrent.TimeUnit;
 public class MybatisMapperHotLoading {
     private static Logger logger = LoggerFactory.getLogger(MybatisMapperHotLoading.class);
     /**
-     * 是否启用mapper热加载
+     * 扫描结果
      */
-    @Value("${jdbc.mapper.hotLoading}")
-    private boolean isMapperHotLoading;
-    @Autowired
-    private SqlSessionFactory sqlSessionFactory;
-    /**
-     * mapper文件位置
-     */
-    @Value("${jdbc.mapper.location}")
-    private String sqlPath;
-    private Resource[] mapperLocations;
-    private HashMap<String, Long> fileMapping = new HashMap<>();// 记录文件是否变化
+    private static Resource[] mapperLocations;
+    private static HashMap<String, Long> fileMapping = new HashMap<>();// 记录文件是否变化
 
-    @PostConstruct
-    private void schedule() {
-        if (!isMapperHotLoading) return;
+    /**
+     * 启动热加载
+     * @param threadSize 启动线程数
+     * @param delay 延迟时间（秒）
+     * @param period 间隔时间（秒）
+     */
+    public static void init(int threadSize, int delay, int period) {
+        //0、开关
+        if ( !Boolean.valueOf(Framework.getProperty("jdbc.mapper.hotLoading")) ) return;
         //1、创建计划实例
-        final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(2);
+        final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(threadSize);
         //2、创建任务实例
         final TimerTask refreshMapperTask = new TimerTask() {
             @Override
@@ -60,30 +55,31 @@ public class MybatisMapperHotLoading {
             }
         };
         //3、执行定时任务
-        schedule.scheduleAtFixedRate(refreshMapperTask, 60, 30, TimeUnit.SECONDS);
+        schedule.scheduleAtFixedRate(refreshMapperTask, delay, period, TimeUnit.SECONDS);
     }
 
     /**
      * 刷新Mapper
      */
-    private void refreshMapper() {
+    private static void refreshMapper() {
         try {
-            Configuration configuration = this.sqlSessionFactory.getConfiguration();
+            SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) Framework.getBean("sqlSessionFactory");
+            Configuration configuration = sqlSessionFactory.getConfiguration();
 
-            // step.1 扫描文件
+            // 1、 扫描文件
             try {
-                this.scanMapperXml();
+                scanMapperXml();
             } catch (IOException e) {
                 logger.error("sql文件路径配置错误");
                 return;
             }
 
-            // step.2 判断是否有文件发生了变化
-            if (this.isChanged()) {
+            // 2、 判断是否有文件发生了变化
+            if ( isChanged() ) {
                 // step.2.1 清理
-                this.removeConfig(configuration);
+                removeConfig(configuration);
 
-                // step.2.2 重新加载
+                // 2.2、 重新加载
                 for (Resource configLocation : mapperLocations) {
                     try {
                         /*
@@ -110,8 +106,8 @@ public class MybatisMapperHotLoading {
      *
      * @throws IOException IO异常
      */
-    private void scanMapperXml() throws IOException {
-        this.mapperLocations = new PathMatchingResourcePatternResolver().getResources(sqlPath);
+    private static void scanMapperXml() throws IOException {
+        mapperLocations = new PathMatchingResourcePatternResolver().getResources(  Framework.getProperty("jdbc.mapper.location") );
     }
 
     /**
@@ -120,7 +116,7 @@ public class MybatisMapperHotLoading {
      * @param configuration mybatis配置对象
      * @throws Exception 异常
      */
-    private void removeConfig(Configuration configuration) throws Exception {
+    private static void removeConfig(Configuration configuration) throws Exception {
         Class<?> classConfig = configuration.getClass();
         clearMap(classConfig, configuration, "mappedStatements");
         clearMap(classConfig, configuration, "caches");
@@ -134,7 +130,7 @@ public class MybatisMapperHotLoading {
     }
 
     @SuppressWarnings("rawtypes")
-    private void clearMap(Class<?> classConfig, Configuration configuration, String fieldName) throws Exception {
+    private static void clearMap(Class<?> classConfig, Configuration configuration, String fieldName) throws Exception {
         Field field = classConfig.getDeclaredField(fieldName);
         field.setAccessible(true);
         Map mapConfig = (Map) field.get(configuration);
@@ -142,7 +138,7 @@ public class MybatisMapperHotLoading {
     }
 
     @SuppressWarnings("rawtypes")
-    private void clearSet(Class<?> classConfig, Configuration configuration, String fieldName) throws Exception {
+    private static void clearSet(Class<?> classConfig, Configuration configuration, String fieldName) throws Exception {
         Field field = classConfig.getDeclaredField(fieldName);
         field.setAccessible(true);
         Set setConfig = (Set) field.get(configuration);
@@ -155,7 +151,7 @@ public class MybatisMapperHotLoading {
      * @return 是否变化
      * @throws IOException 异常
      */
-    private boolean isChanged() throws IOException {
+    private static boolean isChanged() throws IOException {
         boolean flag = false;
         for (Resource resource : mapperLocations) {
             String resourceName = resource.getFilename();
@@ -165,11 +161,11 @@ public class MybatisMapperHotLoading {
             // 修改文件:判断文件内容是否有变化
             Long compareFrame = fileMapping.get(resourceName);
             long lastFrame = resource.contentLength() + resource.lastModified();
-            boolean modifyFlag = null != compareFrame && compareFrame.longValue() != lastFrame;// 此为修改标识
+            boolean modifyFlag = null != compareFrame && compareFrame != lastFrame;// 此为修改标识
 
             // 新增或是修改时,存储文件
             if (addFlag || modifyFlag) {
-                fileMapping.put(resourceName, Long.valueOf(lastFrame));// 文件内容帧值
+                fileMapping.put(resourceName, lastFrame);// 文件内容帧值
                 flag = true;
             }
         }

@@ -1,15 +1,13 @@
 package com.lamb.framework.util;
 
+import com.lamb.framework.base.Framework;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.env.PropertySourcesLoader;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.TimerTask;
@@ -31,45 +29,32 @@ public class PropertySourceHotLoading {
      * PropertySource的key
      */
     private final static String DYNAMIC_CONFIG_NAME = "dynamic_config";
-    /**
-     * 是否启用热加载
-     */
-    @Value("${server.config.hotLoading}")
-    private Boolean isHotLoading;
-    /**
-     * 热加载的配置文件路径
-     */
-    @Value("${server.config.path}")
-    private String confPath;
 
     /**
-     * 系统运行配置参数
+     * 启动热加载
+     * @param threadSize 启动线程数
+     * @param delay 延迟时间（秒）
+     * @param period 间隔时间（秒）
      */
-    @Resource
-    private AbstractEnvironment environment;
-
-    /**
-     * 初始化定时任务
-     */
-    @PostConstruct
-    private void init(){
+    public static void init(int threadSize, int delay, int period){
         //是否开启热加载
-        if ( !isHotLoading ) return;
+        if ( !Boolean.valueOf(Framework.getProperty("server.config.hotLoading")) ) return;
 
         //1、创建计划实例
-        final ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(2);
+        final ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(threadSize);
         //2、创建任务实例
         final TimerTask dynamicLoad = new TimerTask() {
             @Override
             public void run() {
                 try {
+                    AbstractEnvironment environment = (AbstractEnvironment) Framework.getBean("environment");
                     //更新系统配置到环境参数中
                     environment.getPropertySources().addFirst(
                             new PropertySourcesLoader().load(
                                     new FileSystemResource(
-                                            new File(confPath)),DYNAMIC_CONFIG_NAME,null)
+                                            new File( Framework.getProperty("server.config.path") )),DYNAMIC_CONFIG_NAME,null)
                     );
-                    logger.info("【系统配置】热加载成功！");
+                    logger.debug("【系统配置】热加载成功！");
                 } catch (IOException e) {
                     logger.error("【系统配置】热加载失败！");
                     e.printStackTrace();
@@ -77,6 +62,6 @@ public class PropertySourceHotLoading {
             }
         };
         //3、执行定时任务
-        scheduled.scheduleAtFixedRate(dynamicLoad, 60, 30, TimeUnit.SECONDS);
+        scheduled.scheduleAtFixedRate(dynamicLoad, delay, period, TimeUnit.SECONDS);
     }
 }
