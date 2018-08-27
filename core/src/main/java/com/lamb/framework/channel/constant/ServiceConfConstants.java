@@ -51,6 +51,8 @@ public class ServiceConfConstants {
     public static final String FIELD_TYPE_F = "F";
     //布尔值
     public static final String FIELD_TYPE_B = "B";
+    //时间类型
+    public static final String FIELD_TYPE_T = "T";
     //密文
     public static final String FIELD_TYPE_P = "P";
     //列表

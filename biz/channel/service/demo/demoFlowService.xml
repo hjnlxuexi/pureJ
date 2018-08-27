@@ -5,8 +5,8 @@
     <direct>false</direct>
     <id>demo/demoFlow</id>
     <input>
-        <field name="p1" type="S" regexp="" required="true" desc="条件参数-1"/>
-        <field name="p2" type="S" regexp="" required="true" desc="条件参数-2"/>
+        <field name="p1" type="T" regexp="yyyy-MM-dd" required="true" desc="条件参数-1"/>
+        <field name="p2" type="S" regexp="[a-z]*" required="true" desc="条件参数-2"/>
         <field name="p3" type="E" regexp="" required="true" desc="列表参数">
             <field name="p1" type="S" regexp="" required="true" desc="条件参数-1"/>
             <field name="p2" type="S" regexp="" required="true" desc="条件参数-2"/>
