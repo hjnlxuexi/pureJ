@@ -383,7 +383,7 @@ var RestfulService = {
             var list = field['list'];
             for (var idx in list) {
                 var sub = list[idx];
-                array.push('            <field name="' + sub["name"] + '" targetName="' + field["targetName"] + '" type="' + sub["type"] + '" regexp="' + (sub["regexp"] || "") + '" required="' + sub["required"] + '" desc="' + (sub["desc"] || "") + '"/>');
+                array.push('            <field name="' + sub["name"] + '" targetName="' + sub["targetName"] + '" type="' + sub["type"] + '" regexp="' + (sub["regexp"] || "") + '" required="' + sub["required"] + '" desc="' + (sub["desc"] || "") + '"/>');
             }
             array.push('        </field>');
         }

@@ -15,8 +15,8 @@
     <output>
         <field name="param1" targetName="" type="B" regexp="" required="true" desc="条件参数-1"/>
         <field name="p3" targetName="pList" type="E" regexp="" required="true" desc="列表参数">
-            <field name="p1" targetName="pList" type="S" regexp="[1-9]\d{1,10}" required="true" desc="条件参数-1"/>
-            <field name="p2" targetName="pList" type="S" regexp="" required="true" desc="条件参数-2"/>
+            <field name="p1" targetName="L1" type="S" regexp="[1-9]\d{1,10}" required="true" desc="条件参数-1"/>
+            <field name="p2" targetName="L2" type="S" regexp="" required="true" desc="条件参数-2"/>
         </field>
         <field name="param2" targetName="" type="S" regexp="" required="true" desc="条件参数-2"/>
     </output>
