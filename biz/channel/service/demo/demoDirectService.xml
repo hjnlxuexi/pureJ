@@ -7,8 +7,8 @@
     <id>mysqlDao.getUser#ONE</id>
     <input/>
     <output>
-        <field name="DEPTNO" type="S" regexp="" required="true" desc="部门编号"/>
-        <field name="DNAME" type="S" regexp="" required="true" desc="部门名称"/>
-        <field name="LOC" type="S" regexp="" required="true" desc="地区"/>
+        <field name="DEPTNO" targetName="deptName" type="S" regexp="" required="true" desc="部门编号"/>
+        <field name="DNAME" targetName="dName" type="S" regexp="" required="true" desc="部门名称"/>
+        <field name="LOC" targetName="loc" type="S" regexp="" required="true" desc="地区"/>
     </output>
 </service>

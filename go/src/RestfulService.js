@@ -376,14 +376,14 @@ var RestfulService = {
             var field = fields[i];
             var type = field["type"];
             if (type != "E") {
-                array.push('        <field name="' + field["name"] + '" type="' + field["type"] + '" regexp="' + (field["regexp"] || "") + '" required="' + field["required"] + '" desc="' + (field["desc"] || "") + '"/>');
+                array.push('        <field name="' + field["name"] + '" targetName="' + field["targetName"] + '" type="' + field["type"] + '" regexp="' + (field["regexp"] || "") + '" required="' + field["required"] + '" desc="' + (field["desc"] || "") + '"/>');
                 continue;
             }
-            array.push('        <field name="' + field["name"] + '" type="' + type + '" regexp="' + (field["regexp"] || "") + '" required="' + field["required"] + '" desc="' + (field["desc"] || "") + '">');
+            array.push('        <field name="' + field["name"] + '" targetName="' + field["targetName"] + '" type="' + type + '" regexp="' + (field["regexp"] || "") + '" required="' + field["required"] + '" desc="' + (field["desc"] || "") + '">');
             var list = field['list'];
             for (var idx in list) {
                 var sub = list[idx];
-                array.push('            <field name="' + sub["name"] + '" type="' + sub["type"] + '" regexp="' + (sub["regexp"] || "") + '" required="' + sub["required"] + '" desc="' + (sub["desc"] || "") + '"/>');
+                array.push('            <field name="' + sub["name"] + '" targetName="' + field["targetName"] + '" type="' + sub["type"] + '" regexp="' + (sub["regexp"] || "") + '" required="' + sub["required"] + '" desc="' + (sub["desc"] || "") + '"/>');
             }
             array.push('        </field>');
         }

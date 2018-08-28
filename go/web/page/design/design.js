@@ -73,6 +73,7 @@ $(document).ready(function () {
                 $tr.find('.in_type').val(type);
                 $tr.find('.regexp').val(field['regexp']);
                 $tr.find(".in_name").val(field['name']);
+                $tr.find(".targetName").val(field['targetName']);
                 $tr.find('.in_required').val(field['required'] || 'false');
                 $tr.find('.in_desc').val(field['desc']);
                 if (type == 'E') {
@@ -92,6 +93,7 @@ $(document).ready(function () {
                         $tr_subtr.find('.in_type').val(item['type']);
                         $tr_subtr.find('.regexp').val(item['regexp']);
                         $tr_subtr.find(".in_name").val(item['name']);
+                        $tr_subtr.find(".targetName").val(item['targetName']);
                         $tr_subtr.find('.in_required').val(item['required'] || 'false');
                         $tr_subtr.find('.in_desc').val(item['desc']);
                     }
@@ -224,6 +226,7 @@ $(document).ready(function () {
             if (!name) return null;
             var field = {};
             field['name'] = $el.find(".in_name").val();
+            field['targetName'] = $el.find(".targetName").val();
             field['type'] = $el.find(".in_type").val();
             field['required'] = $el.find(".in_required").val();
             field['desc'] = $el.find(".in_desc").val();
@@ -261,6 +264,7 @@ $(document).ready(function () {
          */
         tr_tpl: ['<tr><td class="del-field">▬</td>',
             '<td><input type="text" class="in_name" placeholder="字段名称"></td>',
+            '<td><input type="text" class="targetName" placeholder="目标字段名称"></td>',
             '<td>',
             '<select class="in_type">',
             '<option value="S">字符串型</option>',
@@ -289,6 +293,7 @@ $(document).ready(function () {
             '<tr>',
             '<td class="add-field second-level">✚</td>',
             '<td>字段名称</td>',
+            '<td>目标字段名称</td>',
             '<td>字段类型</td>',
             '<td>正则表达式</td>',
             '<td>是否必需</td>',
@@ -299,6 +304,7 @@ $(document).ready(function () {
             '<tr>',
             '<td class="del-field">▬</td>',
             '<td><input type="text" class="in_name" placeholder="字段名称"></td>',
+            '<td><input type="text" class="targetName" placeholder="目标字段名称"></td>',
             '<td>',
             '<select class="in_type">',
             '<option value="S">字符串型</option>',
