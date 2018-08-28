@@ -54,13 +54,21 @@ public class Framework {
     }
 
     /**
+     * 获取系统配置对象
+     * @return 系统配置对象
+     */
+    public static Environment getEnvironment(){
+        return springCtx.getEnvironment();
+    }
+
+    /**
      * 获取系统配置
      * @param key key
      * @return 属性值
      */
     public static String getProperty(String key){
         //获取环境变量
-        Environment env = (Environment)Framework.getBean("environment");
+        Environment env = springCtx.getEnvironment();
         //返回属性值
         return env.getProperty(key);
     }

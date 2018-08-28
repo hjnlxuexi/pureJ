@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -26,7 +25,6 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
-@Component
 public class JsonConverter  extends AbstractHttpMessageConverter<Object> {
     private static Logger logger = LoggerFactory.getLogger(JsonConverter.class);
     //字符集

@@ -2,6 +2,7 @@ package com.lamb;
 
 import com.lamb.discover.ServiceAutoDiscover;
 import com.lamb.framework.base.Framework;
+import com.lamb.framework.listener.AbstractListener;
 import com.lamb.framework.util.MybatisMapperHotLoading;
 import com.lamb.framework.util.PropertySourceHotLoading;
 import org.slf4j.Logger;
@@ -9,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * <p>Title : 应用启动入口</p>
@@ -27,9 +31,10 @@ public class Application  {
      * @param args 参数
      */
     public static void main(String[] args) {
-        logger.debug("启动App...");
         ApplicationContext applicationContext = SpringApplication.run(Application.class , args);
         Framework.setSpringCtx(applicationContext);
+        //设置监听器
+        setListeners(applicationContext);
         //启动热加载
         hotLoading();
         //服务发现
@@ -54,6 +59,29 @@ public class Application  {
      */
     private static void discovery(){
         ServiceAutoDiscover.init();
+    }
+
+    /**
+     * 设置所有监听器
+     */
+    private static void setListeners(ApplicationContext springCtx){
+        //1、获取监听器列表
+        List<AbstractListener> list = (List<AbstractListener>)springCtx.getBean("listeners");
+        //2、清空列表
+        list.clear();
+        //3、自动扫描，并添加所有监听器
+        String[] listeners = springCtx.getBeanNamesForType(AbstractListener.class);
+        for (String listenerName : listeners) {
+            AbstractListener listener = (AbstractListener) Framework.getBean(listenerName);
+            list.add(listener);
+        }
+        //4、排序
+        list.sort(new Comparator<AbstractListener>() {
+            @Override
+            public int compare(AbstractListener o1, AbstractListener o2) {
+                return o1.getSort().compareTo(o2.getSort());
+            }
+        });
     }
 
 }

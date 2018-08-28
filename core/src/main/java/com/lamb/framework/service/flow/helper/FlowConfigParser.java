@@ -114,7 +114,7 @@ public class FlowConfigParser {
                 String attrValue = attribute.getValue();
                 //步骤索引
                 if (attrName.equals(FlowConfigConstants.STEP_INDEX)){
-                    if (attrValue==null||attrValue.equals(""))//流程文档必须包含步骤索引
+                    if (attrValue==null||attrValue.equals("")||flow.getSteps().containsKey(attrValue))//流程文档必须包含步骤索引，且不重复
                         throw new ServiceRuntimeException("2004" , this.getClass());
                     step.setIndex(attrValue);
                 }

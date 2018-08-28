@@ -45,7 +45,7 @@ public class FlowEngineService implements IService {
     @Transactional
     public void execute(Context context) {
         try {
-            logger.debug("执行流程服务【"+context.getServiceName()+"】，开始...");
+            logger.debug("执行流程服务【" + context.getServiceName() + "】，开始...");
             long startTime = System.currentTimeMillis();
             //1、获取流程对象
             Flow flow = flowConfigParser.parseFlowConfig(context);
@@ -53,15 +53,15 @@ public class FlowEngineService implements IService {
             Map<String, Step> steps = flow.getSteps();
             if (steps.isEmpty()) return;
             //3、开始节点
-            Step start = steps.get( Framework.getProperty("channel.flow.start.index") );
+            Step start = steps.get(Framework.getProperty("channel.flow.start.index"));
             //4、执行流程
             this.run(start, context, steps);
             long endTime = System.currentTimeMillis();
-            logger.debug("执行流程服务【"+context.getServiceName()+"】，结束【" + (endTime - startTime) + "毫秒】");
+            logger.debug("执行流程服务【" + context.getServiceName() + "】，结束【" + (endTime - startTime) + "毫秒】");
         } catch (Exception e) {
             if (e instanceof ServiceRuntimeException)
-                throw (ServiceRuntimeException)e;
-            throw new ServiceRuntimeException("4000" , this.getClass() , e , context.getServiceName());
+                throw (ServiceRuntimeException) e;
+            throw new ServiceRuntimeException("4000", this.getClass(), e, context.getServiceName());
         }
     }
 
@@ -76,18 +76,18 @@ public class FlowEngineService implements IService {
         //0、判断原子服务是否为数据库原子服务、或者外部原子服务；如：dataBaseOP:testDao/findAllDept
         String ref = step.getRef();
         String[] refConf = ref.trim().split(FlowConfigConstants.OP_SEPARATOR);
-        if (refConf.length==2){
+        if (refConf.length == 2) {
             opName = refConf[0];//dataBaseOP
             String serviceId = refConf[1];//服务ID：testDao/findAllDept
             context.setServiceId(serviceId);
-        }else if (refConf.length==1){
+        } else if (refConf.length == 1) {
             opName = refConf[0];
-        }else {
-            throw new ServiceRuntimeException("2006" , this.getClass() , step.getDesc());
+        } else {
+            throw new ServiceRuntimeException("2006", this.getClass(), step.getDesc());
         }
         //1、执行当前节点服务
         Object obj = Framework.getBean(opName);
-        if (obj==null) throw new ServiceRuntimeException("2005" , this.getClass());
+        if (obj == null) throw new ServiceRuntimeException("2005", this.getClass());
         OP op = (OP) obj;
         op.execute(context);
 
@@ -98,6 +98,8 @@ public class FlowEngineService implements IService {
             if (!isForward(forward, context)) continue;
             //执行下一个节点
             Step nextStep = steps.get(forward.getTo());
+            //检查回环调用
+            checkLoopbackCall(step,nextStep,context);
             nextStep.setPreviousStep(step);
             run(nextStep, context, steps);
             //结束流程
@@ -106,11 +108,11 @@ public class FlowEngineService implements IService {
         //3、判断流程是否结束
         String next = step.getNext();
         if (next == null) return;
-        //4、不能循环转向到自己
-        if (next.equals(step.getIndex()))//流程死循环
-            throw new ServiceRuntimeException("2000" , this.getClass());
-        //5、执行下一步骤
+
+        //4、执行下一步骤
         Step nextStep = steps.get(next);
+        //检查回环调用
+        checkLoopbackCall(step,nextStep,context);
         nextStep.setPreviousStep(step);
         run(nextStep, context, steps);
     }
@@ -141,7 +143,7 @@ public class FlowEngineService implements IService {
                 return this.getTwoParamsExpress(meta, context);
             //不合法的表达式
             default://不支持的条件表达式
-                throw new ServiceRuntimeException("2001" , this.getClass(), condition);
+                throw new ServiceRuntimeException("2001", this.getClass(), condition);
         }
     }
 
@@ -159,11 +161,11 @@ public class FlowEngineService implements IService {
 
         //两个字符串比较:相等
         if (operator.equals(FlowConfigConstants.OPERATOR_EQ)) {
-            return isEqual(context,left,right);
+            return isEqual(context, left, right);
         }
         //两个字符串比较:不相等
         if (operator.equals(FlowConfigConstants.OPERATOR_UN_EQ)) {
-            return !isEqual(context,left,right);
+            return !isEqual(context, left, right);
         }
         //两个布尔值比较
         Boolean var1 = getSingleParamExpress(left, context);
@@ -176,10 +178,10 @@ public class FlowEngineService implements IService {
 
     }
 
-    private boolean isEqual(Context context,String left,String right){
+    private boolean isEqual(Context context, String left, String right) {
         String var1 = this.getStringVar(left, context);
         String var2 = this.getStringVar(right, context);
-        return (var1 == null && var2 == null) || (var1 != null && var2 != null && var1.equals(var2) );
+        return (var1 == null && var2 == null) || (var1 != null && var2 != null && var1.equals(var2));
     }
 
 
@@ -204,7 +206,7 @@ public class FlowEngineService implements IService {
                 //获取布尔变量的值
                 return this.getBooleanVar(condition, context);
             default://变量表达式不正确
-                throw new ServiceRuntimeException("2001" , this.getClass(), condition);
+                throw new ServiceRuntimeException("2001", this.getClass(), condition);
         }
     }
 
@@ -217,7 +219,7 @@ public class FlowEngineService implements IService {
      */
     private Boolean getBooleanVar(String var, Context context) {
         if (var.length() <= 1 || !Character.valueOf(var.charAt(0)).equals(FlowConfigConstants.OPERATOR_AT))
-            throw new ServiceRuntimeException("2002" , this.getClass(), var);//变量标记不正确
+            throw new ServiceRuntimeException("2002", this.getClass(), var);//变量标记不正确
         //判断变量值合法性
         String key = var.substring(1);
         Object value = context.getParams().get(key);
@@ -235,11 +237,38 @@ public class FlowEngineService implements IService {
     private String getStringVar(String var, Context context) {
         //1、为字符串常量
         if (var.charAt(0) != FlowConfigConstants.OPERATOR_AT)
-            return var.equals("null")?null:var;
+            return var.equals("null") ? null : var;
         //2、为变量
         Object value = context.getParams().get(var.substring(1));
         if (value == null) return null;
 
         return value.toString();
+    }
+
+    /**
+     * 检查回环调用
+     *
+     * @param current 当前节点
+     * @param next    下一节点
+     * @param context  总线
+     */
+    private void checkLoopbackCall(Step current, Step next, Context context) {
+
+        if (
+            //1、起始及诶按被再次调用时，则产生回环
+            next.getIndex().equals(Framework.getProperty("channel.flow.start.index")) ||
+            //2、下一节点之前被调用过，则产生回环
+            next.getPreviousStep() != null
+        ) {
+            if (
+                //3、两个节点来回调用
+                (next.getNext()!=null && next.getNext().equals(current.getIndex())) ||
+                //4、一个节点自调用
+                next.getIndex().equals(current.getIndex())
+            ){
+                throw new ServiceRuntimeException("2000", this.getClass());
+            }
+            logger.error("【流程服务】" + context.getServiceName() + "，产生回环调用!!!");
+        }
     }
 }

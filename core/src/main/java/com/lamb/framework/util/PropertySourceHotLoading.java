@@ -47,7 +47,7 @@ public class PropertySourceHotLoading {
             @Override
             public void run() {
                 try {
-                    AbstractEnvironment environment = (AbstractEnvironment) Framework.getBean("environment");
+                    AbstractEnvironment environment = (AbstractEnvironment) Framework.getEnvironment();
                     //更新系统配置到环境参数中
                     environment.getPropertySources().addFirst(
                             new PropertySourcesLoader().load(
