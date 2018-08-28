@@ -107,7 +107,7 @@
                 <configuration>
                     <fork>true</fork>
                     <!--启动入口类-->
-                    <mainClass>com.lamb.Application</mainClass>
+                    <mainClass>com.Application</mainClass>
                 </configuration>
             </plugin>
             <!--跳过单元测试-->
