@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.env.PropertySourcesLoader;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author : hejie
  */
-@Component
 public class PropertySourceHotLoading {
     private static Logger logger = LoggerFactory.getLogger(PropertySourceHotLoading.class);
     /**
@@ -54,7 +52,6 @@ public class PropertySourceHotLoading {
                                     new FileSystemResource(
                                             new File( Framework.getProperty("server.config.path") )),DYNAMIC_CONFIG_NAME,null)
                     );
-                    logger.debug("【系统配置】热加载成功！");
                 } catch (IOException e) {
                     logger.error("【系统配置】热加载失败！");
                     e.printStackTrace();

@@ -5,6 +5,7 @@ import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
+import com.lamb.framework.util.BizConfigHotLoading;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.*;
 
@@ -29,11 +29,6 @@ import java.util.*;
 @Component
 public class ServiceConfigParser {
     private static Logger logger = LoggerFactory.getLogger(ServiceConfigParser.class);
-    /**
-     * 服务配置对象缓存
-     */
-    @Resource
-    private ConfigCache configCache;
 
     /**
      * 解析服务配置
@@ -44,45 +39,33 @@ public class ServiceConfigParser {
     public Map parseServiceConf(Context context) {
         long start = System.currentTimeMillis();
         String serviceCode = Framework.getProperty("biz.conf.service") + context.getServiceCode();
-        logger.debug("解析服务配置文件【"+serviceCode+"】，开始...");
         //0、缓存中获取配置对象
-        if (Boolean.valueOf(Framework.getProperty("cache.conf.service")) && configCache.hasConfig(serviceCode)){
-            logger.debug("解析服务配置文件【"+serviceCode+"】，结束【命中缓存】");
-            return (Map) configCache.getConfig(serviceCode);
+        if (ConfigCache.hasConfig(serviceCode)){
+            logger.debug("服务配置文件【"+serviceCode+"】，【命中缓存】");
+            return (Map) ConfigCache.getConfig(serviceCode);
         }
-        //1、获得服务配置文档对象
-        Element root = this.getServiceConfDoc(serviceCode + ".xml");
-        //2、解析配置文档
-        Map config = this.parseNodes(root);
-        //3、添加配置对象至缓存，并返回
-        configCache.addConfig(serviceCode, config);
+        if (serviceCode.startsWith(BizConfigHotLoading.HTTP_PROTOCOL))//服务配置不存在
+            throw new ServiceRuntimeException("1010",this.getClass(),serviceCode);
+
+        logger.debug("解析服务配置文件【"+serviceCode+"】，开始...");
+        //1、解析配置文档
+        Map config = this.parseNodes(serviceCode + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
+        //2、添加配置对象至缓存，并返回
+        ConfigCache.addConfig(serviceCode, config);
         long end = System.currentTimeMillis();
         logger.debug("解析服务配置文件【"+serviceCode+"】，结束【"+(end-start)+"毫秒】");
         return config;
     }
 
     /**
-     * 读取文档，并返回根节点
-     *
-     * @param path 服务配置路径
-     * @return 文档根节点
-     */
-    private Element getServiceConfDoc(String path) {
-        try {
-            SAXReader reader = new SAXReader();
-            Document doc = reader.read(new File(path));
-            return doc.getRootElement();
-        } catch (DocumentException e) {//服务配置解析失败
-            throw new ServiceRuntimeException("1004" , this.getClass() , e , path);
-        }
-    }
-
-    /**
      * 遍历解析节点树
      *
-     * @param node 根节点
+     * @param path 服务配置路径
      */
-    private Map parseNodes(Element node) {
+    public Map parseNodes(String path) {
+        //0、读取文档
+        Element node = getServiceConfDoc(path);
+
         if (!node.getName().equals(ServiceConfConstants.ROOT_TAG))//服务配置结构不正确
             throw new ServiceRuntimeException("1005" , this.getClass());
         Map map = new HashMap();
@@ -104,6 +87,22 @@ public class ServiceConfigParser {
             }
         }
         return map;
+    }
+
+    /**
+     * 读取文档，并返回根节点
+     *
+     * @param path 服务配置路径
+     * @return 文档根节点
+     */
+    private Element getServiceConfDoc(String path) {
+        try {
+            SAXReader reader = new SAXReader();
+            Document doc = reader.read(new File(path));
+            return doc.getRootElement();
+        } catch (DocumentException e) {//服务配置解析失败
+            throw new ServiceRuntimeException("1004" , this.getClass() , e , path);
+        }
     }
 
     /**

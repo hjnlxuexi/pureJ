@@ -8,6 +8,7 @@ import com.lamb.framework.service.flow.constant.FlowConfigConstants;
 import com.lamb.framework.service.flow.model.Flow;
 import com.lamb.framework.service.flow.model.Forward;
 import com.lamb.framework.service.flow.model.Step;
+import com.lamb.framework.util.BizConfigHotLoading;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -17,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -33,11 +33,6 @@ import java.util.List;
 @Component
 public class FlowConfigParser {
     private static Logger logger = LoggerFactory.getLogger(FlowConfigParser.class);
-    /**
-     * 流程配置对象缓存
-     */
-    @Resource
-    private ConfigCache configCache;
 
     /**
      * 解析流程配置
@@ -48,47 +43,34 @@ public class FlowConfigParser {
     public Flow parseFlowConfig(Context context) {
         long start = System.currentTimeMillis();
         String serviceId = Framework.getProperty("biz.conf.flow") + context.getServiceId();
-        logger.debug("解析流程配置文件【"+serviceId+"】，开始...");
         //1、缓存中查找对象
-        if (Boolean.valueOf(Framework.getProperty("cache.conf.flow")) && configCache.hasConfig(serviceId)){
-            logger.debug("解析流程配置文件【"+serviceId+"】，结束【命中缓存】");
-            return (Flow) configCache.getConfig(serviceId);
+        if (ConfigCache.hasConfig(serviceId)){
+            logger.debug("流程配置文件【"+serviceId+"】，【命中缓存】");
+            return (Flow) ConfigCache.getConfig(serviceId);
         }
-        //2、获取配置文档对象
-        Element root = this.getFlowConfDoc(serviceId + ".xml");
-        //3、解析配置文档
-        Flow config = this.parseNodes(root);
-        //4、添加至缓存
-        configCache.addConfig(serviceId, config);
+        if (serviceId.startsWith(BizConfigHotLoading.HTTP_PROTOCOL))//流程配置不存在
+            throw new ServiceRuntimeException("2007",this.getClass(),serviceId);
+
+        logger.debug("解析流程配置文件【"+serviceId+"】，开始...");
+        //2、解析配置文档
+        Flow config = this.parseNodes(serviceId + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
+        //3、添加至缓存
+        ConfigCache.addConfig(serviceId, config);
         long end = System.currentTimeMillis();
         logger.debug("解析流程配置文件【"+serviceId+"】，结束【"+(end-start)+"毫秒】");
         return config;
     }
 
     /**
-     * 获取配置文档对象
-     *
-     * @param path 文档路径
-     * @return 文档对象
-     */
-    private Element getFlowConfDoc(String path) {
-        SAXReader reader = new SAXReader();
-        Document doc;
-        try {
-            doc = reader.read(new File(path));
-        } catch (DocumentException e) {//流程文档解析失败
-            throw new ServiceRuntimeException("2003" , this.getClass() , e , path);
-        }
-        return doc.getRootElement();
-    }
-
-    /**
      * 解析文档对象为流程对象
      *
-     * @param root 流程节点节点
+     * @param path 文档路径
      * @return 流程对象
      */
-    private Flow parseNodes(Element root) {
+    public Flow parseNodes(String path) {
+        //0、获取配置内容
+        Element root = getFlowConfDoc(path);
+
         if (!root.getName().equals(FlowConfigConstants.FLOW_TAG))//流程文档结构不正确
             throw new ServiceRuntimeException("2004" , this.getClass());
         Flow flow = new Flow();
@@ -172,5 +154,23 @@ public class FlowConfigParser {
             flow.getSteps().put(step.getIndex() , step);
         }
         return flow;
+    }
+
+
+    /**
+     * 获取配置文档对象
+     *
+     * @param path 文档路径
+     * @return 文档对象
+     */
+    private Element getFlowConfDoc(String path) {
+        SAXReader reader = new SAXReader();
+        Document doc;
+        try {
+            doc = reader.read(new File(path));
+        } catch (DocumentException e) {//流程文档解析失败
+            throw new ServiceRuntimeException("2003" , this.getClass() , e , path);
+        }
+        return doc.getRootElement();
     }
 }

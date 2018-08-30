@@ -6,7 +6,7 @@ server:
     #是否开启系统配置热加载，默认true，开启
     hotLoading: true
     #热加载的配置文件路径
-    path: ${biz.conf.dir}conf/app.yml
+    path: ${biz.conf.path}conf/app.yml
 
 #启用profile
 spring:
@@ -15,18 +15,13 @@ spring:
 
 #业务配置路径
 biz:
+  #是否开启业务配置热加载，默认true，开启
+  hotLoading: true
   conf:
-    dir: /Users/home/Desktop/HJ/pureJ/biz/
-    service: ${biz.conf.dir}channel/service/
-    flow: ${biz.conf.dir}channel/flow/
-    adapter: ${biz.conf.dir}adapter/
-
-#缓存配置
-cache:
-  conf:
-    service: true
-    flow: true
-    adapter: true
+    path: /Users/home/Desktop/HJ/pureJ/biz/
+    service: ${biz.conf.path}channel/service/
+    flow: ${biz.conf.path}channel/flow/
+    adapter: ${biz.conf.path}adapter/
 
 #渠道服务配置
 channel:
@@ -60,7 +55,7 @@ jdbc:
     type: oracle
   mapper:
     #sql文件路径
-    location: file:${biz.conf.dir}mapper/${jdbc.database.type}/*.xml
+    location: file:${biz.conf.path}mapper/${jdbc.database.type}/*.xml
     #是否开启mapper文件热加载，默认true，开启
     hotLoading: true
   #连接池配置

@@ -3,6 +3,7 @@ package com;
 import com.lamb.discover.ServiceAutoDiscover;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.listener.AbstractListener;
+import com.lamb.framework.util.BizConfigHotLoading;
 import com.lamb.framework.util.MybatisMapperHotLoading;
 import com.lamb.framework.util.PropertySourceHotLoading;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class Application  {
         hotLoading();
         //服务发现
         discovery();
+        logger.info("系统启动成功！！！");
     }
 
     /**
@@ -51,6 +53,8 @@ public class Application  {
         MybatisMapperHotLoading.init(2 , 60 , 30);
         //启动 系统配置文件热加载
         PropertySourceHotLoading.init(2 , 60 , 30);
+        //启动 业务配置热加载
+        BizConfigHotLoading.init(5 , 0 , 10);
     }
 
     /**

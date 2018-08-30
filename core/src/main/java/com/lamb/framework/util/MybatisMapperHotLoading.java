@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -27,7 +26,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author : hejie
  */
-@Component
 public class MybatisMapperHotLoading {
     private static Logger logger = LoggerFactory.getLogger(MybatisMapperHotLoading.class);
     /**
@@ -92,8 +90,6 @@ public class MybatisMapperHotLoading {
                         logger.error("mapper文件[" + configLocation.getFilename() + "]不存在或内容格式不对");
                     }
                 }
-
-                logger.debug("【mapper文件】热加载成功！");
             }
         } catch (Exception e) {
             logger.debug("【mapper文件】热加载失败！");

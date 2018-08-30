@@ -1,9 +1,7 @@
 package com.lamb.framework.cache;
 
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>Title : 服务配置缓存</p>
@@ -13,12 +11,11 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
-@Component
 public class ConfigCache {
     /**
      * 缓存容器
      */
-    private Map<String,Object> configMap = new HashMap<>();
+    private final static Map<String,Object> configMap = new ConcurrentHashMap<>();
 
     /**
      * 添加服务配置对象到缓存
@@ -26,7 +23,7 @@ public class ConfigCache {
      * @param code 服务配置对象键
      * @param config 服务配置对象
      */
-    public synchronized void addConfig(String code , Object config){
+    public static void addConfig(String code , Object config){
         configMap.put(code , config);
     }
 
@@ -35,7 +32,7 @@ public class ConfigCache {
      * @param code 配置对象键
      * @return 返回配置对象
      */
-    public Object getConfig(String code){
+    public static Object getConfig(String code){
         return configMap.get(code);
     }
 
@@ -44,7 +41,7 @@ public class ConfigCache {
      * @param code 配置对象键
      * @return 是否包含
      */
-    public boolean hasConfig(String code){
+    public static boolean hasConfig(String code){
         return configMap.containsKey(code);
     }
 
@@ -52,14 +49,14 @@ public class ConfigCache {
      * 删除指定的配置对象
      * @param code 配置对象键
      */
-    public void removeConfig(String code){
+    public static void removeConfig(String code){
         configMap.remove(code);
     }
 
     /**
      * 清空缓存
      */
-    public void clearCache(){
+    public static void clearCache(){
         configMap.clear();
     }
 

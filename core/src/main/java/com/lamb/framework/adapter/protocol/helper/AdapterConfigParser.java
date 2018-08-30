@@ -5,6 +5,7 @@ import com.lamb.framework.base.Context;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.exception.ServiceRuntimeException;
+import com.lamb.framework.util.BizConfigHotLoading;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.*;
 
@@ -29,11 +29,6 @@ import java.util.*;
 @Component
 public class AdapterConfigParser {
     private static Logger logger = LoggerFactory.getLogger(AdapterConfigParser.class);
-    /**
-     * 服务配置对象缓存
-     */
-    @Resource
-    private ConfigCache configCache;
 
     /**
      * 解析服务配置
@@ -44,46 +39,33 @@ public class AdapterConfigParser {
     public Map parseAdapterConf(Context context) {
         long start = System.currentTimeMillis();
         String serviceId = Framework.getProperty("biz.conf.adapter") + context.getServiceId();
-        logger.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
         //0、缓存中获取配置对象
-        if (Boolean.valueOf(Framework.getProperty("cache.conf.adapter")) && configCache.hasConfig(serviceId)){
-            logger.debug("解析外部服务配置文件【"+serviceId+"】，结束【命中缓存】");
-            return (Map) configCache.getConfig(serviceId);
+        if (ConfigCache.hasConfig(serviceId)){
+            logger.debug("外部服务配置文件【"+serviceId+"】，【命中缓存】");
+            return (Map) ConfigCache.getConfig(serviceId);
         }
-        //1、获得服务配置文档对象
-        Element root = this.getAdapterConfDoc(serviceId + ".xml");
-        //2、解析配置文档
-        Map config = this.parseNodes(root);
-        //3、添加配置对象至缓存，并返回
-        configCache.addConfig(serviceId, config);
+        if (serviceId.startsWith(BizConfigHotLoading.HTTP_PROTOCOL))//适配器配置不存在
+            throw new ServiceRuntimeException("5004",this.getClass(),serviceId);
+
+        logger.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
+        //1、解析配置文档
+        Map config = this.parseNodes(serviceId + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
+        //2、添加配置对象至缓存，并返回
+        ConfigCache.addConfig(serviceId, config);
         long end = System.currentTimeMillis();
         logger.debug("解析外部服务配置文件【"+serviceId+"】，结束【"+(end-start)+"毫秒】");
         return config;
     }
 
     /**
-     * 读取文档，并返回根节点
-     *
-     * @param path 外部服务配置路径
-     * @return 文档根节点
-     * @throws DocumentException 文档读取异常
-     */
-    private Element getAdapterConfDoc(String path) {
-        try {
-            SAXReader reader = new SAXReader();
-            Document doc = reader.read(new File(path));
-            return doc.getRootElement();
-        } catch (DocumentException e) {//服务配置解析失败
-            throw new ServiceRuntimeException("5000" , this.getClass() , e , path);
-        }
-    }
-
-    /**
      * 遍历解析节点树
      *
-     * @param node 根节点
+     * @param path 外部服务配置路径
      */
-    private Map parseNodes(Element node) {
+    public Map parseNodes(String path) {
+        //0、读取配置文件
+        Element node = getAdapterConfDoc(path);
+
         if (!node.getName().equals(AdapterConfConstants.ROOT_TAG))//服务配置结构不正确
             throw new ServiceRuntimeException("5001" , this.getClass());
         Map map = new HashMap();
@@ -105,6 +87,22 @@ public class AdapterConfigParser {
             }
         }
         return map;
+    }
+
+    /**
+     * 读取文档，并返回根节点
+     *
+     * @param path 外部服务配置路径
+     * @return 文档根节点
+     */
+    private Element getAdapterConfDoc(String path) {
+        try {
+            SAXReader reader = new SAXReader();
+            Document doc = reader.read(new File(path));
+            return doc.getRootElement();
+        } catch (DocumentException e) {//服务配置解析失败
+            throw new ServiceRuntimeException("5000" , this.getClass() , e , path);
+        }
     }
 
     /**
