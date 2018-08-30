@@ -1,24 +1,7 @@
-#==========开发环境配置==========
-server:
-  display-name: demo
-  port: 8080
-  context-path: /demo
-  config:
-    #热加载的配置文件路径，（通常为本文件的路径）
-    path: ${biz.conf.path}conf/demo.yml
+#==========可热加载的配置内容==========
 
 
 #业务配置路径
 biz:
   conf:
     path: /Users/home/Desktop/HJ/pureJ/biz/
-
-#数据库类型：oracle、mysql、db2
-jdbc:
-  database:
-    type: mysql
-  #数据库连接
-  url: jdbc:mysql://172.16.193.200:3306/mysql?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
-  username: root
-  password: 123456
-  driver-Class-Name: com.mysql.cj.jdbc.Driver

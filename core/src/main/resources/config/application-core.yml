@@ -8,11 +8,6 @@ server:
     #热加载的配置文件路径
     path: ${biz.conf.path}conf/app.yml
 
-#启用profile
-spring:
-  profiles:
-    active: message
-
 #业务配置路径
 biz:
   #是否开启业务配置热加载，默认true，开启

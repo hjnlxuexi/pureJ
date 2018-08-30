@@ -4,11 +4,9 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -25,11 +23,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 public class MyBatisConfig {
-    /**
-     * mapper的位置
-     */
-    @Value("${jdbc.mapper.location}")
-    private String sqlPath;
     /**
      * 配置数据源
      * @return Druid数据源
@@ -50,10 +43,7 @@ public class MyBatisConfig {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean
-                .setMapperLocations(resolver
-                        .getResources(sqlPath));
+        //这里很极端，默认没有加载任何mapper，完全通过热加载
         return sqlSessionFactoryBean.getObject();
     }
 
@@ -61,11 +51,9 @@ public class MyBatisConfig {
      * 配置事务管理
      * @param dataSource 数据源
      * @return DataSourceTransactionManager实例
-     * @throws Exception 事务管理器创建异常
      */
     @Bean
-    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource)
-            throws Exception {
+    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

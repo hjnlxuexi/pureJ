@@ -50,9 +50,9 @@ public class Application  {
      */
     private static void hotLoading(){
         //启动 mapper文件热加载
-        MybatisMapperHotLoading.init(2 , 60 , 30);
+        MybatisMapperHotLoading.init(2 , 0 , 30);
         //启动 系统配置文件热加载
-        PropertySourceHotLoading.init(2 , 60 , 30);
+        PropertySourceHotLoading.init(2 , 0 , 30);
         //启动 业务配置热加载
         BizConfigHotLoading.init(5 , 0 , 10);
     }
