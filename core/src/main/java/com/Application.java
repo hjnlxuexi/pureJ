@@ -76,7 +76,7 @@ public class Application  {
         //3、自动扫描，并添加所有监听器
         String[] listeners = springCtx.getBeanNamesForType(AbstractListener.class);
         for (String listenerName : listeners) {
-            AbstractListener listener = (AbstractListener) Framework.getBean(listenerName);
+            AbstractListener listener = (AbstractListener) springCtx.getBean(listenerName);
             list.add(listener);
         }
         //4、排序
