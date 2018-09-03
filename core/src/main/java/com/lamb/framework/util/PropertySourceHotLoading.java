@@ -35,9 +35,6 @@ public class PropertySourceHotLoading {
      * @param period 间隔时间（秒）
      */
     public static void init(int threadSize, int delay, int period){
-        //是否开启热加载
-        if ( !Boolean.valueOf(Framework.getProperty("server.config.hotLoading")) ) return;
-
         //1、创建计划实例
         final ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(threadSize);
         //2、创建任务实例

@@ -41,8 +41,6 @@ public class MybatisMapperHotLoading {
      * @param period 间隔时间（秒）
      */
     public static void init(int threadSize, int delay, int period) {
-        //0、开关
-        if ( !Boolean.valueOf(Framework.getProperty("jdbc.mapper.hotLoading")) ) return;
         //1、创建计划实例
         final ScheduledExecutorService schedule = Executors.newScheduledThreadPool(threadSize);
         //2、创建任务实例

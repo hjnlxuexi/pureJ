@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 
 import java.util.Comparator;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Application  {
         //设置监听器
         setListeners(applicationContext);
         //启动热加载
-        hotLoading();
+        hotLoading(applicationContext);
         //服务发现
         discovery();
         logger.info("系统启动成功！！！");
@@ -48,13 +49,14 @@ public class Application  {
      * 1、mapper文件热加载
      * 2、系统配置热加载
      */
-    private static void hotLoading(){
+    private static void hotLoading(ApplicationContext applicationContext){
+        Environment environment = applicationContext.getEnvironment();
         //启动 mapper文件热加载
-        MybatisMapperHotLoading.init(2 , 0 , 30);
+        if ( Boolean.valueOf(environment.getProperty("jdbc.mapper.hotLoading")) ) MybatisMapperHotLoading.init(2 , 0 , 30);
         //启动 系统配置文件热加载
-        PropertySourceHotLoading.init(2 , 0 , 30);
+        if ( Boolean.valueOf(environment.getProperty("server.config.hotLoading")) ) PropertySourceHotLoading.init(2 , 0 , 30);
         //启动 业务配置热加载
-        BizConfigHotLoading.init(5 , 0 , 10);
+        if ( Boolean.valueOf(environment.getProperty("biz.hotLoading")) ) BizConfigHotLoading.init(5 , 0 , 10);
     }
 
     /**
