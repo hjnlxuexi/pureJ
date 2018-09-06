@@ -1,9 +1,11 @@
 package com.lamb.framework.service.direct;
 
 import com.lamb.framework.base.Context;
+import com.lamb.framework.base.Framework;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.service.IService;
+import com.lamb.framework.service.OP;
 import com.lamb.framework.service.op.DataBaseOP;
 import com.lamb.framework.service.op.ProtocolOP;
 import org.slf4j.Logger;
@@ -50,9 +52,20 @@ public class DirectService implements IService {
             //1、外部服务
             if (directType.equals(ServiceConfConstants.DIRECT_TYPE_PROTOCOL)) {
                 protocolOP.execute(context);
-            }else {
-                //2、数据库服务
+            }
+            //2、数据库服务
+            else if (directType.equals(ServiceConfConstants.DIRECT_TYPE_DB)){
                 dataBaseOP.execute(context);
+            }
+            //3、单OP服务
+            else if (directType.equals(ServiceConfConstants.DIRECT_TYPE_SINGLE)){
+                String serviceId = context.getServiceId();
+                OP op = (OP) Framework.getBean(serviceId);
+                op.execute(context);
+            }
+            //4、过路类型不合法
+            else {
+                throw new ServiceRuntimeException("1011",this.getClass(),context.getServiceName(), directType);
             }
             long end = System.currentTimeMillis();
             logger.debug("执行过路服务【" + context.getServiceName() + "】，结束【" + (end - start) + "毫秒】");

@@ -6,7 +6,7 @@
     float: left;
     line-height: 40px;
     width: 30%;
-    text-align: right;
+    text-align: left;
 }
 .main .content .base-info .prop label {
     font-size: 16px;
@@ -14,7 +14,7 @@
 }
 .main .content .base-info .prop input[type='radio'] {
     height: 16px;
-    width: 30px;
+    width: 15px;
 }
 .main .content .base-info .prop input:not([type='radio']) {
     height: 25px;

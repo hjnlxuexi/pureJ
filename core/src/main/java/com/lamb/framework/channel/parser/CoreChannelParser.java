@@ -95,9 +95,9 @@ public class CoreChannelParser implements ICoreChannelParser {
                 && Boolean.valueOf(config.get(ServiceConfConstants.DIRECT_TAG).toString());
         context.setDirect(isDirect);
         //3、过路交易类型
-        if (isDirect && config.get(ServiceConfConstants.DIRECT_TYPE_TAG)!=null
-                && config.get(ServiceConfConstants.DIRECT_TYPE_TAG).toString().equals(ServiceConfConstants.DIRECT_TYPE_PROTOCOL)){
-            context.setDirectType(ServiceConfConstants.DIRECT_TYPE_PROTOCOL);
+        if (isDirect && config.get(ServiceConfConstants.DIRECT_TYPE_TAG)!=null ){
+            String directType = config.get(ServiceConfConstants.DIRECT_TYPE_TAG).toString();
+            context.setDirectType(directType);
         }
         //4、判断服务ID合法性，数据库过路交易，必须为：***Dao/xxx
         /*if (isDirect && context.getDirectType().equals(ServiceConfConstants.DIRECT_TYPE_DB)

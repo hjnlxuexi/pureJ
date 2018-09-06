@@ -43,7 +43,7 @@ public class PropertySourceHotLoading {
             public void run() {
                 try {
                     AbstractEnvironment environment = (AbstractEnvironment) Framework.getEnvironment();
-                    //更新系统配置到环境参数中
+                    //更新系统配置到环境参数中   todo 通过配置中心加载系统配置
                     environment.getPropertySources().addFirst(
                             new PropertySourcesLoader().load(
                                     new FileSystemResource(

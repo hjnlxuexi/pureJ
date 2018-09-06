@@ -63,6 +63,8 @@ public class ServiceConfConstants {
     public static final String DIRECT_TYPE_DB = "database";
     //外部服务交易
     public static final String DIRECT_TYPE_PROTOCOL = "protocol";
+    //单节点服务，即只有一个OP原子操作的服务
+    public static final String DIRECT_TYPE_SINGLE = "single";
 
     //=========列表型字段============
     public static final String FIELD_KEY_LIST = "list";

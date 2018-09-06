@@ -20,7 +20,7 @@
                     <label>服务路径</label>
                     <input id="service_path" type="text" placeholder="请输入服务路径">
                 </div>
-                <div class="prop">
+                <div class="prop" style="width: 35%">
                     <label for="service_id">服务ID</label>
                     <input id="service_id" type="text" placeholder="请输入服务ID">
                 </div>
@@ -37,13 +37,16 @@
                         <input type="radio" name="isDirect" value="false">否
                     </label>
                 </div>
-                <div class="prop" id="direct_type">
+                <div class="prop" id="direct_type" style="width: 35%">
                     <label>过路服务类型</label>
                     <label>
                         <input type="radio" name="directType" value="database" checked>数据库
                     </label>
                     <label>
                         <input type="radio" name="directType" value="protocol">外部接口
+                    </label>
+                    <label>
+                        <input type="radio" name="directType" value="single">原子服务
                     </label>
                 </div>
                 <div class="prop hide" id="normal_service">
