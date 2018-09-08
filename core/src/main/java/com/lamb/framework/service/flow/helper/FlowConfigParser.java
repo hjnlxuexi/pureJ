@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Component
 public class FlowConfigParser {
-    private static Logger logger = LoggerFactory.getLogger(FlowConfigParser.class);
+    private final static Logger logger = LoggerFactory.getLogger(FlowConfigParser.class);
 
     /**
      * 解析流程配置
@@ -67,6 +67,7 @@ public class FlowConfigParser {
      * @param path 文档路径
      * @return 流程对象
      */
+    @SuppressWarnings("unchecked")
     public Flow parseNodes(String path) {
         //0、获取配置内容
         Element root = getFlowConfDoc(path);

@@ -25,7 +25,7 @@ import java.util.List;
  */
 @SpringBootApplication
 public class Application  {
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
+    private final static Logger logger = LoggerFactory.getLogger(Application.class);
 
     /**
      * 以java引用形式启动
@@ -59,6 +59,7 @@ public class Application  {
     /**
      * 设置所有监听器
      */
+    @SuppressWarnings("unchecked")
     private static void setListeners(ApplicationContext springCtx){
         //1、获取监听器列表
         List<AbstractListener> list = (List<AbstractListener>)springCtx.getBean("listeners");
@@ -71,12 +72,7 @@ public class Application  {
             list.add(listener);
         }
         //4、排序
-        list.sort(new Comparator<AbstractListener>() {
-            @Override
-            public int compare(AbstractListener o1, AbstractListener o2) {
-                return o1.getSort().compareTo(o2.getSort());
-            }
-        });
+        list.sort(Comparator.comparing(AbstractListener::getSort));
     }
 
 }

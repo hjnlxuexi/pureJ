@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @Component
 public class CoreChannelParser implements ICoreChannelParser {
-    private static Logger logger = LoggerFactory.getLogger(CoreChannelParser.class);
+    private final static Logger logger = LoggerFactory.getLogger(CoreChannelParser.class);
     /**
      * 服务配置解析器
      */
@@ -92,7 +92,7 @@ public class CoreChannelParser implements ICoreChannelParser {
         String serviceID = config.get(ServiceConfConstants.ID_TAG).toString();
         //2、过路交易
         boolean isDirect = (config.get(ServiceConfConstants.DIRECT_TAG)!=null)
-                && Boolean.valueOf(config.get(ServiceConfConstants.DIRECT_TAG).toString());
+                && Boolean.parseBoolean(config.get(ServiceConfConstants.DIRECT_TAG).toString());
         context.setDirect(isDirect);
         //3、过路交易类型
         if (isDirect && config.get(ServiceConfConstants.DIRECT_TYPE_TAG)!=null ){
@@ -114,6 +114,7 @@ public class CoreChannelParser implements ICoreChannelParser {
      * @param config 服务配置对象
      * @param context 数据总线
      */
+    @SuppressWarnings("unchecked")
     private void dealReqData(Map config, Context context){
         List<Map> inputList = (List<Map>) config.get(ServiceConfConstants.INPUT_TAG);
         //1、请求报文

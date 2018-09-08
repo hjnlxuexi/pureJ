@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @RestController
 public class ServiceRouter {
-    private static Logger logger = LoggerFactory.getLogger(ServiceRouter.class);
+    private final static Logger logger = LoggerFactory.getLogger(ServiceRouter.class);
     /**
      * 请求报文解析器
      */

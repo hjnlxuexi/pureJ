@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @version : 1.0
  */
 public class ConfigValidator {
-    private static Logger logger = LoggerFactory.getLogger(ConfigValidator.class);
+    private final static Logger logger = LoggerFactory.getLogger(ConfigValidator.class);
 
     /**
      * 验证目标数据合法性
@@ -29,6 +29,7 @@ public class ConfigValidator {
      * @param value 数据
      * @param field 字段对象
      */
+    @SuppressWarnings("unchecked")
     public static Object validateField(Object value, Map field) {
         logger.debug("通过服务配置验证数据，开始...");
         long start = System.currentTimeMillis();
@@ -54,7 +55,7 @@ public class ConfigValidator {
         //3、整型判断
         if (value != null && field.get(ServiceConfConstants.TYPE_PROP).equals(ServiceConfConstants.FIELD_TYPE_I)) {
             try {
-                Integer.valueOf(value.toString());
+                value = Integer.parseInt(value.toString());
             } catch (NumberFormatException e) {//字段必须为整数
                 throw new ServiceRuntimeException("1007", ConfigValidator.class, e, field.get(ServiceConfConstants.NAME_PROP));
             }
@@ -62,7 +63,7 @@ public class ConfigValidator {
         //4、浮点数判断
         if (value != null && field.get(ServiceConfConstants.TYPE_PROP).equals(ServiceConfConstants.FIELD_TYPE_F)) {
             try {
-                Float.valueOf(value.toString());
+                value = Float.parseFloat(value.toString());
             } catch (NumberFormatException e) {//字段必须为浮点数
                 throw new ServiceRuntimeException("1007", ConfigValidator.class, e, field.get(ServiceConfConstants.NAME_PROP));
             }
@@ -70,7 +71,7 @@ public class ConfigValidator {
         //5、布尔值判断
         if (value != null && field.get(ServiceConfConstants.TYPE_PROP).equals(ServiceConfConstants.FIELD_TYPE_B)) {
             try {
-                Boolean.valueOf(value.toString());
+                value = Boolean.parseBoolean(value.toString());
             } catch (NumberFormatException e) {//字段必须为布尔值
                 throw new ServiceRuntimeException("1007", ConfigValidator.class, e, field.get(ServiceConfConstants.NAME_PROP));
             }
@@ -101,7 +102,7 @@ public class ConfigValidator {
             if (!(value instanceof List)) //字段必须为列表类型
                 throw new ServiceRuntimeException("1007", ConfigValidator.class, field.get(ServiceConfConstants.NAME_PROP));
             List<Map> list = (List<Map>) value;//数据列表
-            List<Map> newList = new ArrayList<Map>();
+            List<Map> newList = new ArrayList<>();
             for (Map record : list) {//每条记录
                 Map newParam = new HashMap();
                 List<Map> fields = (List<Map>) field.get(ServiceConfConstants.FIELD_KEY_LIST);//字段列表

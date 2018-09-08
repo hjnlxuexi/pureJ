@@ -28,7 +28,7 @@ import java.util.*;
  */
 @Component
 public class AdapterConfigParser {
-    private static Logger logger = LoggerFactory.getLogger(AdapterConfigParser.class);
+    private final static Logger logger = LoggerFactory.getLogger(AdapterConfigParser.class);
 
     /**
      * 解析服务配置
@@ -62,6 +62,7 @@ public class AdapterConfigParser {
      *
      * @param path 外部服务配置路径
      */
+    @SuppressWarnings("unchecked")
     public Map parseNodes(String path) {
         //0、读取配置文件
         Element node = getAdapterConfDoc(path);
@@ -111,6 +112,7 @@ public class AdapterConfigParser {
      * @param node 节点元素
      * @return 字段列表
      */
+    @SuppressWarnings("unchecked")
     private List parseFields(Element node) {
         List list = new ArrayList();
         Iterator<Element> iterator = node.elementIterator();

@@ -19,7 +19,7 @@ public class Flow {
     /**
      * 流程步骤列表
      */
-    private Map<String , Step> steps = new HashMap<String , Step>();
+    private Map<String , Step> steps = new HashMap<>();
 
     public String getTitle() {
         return title;

@@ -30,6 +30,7 @@ public class MyBatisMapperProxyUtil {
      * @param clazz 参数类型
      * @return 执行结果
      */
+    @SuppressWarnings("unchecked")
     public static Object invokeProxy(Object proxy,String methodName,Object params,Class clazz){
         try {
             Field h = proxy.getClass().getSuperclass().getDeclaredField("h");

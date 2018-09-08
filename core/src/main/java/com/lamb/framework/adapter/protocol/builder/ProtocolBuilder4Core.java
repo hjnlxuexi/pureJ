@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Component
 public class ProtocolBuilder4Core implements IProtocolBuilder {
-    private static Logger logger = LoggerFactory.getLogger(ProtocolBuilder4Core.class);
+    private final static Logger logger = LoggerFactory.getLogger(ProtocolBuilder4Core.class);
     /**
      * 组装报文
      * @param context 数据总线
@@ -35,7 +35,7 @@ public class ProtocolBuilder4Core implements IProtocolBuilder {
         //0、请求报文
         Map data = new HashMap();
         //1、组装报文头
-        this.buildHeader(context , adapterConfig , data);
+        this.buildHeader(adapterConfig , data);
         //2、组装报文体
         this.buildBody(context , adapterConfig, data);
         //3、请求报文放入总线
@@ -46,10 +46,10 @@ public class ProtocolBuilder4Core implements IProtocolBuilder {
 
     /**
      * 组装报文头
-     * @param context 数据总线
      * @param adapterConfig 适配器配置对象
      */
-    private void buildHeader(Context context  , Map adapterConfig , Map data){
+    @SuppressWarnings("unchecked")
+    private void buildHeader(Map adapterConfig , Map data){
         Map header = new HashMap();
         Object _service = adapterConfig.get(AdapterConfConstants.SERVICE_TAG);
         if (_service==null)//服务配置结构不正确
@@ -65,6 +65,7 @@ public class ProtocolBuilder4Core implements IProtocolBuilder {
      * @param context 数据总线
      * @param adapterConfig 适配器配置对象
      */
+    @SuppressWarnings("unchecked")
     private void buildBody(Context context  , Map adapterConfig , Map data){
         Map body = new HashMap();
         Map params = context.getParams();

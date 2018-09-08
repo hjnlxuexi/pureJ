@@ -26,7 +26,7 @@ import java.util.Map;
  * @version : 1.0
  */
 public class JsonConverter  extends AbstractHttpMessageConverter<Object> {
-    private static Logger logger = LoggerFactory.getLogger(JsonConverter.class);
+    private final static Logger logger = LoggerFactory.getLogger(JsonConverter.class);
     //字符集
     private final static Charset UTF8 = Charset.forName("UTF-8");
 

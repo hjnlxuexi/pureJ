@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @Component
 public class Connector4Http implements IConnector {
-    private static Logger logger = LoggerFactory.getLogger(Connector4Http.class);
+    private final static Logger logger = LoggerFactory.getLogger(Connector4Http.class);
 
     /**
      * 连接外部服务
@@ -42,10 +42,10 @@ public class Connector4Http implements IConnector {
 
         //连接时间
         Object _connTimeout = adapterConfig.get(AdapterConfConstants.CONNECT_TIMEOUT_TAG);
-        int connTimeout = _connTimeout == null ? Integer.valueOf(Framework.getProperty("adapter.connectTimeout")) : Integer.parseInt(_connTimeout.toString());
+        int connTimeout = _connTimeout == null ? Integer.parseInt(Framework.getProperty("adapter.connectTimeout")) : Integer.parseInt(_connTimeout.toString());
         //响应时间
         Object _respTimeout = adapterConfig.get(AdapterConfConstants.RESPONSE_TIMEOUT_TAG);
-        int respTimeout = _respTimeout == null ? Integer.valueOf(Framework.getProperty("adapter.responseTimeout")) : Integer.parseInt(_respTimeout.toString());
+        int respTimeout = _respTimeout == null ? Integer.parseInt(Framework.getProperty("adapter.responseTimeout")) : Integer.parseInt(_respTimeout.toString());
         //字符集
         Object _charset = adapterConfig.get(AdapterConfConstants.CHARSET_TAG);
         String charset = _charset == null ? Framework.getProperty("adapter.charset") : _charset.toString();
@@ -55,7 +55,7 @@ public class Connector4Http implements IConnector {
         String reqStr = JSON.toJSONString(context.getRequestData());
         logger.debug("外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，请求报文：" + reqStr);
 
-        HttpURLConnection httpConn = null;
+        HttpURLConnection httpConn;
         PrintWriter out = null;
         BufferedReader in = null;
         try {

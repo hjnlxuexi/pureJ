@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Component
 public class ProtocolParser4Core implements IProtocolParser {
-    private static Logger logger = LoggerFactory.getLogger(ProtocolParser4Core.class);
+    private final static Logger logger = LoggerFactory.getLogger(ProtocolParser4Core.class);
     /**
      * 解析报文，数据总线中流向  ResponseData--->params
      * @param context 数据总线
@@ -67,6 +67,7 @@ public class ProtocolParser4Core implements IProtocolParser {
      * @param context 数据总线
      * @param adapterConfig 适配器配置
      */
+    @SuppressWarnings("unchecked")
     private void parseBody(Context context, Map adapterConfig){
         Map data = (Map)context.getResponseData();
         Map body = (Map)data.get(ServicePacketConstants.BODY);

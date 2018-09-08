@@ -25,7 +25,7 @@ import javax.annotation.Resource;
  */
 @Service
 public class DirectService implements IService {
-    private static Logger logger = LoggerFactory.getLogger(DirectService.class);
+    private final static Logger logger = LoggerFactory.getLogger(DirectService.class);
     /**
      * 外部原子服务
      */
@@ -49,23 +49,24 @@ public class DirectService implements IService {
             logger.debug("执行过路服务【" + context.getServiceName() + "】，开始...");
             long start = System.currentTimeMillis();
             String directType = context.getDirectType();
-            //1、外部服务
-            if (directType.equals(ServiceConfConstants.DIRECT_TYPE_PROTOCOL)) {
-                protocolOP.execute(context);
-            }
-            //2、数据库服务
-            else if (directType.equals(ServiceConfConstants.DIRECT_TYPE_DB)){
-                dataBaseOP.execute(context);
-            }
-            //3、单OP服务
-            else if (directType.equals(ServiceConfConstants.DIRECT_TYPE_SINGLE)){
-                String serviceId = context.getServiceId();
-                OP op = (OP) Framework.getBean(serviceId);
-                op.execute(context);
-            }
-            //4、过路类型不合法
-            else {
-                throw new ServiceRuntimeException("1011",this.getClass(),context.getServiceName(), directType);
+            switch (directType) {
+                //1、外部服务
+                case ServiceConfConstants.DIRECT_TYPE_PROTOCOL:
+                    protocolOP.execute(context);
+                    break;
+                //2、数据库服务
+                case ServiceConfConstants.DIRECT_TYPE_DB:
+                    dataBaseOP.execute(context);
+                    break;
+                //3、单OP服务
+                case ServiceConfConstants.DIRECT_TYPE_SINGLE:
+                    String serviceId = context.getServiceId();
+                    OP op = (OP) Framework.getBean(serviceId);
+                    op.execute(context);
+                    break;
+                //4、过路类型不合法
+                default:
+                    throw new ServiceRuntimeException("1011", this.getClass(), context.getServiceName(), directType);
             }
             long end = System.currentTimeMillis();
             logger.debug("执行过路服务【" + context.getServiceName() + "】，结束【" + (end - start) + "毫秒】");

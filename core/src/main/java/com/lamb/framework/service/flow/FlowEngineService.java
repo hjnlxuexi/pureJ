@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Service
 public class FlowEngineService implements IService {
-    private static Logger logger = LoggerFactory.getLogger(FlowEngineService.class);
+    private final static Logger logger = LoggerFactory.getLogger(FlowEngineService.class);
     /**
      * 流程配置解析器
      */
@@ -122,8 +122,10 @@ public class FlowEngineService implements IService {
      * 条件表达式只支持：
      * 1、布尔值的与、或、非
      * 2、字符串的equals
-     * 如：@param1 or @param2
+     * 如：@param1 and @param2
+     * 或 @param1 or @param2
      * "db" eq @param2
+     * "db" uneq @param2
      * !@param1
      *
      * @param forward 转向实例

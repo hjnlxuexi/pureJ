@@ -33,10 +33,12 @@ public class DataBaseOP implements OP{
      * 1、原子数据库服务参数定义必须为Map
      * 2、原子数据库服务的返回结果集，只能为：List、Map
      * 3、当返回结果集为List时，存入总线Context中的key为 'list'
+     * 4、当数据库操作为查询，且明确查询结果为一条数据，则在sql-id后面拼接：#ONE
      *
      * @param context 数据总线
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void execute(Context context) {
         Map<String,Object> result = new HashMap<>();
         Object data;

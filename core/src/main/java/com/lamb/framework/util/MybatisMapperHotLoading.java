@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author : hejie
  */
 public class MybatisMapperHotLoading {
-    private static Logger logger = LoggerFactory.getLogger(MybatisMapperHotLoading.class);
+    private final static Logger logger = LoggerFactory.getLogger(MybatisMapperHotLoading.class);
     /**
      * 扫描结果
      */

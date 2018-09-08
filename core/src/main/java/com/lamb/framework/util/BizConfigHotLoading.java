@@ -5,8 +5,6 @@ import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.channel.helper.ServiceConfigParser;
 import com.lamb.framework.service.flow.helper.FlowConfigParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.TimerTask;
@@ -22,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  * @author : hejie
  */
 public class BizConfigHotLoading {
-    private static Logger logger = LoggerFactory.getLogger(BizConfigHotLoading.class);
     /**
      * http协议名
      */

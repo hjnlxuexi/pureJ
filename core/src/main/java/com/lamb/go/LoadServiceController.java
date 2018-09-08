@@ -81,6 +81,7 @@ public class LoadServiceController {
      * @param context 数据总线
      * @return 所有原子服务
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping("/loadOPList")
     public Map loadOPList(@RequestBody Context context){
         try {

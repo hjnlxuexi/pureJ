@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @author : hejie
  */
 public class PropertySourceHotLoading {
-    private static Logger logger = LoggerFactory.getLogger(PropertySourceHotLoading.class);
+    private final static Logger logger = LoggerFactory.getLogger(PropertySourceHotLoading.class);
     /**
      * PropertySource的key
      */

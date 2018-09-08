@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @Component
 public class CoreChannelBuilder implements ICoreChannelBuilder {
-    private static Logger logger = LoggerFactory.getLogger(CoreChannelBuilder.class);
+    private final static Logger logger = LoggerFactory.getLogger(CoreChannelBuilder.class);
     /**
      * 服务配置解析器
      */
@@ -74,6 +74,7 @@ public class CoreChannelBuilder implements ICoreChannelBuilder {
      * @param config  服务配置对象
      * @param context 数据总线
      */
+    @SuppressWarnings("unchecked")
     private void buildBody(Map config, Context context) {
         Map body = new HashMap();
         //1、服务配置的输出域列表
