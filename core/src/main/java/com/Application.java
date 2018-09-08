@@ -1,6 +1,5 @@
 package com;
 
-import com.lamb.discover.ServiceAutoDiscover;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.listener.AbstractListener;
 import com.lamb.framework.util.BizConfigHotLoading;
@@ -39,8 +38,6 @@ public class Application  {
         setListeners(applicationContext);
         //启动热加载
         hotLoading(applicationContext);
-        //服务发现
-        discovery();
         logger.info("系统启动成功！！！");
     }
 
@@ -57,14 +54,6 @@ public class Application  {
         if ( Boolean.valueOf(environment.getProperty("server.config.hotLoading")) ) PropertySourceHotLoading.init(2 , 0 , 30);
         //启动 业务配置热加载
         if ( Boolean.valueOf(environment.getProperty("biz.hotLoading")) ) BizConfigHotLoading.init(5 , 0 , 10);
-    }
-
-    /**
-     * 启动服务发现
-     * 通过特定的数据结构注册到zookeeper
-     */
-    private static void discovery(){
-        ServiceAutoDiscover.init();
     }
 
     /**

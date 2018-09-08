@@ -11,8 +11,8 @@
     <description>极简的服务应用</description>
     <modules>
         <module>core</module>
+        <module>cmdb</module>
         <module>demo</module>
-        <module>service-API-gateway</module>
     </modules>
 
     <properties>
@@ -21,11 +21,11 @@
         <encoding>UTF-8</encoding>
 
         <springboot>1.5.9.RELEASE</springboot>
-        <zookeeper>3.3.6</zookeeper>
-        <mybatis>1.1.1</mybatis>
+        <mybatis.starter>1.1.1</mybatis.starter>
         <fastjson>1.2.4</fastjson>
         <druid>1.0.12</druid>
-        <mysql>8.0.11</mysql>
+        <mysql-8>8.0.11</mysql-8>
+        <mysql-5>5.1.39</mysql-5>
     </properties>
 
     <dependencyManagement>
@@ -53,26 +53,19 @@
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis}</version>
+                <version>${mybatis.starter}</version>
             </dependency>
-
+            <!--mysql-8-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql}</version>
+                <version>${mysql-8}</version>
             </dependency>
-
-            <!-- zookeeper -->
+            <!--mysql-5-->
             <dependency>
-                <groupId>org.apache.zookeeper</groupId>
-                <artifactId>zookeeper</artifactId>
-                <version>${zookeeper}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-5}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -88,15 +81,6 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${java.encoding}</encoding>
-                </configuration>
-            </plugin>
-            <!--resource管理-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <encoding>${encoding}</encoding>
                 </configuration>
             </plugin>
             <!--热启动-->

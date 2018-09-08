@@ -82,33 +82,3 @@ logging:
     com.lamb: DEBUG
   #日志配置
   #config: logback.xml
-
-
-
-#============================++服务发现++=======================
-#服务发现
-service:
-  discover:
-    #是否开启服务发现，默认关闭
-    open: false
-  auto-discover:
-    #是否开启服务自动发现，线程定时扫描，默认关闭
-    open: false
-    #服务自动发现，维持线程数，默认为2
-    threads: 2
-    #服务自动发现，首次延迟时间，默认30s(秒)，不能小于zk.session.timeout
-    delay: 30
-    #服务自动发现，执行周期，默认30s(秒)
-    period: 30
-  registry:
-    #服务提供者ip地址，不配置则默认为本机地址
-    ip: 127.0.0.1
-
-#Zookeeper配置
-zk:
-  #url可配置多个逗号分隔
-  urls: 127.0.0.1:2181
-  session:
-    #会话超时时间(毫秒)
-    timeout: 30000
-
