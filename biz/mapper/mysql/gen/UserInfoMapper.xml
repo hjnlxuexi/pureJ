@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lamb.app.gen.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lamb.app.gen.domain.UserInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+  </resultMap>
+
+
+  <select id="getAll" resultType="map">
+    SELECT name,sex FROM user_info
+  </select>
+</mapper>

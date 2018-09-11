@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>新增用户</name>
+    <desc>插入用户信息</desc>
+    <direct>true</direct>
+    <directtype>database</directtype>
+    <!--<id>userInfoMapper/insert</id>-->
+    <id>com.lamb.app.gen.dao.UserInfoMapper.insert</id>
+    <input>
+        <field name="name" type="S" regexp="" required="true" desc="姓名"/>
+        <field name="age" type="I" regexp="" required="true" desc="年龄"/>
+        <field name="sex" type="I" regexp="" required="true" desc="性别"/>
+    </input>
+    <output/>
+</service>

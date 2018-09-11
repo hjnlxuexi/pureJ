@@ -27,11 +27,10 @@ public class MyBatisMapperProxyUtil {
      * @param proxy 代理对象
      * @param methodName 执行的方法名
      * @param params 参数
-     * @param clazz 参数类型
      * @return 执行结果
      */
     @SuppressWarnings("unchecked")
-    public static Object invokeProxy(Object proxy,String methodName,Object params,Class clazz){
+    public static Object invokeProxy(Object proxy,String methodName,Object params){
         try {
             Field h = proxy.getClass().getSuperclass().getDeclaredField("h");
             h.setAccessible(true);
@@ -39,14 +38,20 @@ public class MyBatisMapperProxyUtil {
             Field advised = mapperProxy.getClass().getDeclaredField("mapperInterface");
             advised.setAccessible(true);
             Class target = (Class)advised.get(mapperProxy);
-            Method method;
             Object[] args = {};
-            if (params==null){
-                method = target.getMethod(methodName);//获取无参方法
-            }else {
-                method = target.getMethod(methodName, clazz);//获取有参方法
-                args = new Object[]{params};
+            Method method = null;
+            Method[] methods = target.getMethods();
+            for (Method method1 : methods) {
+                if (methodName.equals(method1.getName())) {
+                    method = method1;
+                    break;
+                }
             }
+            if (method==null){
+                throw new ServiceRuntimeException("3002",MyBatisMapperProxyUtil.class,methodName);
+            }
+            int paraCnt = method.getParameterCount();
+            if (paraCnt>0) args = new Object[]{params};
             return mapperProxy.invoke(proxy,method,args);
         } catch (Throwable throwable) {//mybatis代理执行错误
             throw new ServiceRuntimeException("3000" , MyBatisMapperProxyUtil.class , throwable);
@@ -71,15 +76,10 @@ public class MyBatisMapperProxyUtil {
         //执行sql
         if ( !type.equals(SqlCommandType.SELECT) ){
             //insert、update、delete
-            sqlSessionTemplate.update(sqlId , params);
-            return null;
+            return sqlSessionTemplate.update(sqlId , params);
         }
         if (resultType == null) throw new ServiceRuntimeException("3001" , MyBatisMapperProxyUtil.class , "resultType");
         //查询
-        if (resultType.equals("java.util.Map") || resultType.equals("java.util.HashMap")){
-            return sqlSessionTemplate.selectList(sqlId , params);
-        }
-
-        throw new ServiceRuntimeException("3001" , MyBatisMapperProxyUtil.class , "resultType应配置为Map");
+        return sqlSessionTemplate.selectList(sqlId , params);
     }
 }

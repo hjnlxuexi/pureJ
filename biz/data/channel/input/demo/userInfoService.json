@@ -1,0 +1,10 @@
+{
+    "header": {
+        "service": "demo/userInfoService"
+    },
+    "body": {
+        "name": "jjjj",
+        "age": "23",
+        "sex": "1"
+    }
+}

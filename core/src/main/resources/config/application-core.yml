@@ -47,10 +47,10 @@ adapter:
 jdbc:
   database:
     #数据库类型：oracle、mysql、db2
-    type: oracle
+    type: mysql
   mapper:
     #sql文件路径
-    location: file:${biz.conf.path}mapper/${jdbc.database.type}/*.xml
+    location: file:${biz.conf.path}mapper/${jdbc.database.type}/**/*.xml
     #是否开启mapper文件热加载，默认true，开启
     hotLoading: true
   #连接池配置
@@ -68,10 +68,10 @@ jdbc:
   logAbandoned: true
   filters: mergeStat
   #数据库连接
-  url: jdbc:oracle:thin:@172.16.193.136:1521:orcl
-  username: scott
+  url: jdbc:mysql://172.16.193.200:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
+  username: root
   password: 123456
-  driver-Class-Name: oracle.jdbc.OracleDriver
+  driver-Class-Name: com.mysql.cj.jdbc.Driver
   validationQuery: SELECT 1 FROM dual
 
 #日志配置

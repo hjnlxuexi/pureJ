@@ -4,6 +4,6 @@
 <mapper namespace="mysqlDao">
 	<!--查询所有部门数据总数-->
 	<select id="getUser" resultType="map">
-		SELECT Host,User,account_locked FROM user
+		SELECT age,sex,name FROM user_info
 	</select>
 </mapper>

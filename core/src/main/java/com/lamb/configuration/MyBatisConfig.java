@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +22,11 @@ import javax.sql.DataSource;
  * @version : 1.0
  */
 @Configuration
+@tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.**.gen"})
 @EnableTransactionManagement
 public class MyBatisConfig {
+    @Value("${jdbc.mapper.location}")
+    private String mapperLocation;
     /**
      * 配置数据源
      * @return Druid数据源
@@ -43,7 +47,7 @@ public class MyBatisConfig {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        //这里很极端，默认没有加载任何mapper，完全通过热加载
+        //这里很极端，默认没有加载任何mapper-xml，完全通过热加载
         return sqlSessionFactoryBean.getObject();
     }
 

@@ -7,7 +7,7 @@
     {"id":101, "pId":1, "name":"过路服务", "service":"demo/demoDirectService"},
     {"id":101, "pId":1, "name":"过路服务-单OP", "service":"demo/demoDirectSingleService"},
     {"id":102, "pId":1, "name":"流程服务", "service":"demo/demoFlowService"},
-    {"id":103, "pId":1, "name":"新增奖金", "service":"demo/bonusService"},
+    {"id":103, "pId":1, "name":"新增用户", "service":"demo/userInfoService"},
 
     {"id":201, "pId":2, "name":"过路外部服务", "service":"demo/demoOutService"}
 ]

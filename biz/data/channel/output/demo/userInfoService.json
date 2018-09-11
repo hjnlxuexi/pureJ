@@ -1,0 +1,12 @@
+{
+    "header": {
+        "msg": "服务执行成功",
+        "status": "0000"
+    },
+    "body": {
+        "sex": 1,
+        "name": "jjjj",
+        "id": 8,
+        "age": 23
+    }
+}
