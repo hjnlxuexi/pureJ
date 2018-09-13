@@ -5,10 +5,10 @@
     <direct>true</direct>
     <directtype>database</directtype>
     <!--<id>mysqlDao.getUser#ONE</id>-->
-    <id>userInfoMapper/getAll</id>
+    <!--<id>userInfoMapper/getAll</id>-->
     <!--<id>com.lamb.app.gen.dao.UserInfoMapper.getAll</id>-->
     <!--<id>com.lamb.app.gen.dao.UserInfoMapper.selectAll</id>-->
-    <!--<id>testDao/findAllDeptCnt</id>-->
+    <id>testDao/findAllDeptCnt</id>
     <input/>
     <output>
         <field name="DEPTNO" targetName="deptName" type="S" regexp="" required="true" desc="部门编号"/>

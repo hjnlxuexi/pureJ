@@ -8,8 +8,7 @@ import com.lamb.framework.channel.constant.ServicePacketConstants;
 import com.lamb.framework.channel.helper.ServiceConfigParser;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.validator.ConfigValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,9 +24,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class CoreChannelBuilder implements ICoreChannelBuilder {
-    private final static Logger logger = LoggerFactory.getLogger(CoreChannelBuilder.class);
     /**
      * 服务配置解析器
      */
@@ -41,7 +40,7 @@ public class CoreChannelBuilder implements ICoreChannelBuilder {
      */
     @Override
     public void build(Context context) {
-        logger.debug("组装服务响应报文，开始...");
+        log.debug("组装服务响应报文，开始...");
         long start = System.currentTimeMillis();
         //1、获取服务配置对象
         Map config = serviceConfigParser.parseServiceConf(context);
@@ -53,7 +52,7 @@ public class CoreChannelBuilder implements ICoreChannelBuilder {
         this.buildBody(config, context);
 
         long end = System.currentTimeMillis();
-        logger.debug("组装服务响应报文，结束【" + (end - start) + "毫秒】");
+        log.debug("组装服务响应报文，结束【" + (end - start) + "毫秒】");
     }
 
     /**
@@ -61,6 +60,7 @@ public class CoreChannelBuilder implements ICoreChannelBuilder {
      *
      * @param context 数据总线
      */
+    @SuppressWarnings("unchecked")
     private void buildHeader(Context context) {
         Map header = new HashMap();
         header.put(ServicePacketConstants.STATUS, Framework.getProperty("channel.service.success.code"));//响应状态
@@ -110,6 +110,7 @@ public class CoreChannelBuilder implements ICoreChannelBuilder {
      * @return 返回响应报文
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Map buildError(ServiceRuntimeException e) {
         Map errorResult = new HashMap();
         String key = e.getMessageKey();

@@ -6,8 +6,7 @@ import com.lamb.framework.channel.parser.ICoreChannelParser;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.listener.IListener;
 import com.lamb.framework.service.IService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +23,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @RestController
 public class ServiceRouter {
-    private final static Logger logger = LoggerFactory.getLogger(ServiceRouter.class);
     /**
      * 请求报文解析器
      */
@@ -68,7 +67,7 @@ public class ServiceRouter {
             long start = System.currentTimeMillis();
             //1、前置处理
             this.before(context);
-            logger.debug("执行服务【" + context.getServiceCode() + "】，开始...");
+            log.debug("执行服务【" + context.getServiceCode() + "】，开始...");
             //2、服务路由判断
             IService service = context.isDirect() ? directService : flowEngineService;
             //3、执行服务
@@ -76,7 +75,7 @@ public class ServiceRouter {
             //4、后置处理
             this.after(context);
             long end = System.currentTimeMillis();
-            logger.debug("执行服务【" + context.getServiceCode() + "】，结束【" + (end - start) + "毫秒】");
+            log.debug("执行服务【" + context.getServiceCode() + "】，结束【" + (end - start) + "毫秒】");
             //5、返回响应报文
             return context.getServiceOutput();
         }catch (Exception e) {

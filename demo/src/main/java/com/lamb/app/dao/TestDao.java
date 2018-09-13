@@ -1,6 +1,5 @@
 package com.lamb.app.dao;
 
-import com.lamb.framework.adapter.database.IBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.Map;
  * @version : 1.0
  */
 @Mapper
-public interface TestDao extends IBaseDao {
+public interface TestDao {
 
     public Map findAllDeptCnt(Map prams);
     /**

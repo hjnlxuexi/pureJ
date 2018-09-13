@@ -7,8 +7,7 @@ import com.lamb.framework.channel.constant.ServicePacketConstants;
 import com.lamb.framework.channel.helper.ServiceConfigParser;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.validator.ConfigValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -24,9 +23,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class CoreChannelParser implements ICoreChannelParser {
-    private final static Logger logger = LoggerFactory.getLogger(CoreChannelParser.class);
     /**
      * 服务配置解析器
      */
@@ -38,7 +37,7 @@ public class CoreChannelParser implements ICoreChannelParser {
      */
     @Override
     public void parse(Context context){
-        logger.debug("解析服务请求报文，开始...");
+        log.debug("解析服务请求报文，开始...");
         long start = System.currentTimeMillis();
         //0、处理原始报文
         this.dealPacket(context);
@@ -49,7 +48,7 @@ public class CoreChannelParser implements ICoreChannelParser {
         //3、根据服务配置处理请求数据
         this.dealReqData(config, context);
         long end = System.currentTimeMillis();
-        logger.debug("解析服务请求报文，结束【"+(end-start)+"毫秒】");
+        log.debug("解析服务请求报文，结束【"+(end-start)+"毫秒】");
     }
 
     /**

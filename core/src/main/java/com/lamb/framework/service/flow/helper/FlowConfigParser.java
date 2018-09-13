@@ -9,13 +9,12 @@ import com.lamb.framework.service.flow.model.Flow;
 import com.lamb.framework.service.flow.model.Forward;
 import com.lamb.framework.service.flow.model.Step;
 import com.lamb.framework.util.BizConfigHotLoading;
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -30,10 +29,9 @@ import java.util.List;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class FlowConfigParser {
-    private final static Logger logger = LoggerFactory.getLogger(FlowConfigParser.class);
-
     /**
      * 解析流程配置
      *
@@ -45,19 +43,19 @@ public class FlowConfigParser {
         String serviceId = Framework.getProperty("biz.conf.flow") + context.getServiceId();
         //1、缓存中查找对象
         if (ConfigCache.hasConfig(serviceId)){
-            logger.debug("流程配置文件【"+serviceId+"】，【命中缓存】");
+            log.debug("流程配置文件【"+serviceId+"】，【命中缓存】");
             return (Flow) ConfigCache.getConfig(serviceId);
         }
         if (serviceId.startsWith(BizConfigHotLoading.HTTP_PROTOCOL))//流程配置不存在
             throw new ServiceRuntimeException("2007",this.getClass(),serviceId);
 
-        logger.debug("解析流程配置文件【"+serviceId+"】，开始...");
+        log.debug("解析流程配置文件【"+serviceId+"】，开始...");
         //2、解析配置文档
         Flow config = this.parseNodes(serviceId + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
         //3、添加至缓存
         ConfigCache.addConfig(serviceId, config);
         long end = System.currentTimeMillis();
-        logger.debug("解析流程配置文件【"+serviceId+"】，结束【"+(end-start)+"毫秒】");
+        log.debug("解析流程配置文件【"+serviceId+"】，结束【"+(end-start)+"毫秒】");
         return config;
     }
 

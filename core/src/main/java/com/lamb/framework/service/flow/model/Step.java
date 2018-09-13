@@ -1,5 +1,7 @@
 package com.lamb.framework.service.flow.model;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Data
 public class Step {
     /**
      * 步骤索引
@@ -39,74 +42,10 @@ public class Step {
     /**
      * 步骤跳转映射列表
      */
-    private List<Forward> mapping = new ArrayList<Forward>();
+    private List<Forward> mapping = new ArrayList<>();
     /**
      * 上一步骤
      */
     private Step previousStep;
-
-    public String getIndex() {
-        return index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public List<Forward> getMapping() {
-        return mapping;
-    }
-
-    public void setMapping(List<Forward> mapping) {
-        this.mapping = mapping;
-    }
-
-    public String getNext() {
-        return next;
-    }
-
-    public void setNext(String next) {
-        this.next = next;
-    }
-
-    public String getLeft() {
-        return left;
-    }
-
-    public void setLeft(String left) {
-        this.left = left;
-    }
-
-    public String getTop() {
-        return top;
-    }
-
-    public void setTop(String top) {
-        this.top = top;
-    }
-
-    public Step getPreviousStep() {
-        return previousStep;
-    }
-
-    public void setPreviousStep(Step previousStep) {
-        this.previousStep = previousStep;
-    }
 
 }

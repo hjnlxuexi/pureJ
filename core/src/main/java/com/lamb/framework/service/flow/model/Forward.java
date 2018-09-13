@@ -1,5 +1,7 @@
 package com.lamb.framework.service.flow.model;
 
+import lombok.Data;
+
 /**
  * <p>Title : 转向实体</p>
  * <p>Description : 定义转向类</p>
@@ -8,6 +10,7 @@ package com.lamb.framework.service.flow.model;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Data
 public class Forward {
     /**
      * 条件表达式
@@ -21,28 +24,4 @@ public class Forward {
      * 转向描述
      */
     private String desc;
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 }

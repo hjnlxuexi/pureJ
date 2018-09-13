@@ -3,12 +3,14 @@ package com.lamb.framework.validator;
 import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,9 +22,8 @@ import java.util.regex.Pattern;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 public class ConfigValidator {
-    private final static Logger logger = LoggerFactory.getLogger(ConfigValidator.class);
-
     /**
      * 验证目标数据合法性
      *
@@ -31,8 +32,6 @@ public class ConfigValidator {
      */
     @SuppressWarnings("unchecked")
     public static Object validateField(Object value, Map field) {
-        logger.debug("通过服务配置验证数据，开始...");
-        long start = System.currentTimeMillis();
         //1、必输项校验
         if (field.get(ServiceConfConstants.REQUIRED_PROP) != null
                 && Boolean.valueOf(field.get(ServiceConfConstants.REQUIRED_PROP).toString())
@@ -119,8 +118,6 @@ public class ConfigValidator {
             }
             value = newList;
         }
-        long end = System.currentTimeMillis();
-        logger.debug("通过服务配置验证数据，结束【" + (end - start) + "毫秒】");
         return value;
     }
 }

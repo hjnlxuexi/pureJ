@@ -21,7 +21,7 @@ public abstract class AbstractListener implements IListener {
         return this.sort;
     }
 
-    public void setSort(Integer sort) {
+    private void setSort(Integer sort) {
         this.sort = sort;
     }
 }

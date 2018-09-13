@@ -2,8 +2,7 @@ package com.lamb.framework.channel.convert;
 
 import com.alibaba.fastjson.JSON;
 import com.lamb.framework.base.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -25,8 +24,8 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 public class JsonConverter  extends AbstractHttpMessageConverter<Object> {
-    private final static Logger logger = LoggerFactory.getLogger(JsonConverter.class);
     //字符集
     private final static Charset UTF8 = Charset.forName("UTF-8");
 
@@ -60,7 +59,7 @@ public class JsonConverter  extends AbstractHttpMessageConverter<Object> {
         StreamUtils.copy(inputMessage.getBody(), bos);
         byte[] bytes = bos.toByteArray();
         String reqStr = new String(bytes, UTF8);
-        logger.debug("服务请求报文："+reqStr);
+        log.debug("服务请求报文："+reqStr);
 
         Map packet =JSON.parseObject(reqStr, Map.class);
 
@@ -83,7 +82,7 @@ public class JsonConverter  extends AbstractHttpMessageConverter<Object> {
     @Override
     protected void writeInternal(Object obj, HttpOutputMessage httpOutputMessage) throws IOException, HttpMessageNotWritableException {
         String text = JSON.toJSONString(obj);
-        logger.debug("服务响应报文："+text);
+        log.debug("服务响应报文："+text);
 
         byte[] bytes = text.getBytes(UTF8);
         StreamUtils.copy(bytes, httpOutputMessage.getBody());

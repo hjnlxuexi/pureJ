@@ -10,8 +10,7 @@ import com.lamb.framework.service.flow.helper.FlowConfigParser;
 import com.lamb.framework.service.flow.model.Flow;
 import com.lamb.framework.service.flow.model.Forward;
 import com.lamb.framework.service.flow.model.Step;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +26,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Service
 public class FlowEngineService implements IService {
-    private final static Logger logger = LoggerFactory.getLogger(FlowEngineService.class);
     /**
      * 流程配置解析器
      */
@@ -45,7 +44,7 @@ public class FlowEngineService implements IService {
     @Transactional
     public void execute(Context context) {
         try {
-            logger.debug("执行流程服务【" + context.getServiceName() + "】，开始...");
+            log.debug("执行流程服务【" + context.getServiceName() + "】，开始...");
             long startTime = System.currentTimeMillis();
             //1、获取流程对象
             Flow flow = flowConfigParser.parseFlowConfig(context);
@@ -57,7 +56,7 @@ public class FlowEngineService implements IService {
             //4、执行流程
             this.run(start, context, steps);
             long endTime = System.currentTimeMillis();
-            logger.debug("执行流程服务【" + context.getServiceName() + "】，结束【" + (endTime - startTime) + "毫秒】");
+            log.debug("执行流程服务【" + context.getServiceName() + "】，结束【" + (endTime - startTime) + "毫秒】");
         } catch (Exception e) {
             if (e instanceof ServiceRuntimeException)
                 throw (ServiceRuntimeException) e;
@@ -270,7 +269,7 @@ public class FlowEngineService implements IService {
             ){
                 throw new ServiceRuntimeException("2000", this.getClass());
             }
-            logger.error("【流程服务】" + context.getServiceName() + "，产生回环调用!!!");
+            log.error("【流程服务】" + context.getServiceName() + "，产生回环调用!!!");
         }
     }
 }

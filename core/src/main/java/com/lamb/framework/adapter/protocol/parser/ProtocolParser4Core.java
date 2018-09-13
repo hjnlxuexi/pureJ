@@ -6,8 +6,7 @@ import com.lamb.framework.base.Framework;
 import com.lamb.framework.channel.constant.ServicePacketConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.validator.ConfigValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class ProtocolParser4Core implements IProtocolParser {
-    private final static Logger logger = LoggerFactory.getLogger(ProtocolParser4Core.class);
     /**
      * 解析报文，数据总线中流向  ResponseData--->params
      * @param context 数据总线
@@ -31,7 +30,7 @@ public class ProtocolParser4Core implements IProtocolParser {
      */
     @Override
     public void parse(Context context, Map adapterConfig) {
-        logger.debug("解析外部服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，开始...");
+        log.debug("解析外部服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，开始...");
         long start = System.currentTimeMillis();
         //1、解析报文头
         this.parseHeader(context , adapterConfig);
@@ -39,7 +38,7 @@ public class ProtocolParser4Core implements IProtocolParser {
         this.parseBody(context , adapterConfig);
 
         long end = System.currentTimeMillis();
-        logger.debug("解析外部服务服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，结束【"+(end-start)+"毫秒】");
+        log.debug("解析外部服务服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，结束【"+(end-start)+"毫秒】");
     }
 
     /**

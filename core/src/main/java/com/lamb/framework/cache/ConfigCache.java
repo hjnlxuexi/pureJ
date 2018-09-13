@@ -1,5 +1,7 @@
 package com.lamb.framework.cache;
 
+import lombok.Synchronized;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,6 +25,7 @@ public class ConfigCache {
      * @param code 服务配置对象键
      * @param config 服务配置对象
      */
+    @Synchronized("configMap")
     public static void addConfig(String code , Object config){
         configMap.put(code , config);
     }
@@ -32,6 +35,7 @@ public class ConfigCache {
      * @param code 配置对象键
      * @return 返回配置对象
      */
+    @Synchronized("configMap")
     public static Object getConfig(String code){
         return configMap.get(code);
     }
@@ -41,6 +45,7 @@ public class ConfigCache {
      * @param code 配置对象键
      * @return 是否包含
      */
+    @Synchronized("configMap")
     public static boolean hasConfig(String code){
         return configMap.containsKey(code);
     }
@@ -49,6 +54,7 @@ public class ConfigCache {
      * 删除指定的配置对象
      * @param code 配置对象键
      */
+    @Synchronized("configMap")
     public static void removeConfig(String code){
         configMap.remove(code);
     }
@@ -56,6 +62,7 @@ public class ConfigCache {
     /**
      * 清空缓存
      */
+    @Synchronized("configMap")
     public static void clearCache(){
         configMap.clear();
     }

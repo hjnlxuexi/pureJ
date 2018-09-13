@@ -4,8 +4,7 @@ import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.validator.ConfigValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -20,9 +19,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class ProtocolBuilder4Core implements IProtocolBuilder {
-    private final static Logger logger = LoggerFactory.getLogger(ProtocolBuilder4Core.class);
     /**
      * 组装报文
      * @param context 数据总线
@@ -30,7 +29,7 @@ public class ProtocolBuilder4Core implements IProtocolBuilder {
      */
     @Override
     public void build(Context context  , Map adapterConfig) {
-        logger.debug("组装外部服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，开始...");
+        log.debug("组装外部服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，开始...");
         long start = System.currentTimeMillis();
         //0、请求报文
         Map data = new HashMap();
@@ -41,7 +40,7 @@ public class ProtocolBuilder4Core implements IProtocolBuilder {
         //3、请求报文放入总线
         context.setRequestData(data);
         long end = System.currentTimeMillis();
-        logger.debug("组装外部服务服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，结束【"+(end-start)+"毫秒】");
+        log.debug("组装外部服务服务【"+adapterConfig.get(AdapterConfConstants.NAME_TAG)+"】请求报文，结束【"+(end-start)+"毫秒】");
     }
 
     /**

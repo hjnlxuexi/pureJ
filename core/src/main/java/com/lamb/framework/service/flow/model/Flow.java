@@ -1,5 +1,7 @@
 package com.lamb.framework.service.flow.model;
 
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Data
 public class Flow {
     /**
      * 流程标题
@@ -20,20 +23,4 @@ public class Flow {
      * 流程步骤列表
      */
     private Map<String , Step> steps = new HashMap<>();
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Map<String , Step> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(Map<String , Step> steps) {
-        this.steps = steps;
-    }
 }

@@ -2,8 +2,7 @@ package com.lamb.app.listener;
 
 import com.lamb.framework.base.Context;
 import com.lamb.framework.listener.AbstractListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,10 +12,9 @@ import org.springframework.stereotype.Component;
  *
  * @author : hejie
  */
+@Slf4j
 @Component
 public class SecondListener extends AbstractListener {
-    private static Logger logger = LoggerFactory.getLogger(SecondListener.class);
-
     /**
      * 构造函数，设置顺序
      */
@@ -31,7 +29,7 @@ public class SecondListener extends AbstractListener {
      */
     @Override
     public void doBefore(Context context) {
-        logger.debug("第二个Listener，doBefore......");
+        log.debug("第二个Listener，doBefore......");
     }
 
     /**
@@ -41,6 +39,6 @@ public class SecondListener extends AbstractListener {
      */
     @Override
     public void doAfter(Context context) {
-        logger.debug("第二个Listener，doAfter......");
+        log.debug("第二个Listener，doAfter......");
     }
 }

@@ -1,6 +1,7 @@
 package com.lamb.framework.base;
 
 import com.lamb.framework.channel.constant.ServiceConfConstants;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Data
 public class Context {
     /**
      * 服务输入参数
@@ -60,84 +62,4 @@ public class Context {
      * 过路交易类型，默认数据库交易
      */
     private String directType = ServiceConfConstants.DIRECT_TYPE_DB;
-
-    public Map getServiceInput() {
-        return serviceInput;
-    }
-
-    public void setServiceInput(Map serviceInput) {
-        this.serviceInput = serviceInput;
-    }
-
-    public Map getServiceOutput() {
-        return serviceOutput;
-    }
-
-    public void setServiceOutput(Map serviceOutput) {
-        this.serviceOutput = serviceOutput;
-    }
-
-    public Object getRequestData() {
-        return requestData;
-    }
-
-    public void setRequestData(Object requestData) {
-        this.requestData = requestData;
-    }
-
-    public Object getResponseData() {
-        return responseData;
-    }
-
-    public void setResponseData(Object responseData) {
-        this.responseData = responseData;
-    }
-
-    public Map getParams() {
-        return params;
-    }
-
-    public void setParams(Map params) {
-        this.params = params;
-    }
-
-    public String getServiceCode() {
-        return serviceCode;
-    }
-
-    public void setServiceCode(String serviceCode) {
-        this.serviceCode = serviceCode;
-    }
-
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
-
-    public boolean isDirect() {
-        return direct;
-    }
-
-    public void setDirect(boolean direct) {
-        this.direct = direct;
-    }
-
-    public String getDirectType() {
-        return directType;
-    }
-
-    public void setDirectType(String directType) {
-        this.directType = directType;
-    }
 }

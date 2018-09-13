@@ -5,8 +5,8 @@ import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.exception.ServiceRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -23,10 +23,9 @@ import java.util.Map;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class Connector4Http implements IConnector {
-    private final static Logger logger = LoggerFactory.getLogger(Connector4Http.class);
-
     /**
      * 连接外部服务
      * @param context 数据总线
@@ -34,7 +33,7 @@ public class Connector4Http implements IConnector {
      */
     @Override
     public void connect(Context context, Map adapterConfig) {
-        logger.debug("连接外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，开始...");
+        log.debug("连接外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，开始...");
         long start = System.currentTimeMillis();
         //连接url
         Object _url = adapterConfig.get(AdapterConfConstants.HOST_TAG);
@@ -53,12 +52,12 @@ public class Connector4Http implements IConnector {
         String contentType = adapterConfig.get(AdapterConfConstants.CONTENT_TYPE_TAG).toString();
         //请求数据
         String reqStr = JSON.toJSONString(context.getRequestData());
-        logger.debug("外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，请求报文：" + reqStr);
+        log.debug("外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，请求报文：" + reqStr);
 
         HttpURLConnection httpConn;
-        PrintWriter out = null;
-        BufferedReader in = null;
         try {
+            @Cleanup PrintWriter out = null;
+            @Cleanup BufferedReader in = null;
             //1、创建连接
             URL urlClient = new URL(url);
             httpConn = (HttpURLConnection) urlClient.openConnection();
@@ -76,31 +75,16 @@ public class Connector4Http implements IConnector {
                 respSb.append(line);
             }
             String respStr = respSb.toString();
-            logger.debug("外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，响应报文：" + respStr);
+            log.debug("外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，响应报文：" + respStr);
             Map respData = JSON.parseObject(respStr, Map.class);
             //4、将响应数据放入总线
             context.setResponseData(respData);
         } catch (IOException e) {
             throw new ServiceRuntimeException("5002", this.getClass(), e, adapterConfig.get(AdapterConfConstants.NAME_TAG));
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (Exception e) {
-                    logger.error("流关闭异常", e);
-                }
-            }
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception e) {
-                    logger.error("流关闭异常", e);
-                }
-            }
         }
 
         long end = System.currentTimeMillis();
-        logger.debug("连接外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，结束【" + (end - start) + "毫秒】");
+        log.debug("连接外部服务【" + adapterConfig.get(AdapterConfConstants.NAME_TAG) + "】，结束【" + (end - start) + "毫秒】");
     }
 
     /**

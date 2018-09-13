@@ -8,8 +8,7 @@ import com.lamb.framework.service.IService;
 import com.lamb.framework.service.OP;
 import com.lamb.framework.service.op.DataBaseOP;
 import com.lamb.framework.service.op.ProtocolOP;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +22,9 @@ import javax.annotation.Resource;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Service
 public class DirectService implements IService {
-    private final static Logger logger = LoggerFactory.getLogger(DirectService.class);
     /**
      * 外部原子服务
      */
@@ -46,7 +45,7 @@ public class DirectService implements IService {
     @Transactional
     public void execute(Context context) {
         try {
-            logger.debug("执行过路服务【" + context.getServiceName() + "】，开始...");
+            log.debug("执行过路服务【" + context.getServiceName() + "】，开始...");
             long start = System.currentTimeMillis();
             String directType = context.getDirectType();
             switch (directType) {
@@ -69,7 +68,7 @@ public class DirectService implements IService {
                     throw new ServiceRuntimeException("1011", this.getClass(), context.getServiceName(), directType);
             }
             long end = System.currentTimeMillis();
-            logger.debug("执行过路服务【" + context.getServiceName() + "】，结束【" + (end - start) + "毫秒】");
+            log.debug("执行过路服务【" + context.getServiceName() + "】，结束【" + (end - start) + "毫秒】");
         } catch (Exception e) {
             if (e instanceof ServiceRuntimeException)
                 throw (ServiceRuntimeException)e;

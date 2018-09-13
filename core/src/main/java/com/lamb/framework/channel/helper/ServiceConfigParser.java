@@ -6,13 +6,12 @@ import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.util.BizConfigHotLoading;
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -26,10 +25,9 @@ import java.util.*;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class ServiceConfigParser {
-    private final static Logger logger = LoggerFactory.getLogger(ServiceConfigParser.class);
-
     /**
      * 解析服务配置
      *
@@ -41,19 +39,19 @@ public class ServiceConfigParser {
         String serviceCode = Framework.getProperty("biz.conf.service") + context.getServiceCode();
         //0、缓存中获取配置对象
         if (ConfigCache.hasConfig(serviceCode)){
-            logger.debug("服务配置文件【"+serviceCode+"】，【命中缓存】");
+            log.debug("服务配置文件【"+serviceCode+"】，【命中缓存】");
             return (Map) ConfigCache.getConfig(serviceCode);
         }
         if (serviceCode.startsWith(BizConfigHotLoading.HTTP_PROTOCOL))//服务配置不存在
             throw new ServiceRuntimeException("1010",this.getClass(),serviceCode);
 
-        logger.debug("解析服务配置文件【"+serviceCode+"】，开始...");
+        log.debug("解析服务配置文件【"+serviceCode+"】，开始...");
         //1、解析配置文档
         Map config = this.parseNodes(serviceCode + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
         //2、添加配置对象至缓存，并返回
         ConfigCache.addConfig(serviceCode, config);
         long end = System.currentTimeMillis();
-        logger.debug("解析服务配置文件【"+serviceCode+"】，结束【"+(end-start)+"毫秒】");
+        log.debug("解析服务配置文件【"+serviceCode+"】，结束【"+(end-start)+"毫秒】");
         return config;
     }
 

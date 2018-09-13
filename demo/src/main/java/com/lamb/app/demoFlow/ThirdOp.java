@@ -2,8 +2,7 @@ package com.lamb.app.demoFlow;
 
 import com.lamb.framework.base.Context;
 import com.lamb.framework.service.OP;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,11 +13,11 @@ import org.springframework.stereotype.Service;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Service
 public class ThirdOp implements OP{
-    private static Logger logger = LoggerFactory.getLogger(ThirdOp.class);
     @Override
     public void execute(Context context) {
-        logger.debug("步骤三【ThirdOp】，执行结束");
+        log.debug("步骤三【ThirdOp】，执行结束");
     }
 }

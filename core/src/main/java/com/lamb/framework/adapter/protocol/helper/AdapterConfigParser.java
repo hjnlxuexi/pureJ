@@ -6,13 +6,12 @@ import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.util.BizConfigHotLoading;
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -26,10 +25,9 @@ import java.util.*;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @Component
 public class AdapterConfigParser {
-    private final static Logger logger = LoggerFactory.getLogger(AdapterConfigParser.class);
-
     /**
      * 解析服务配置
      *
@@ -41,19 +39,19 @@ public class AdapterConfigParser {
         String serviceId = Framework.getProperty("biz.conf.adapter") + context.getServiceId();
         //0、缓存中获取配置对象
         if (ConfigCache.hasConfig(serviceId)){
-            logger.debug("外部服务配置文件【"+serviceId+"】，【命中缓存】");
+            log.debug("外部服务配置文件【"+serviceId+"】，【命中缓存】");
             return (Map) ConfigCache.getConfig(serviceId);
         }
         if (serviceId.startsWith(BizConfigHotLoading.HTTP_PROTOCOL))//适配器配置不存在
             throw new ServiceRuntimeException("5004",this.getClass(),serviceId);
 
-        logger.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
+        log.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
         //1、解析配置文档
         Map config = this.parseNodes(serviceId + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
         //2、添加配置对象至缓存，并返回
         ConfigCache.addConfig(serviceId, config);
         long end = System.currentTimeMillis();
-        logger.debug("解析外部服务配置文件【"+serviceId+"】，结束【"+(end-start)+"毫秒】");
+        log.debug("解析外部服务配置文件【"+serviceId+"】，结束【"+(end-start)+"毫秒】");
         return config;
     }
 

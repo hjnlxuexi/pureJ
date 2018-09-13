@@ -1,11 +1,10 @@
 package com.lamb.framework.util;
 
 import com.lamb.framework.base.Framework;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -25,9 +24,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author : hejie
  */
+@Slf4j
 public class MybatisMapperHotLoading {
-    private final static Logger logger = LoggerFactory.getLogger(MybatisMapperHotLoading.class);
-
     private static Resource[] mapperLocations;   //扫描结果
     private static HashMap<String, Long> fileMapping = new HashMap<>();// 记录文件是否变化
 
@@ -74,7 +72,7 @@ public class MybatisMapperHotLoading {
                 collateLocations();
             } catch (IOException e) {
                 refresh = false;
-                logger.error("mapper文件路径配置错误");
+                log.error("mapper文件路径配置错误");
                 return;
             }
 
@@ -102,7 +100,7 @@ public class MybatisMapperHotLoading {
                     XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(location.getInputStream(), configuration, locationPath, configuration.getSqlFragments());
                     xmlMapperBuilder.parse();
                 } catch (IOException e) {
-                    logger.error("mapper文件[" + location.getFilename() + "]不存在或内容格式不对");
+                    log.error("mapper文件[" + location.getFilename() + "]不存在或内容格式不对");
                 }
             }
 
@@ -112,7 +110,7 @@ public class MybatisMapperHotLoading {
             refresh = false;
         } catch (Exception e) {
             refresh = false;
-            logger.debug("【mapper文件】热加载失败！");
+            log.debug("【mapper文件】热加载失败！");
             e.printStackTrace();
         }
     }
@@ -237,10 +235,10 @@ public class MybatisMapperHotLoading {
 
         @SuppressWarnings("unchecked")
         public V put(String key, V value) {
-            // T如果现在状态为刷新，则刷新(先删除后添加)
+            // 如果现在状态为刷新，则刷新(先删除后添加)
             if (refresh) {
                 remove(key);
-                logger.debug("mybatis mapper refresh key:" + key.substring(key.lastIndexOf(".") + 1));
+                log.debug("mybatis mapper refresh key:" + key.substring(key.lastIndexOf(".") + 1));
             }
             // end
             if (containsKey(key)) {

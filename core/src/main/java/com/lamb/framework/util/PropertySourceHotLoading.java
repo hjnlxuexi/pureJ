@@ -1,8 +1,7 @@
 package com.lamb.framework.util;
 
 import com.lamb.framework.base.Framework;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.env.PropertySourcesLoader;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.io.FileSystemResource;
@@ -21,8 +20,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author : hejie
  */
+@Slf4j
 public class PropertySourceHotLoading {
-    private final static Logger logger = LoggerFactory.getLogger(PropertySourceHotLoading.class);
     /**
      * PropertySource的key
      */
@@ -50,7 +49,7 @@ public class PropertySourceHotLoading {
                                             new File( Framework.getProperty("server.config.path") )),DYNAMIC_CONFIG_NAME,null)
                     );
                 } catch (IOException e) {
-                    logger.error("【系统配置】热加载失败！");
+                    log.error("【系统配置】热加载失败！");
                     e.printStackTrace();
                 }
             }

@@ -5,8 +5,7 @@ import com.lamb.framework.listener.AbstractListener;
 import com.lamb.framework.util.BizConfigHotLoading;
 import com.lamb.framework.util.MybatisMapperHotLoading;
 import com.lamb.framework.util.PropertySourceHotLoading;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -23,10 +22,9 @@ import java.util.List;
  * @author : hejie (hjnlxuexi@126.com)
  * @version : 1.0
  */
+@Slf4j
 @SpringBootApplication
 public class Application  {
-    private final static Logger logger = LoggerFactory.getLogger(Application.class);
-
     /**
      * 以java引用形式启动
      * @param args 参数
@@ -38,7 +36,7 @@ public class Application  {
         setListeners(applicationContext);
         //启动热加载
         hotLoading(applicationContext);
-        logger.info("系统启动成功！！！");
+        log.info("系统启动成功！！！");
     }
 
     /**
