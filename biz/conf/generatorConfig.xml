@@ -15,7 +15,7 @@
         </plugin>
 
         <!-- 生成 JavaBean 对象重写 toString方法 -->
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
 
         <!-- 生成 JavaBean 对象继承 Serializable 类 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>

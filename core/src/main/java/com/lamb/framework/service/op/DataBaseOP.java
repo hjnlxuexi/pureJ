@@ -52,6 +52,7 @@ public class DataBaseOP implements OP{
         for (String sql : sqlArray) {
             //查询单条数据
             boolean isSelectOne = false;
+            sql = sql.trim();
             if (sql.endsWith(SELECT_ONE_PATTERN)){
                 isSelectOne = true;
                 sql = sql.substring(0,sql.indexOf(SELECT_ONE_PATTERN));
@@ -74,13 +75,15 @@ public class DataBaseOP implements OP{
 
             if(data==null)continue;
 
-            if (data instanceof List) {
-                //查询单条数据
-                if (isSelectOne){
-                    List<Map<String,Object>> list = (List<Map<String,Object>>)data;
-                    if (list.size()>0)result.putAll(list.get(0));
-                }else {
-                    //查询列表
+            //处理结果数据
+            if (data instanceof List) {// 列表
+                if (isSelectOne){ //查询单条数据
+                    List list = (List)data;
+                    if (!list.isEmpty()){
+                        Object serializable = list.get(0);
+                        result = (Map<String, Object>)JSON.parse(JSON.toJSONString(serializable));
+                    }
+                }else { //查询列表，默认key：list
                     result.put(ServicePacketConstants.LIST, data);
                 }
             } else if (data instanceof Map){
