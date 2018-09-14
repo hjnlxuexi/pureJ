@@ -28,6 +28,7 @@
         <mybatis-tk.version>2.0.4</mybatis-tk.version>
         <mapper.version>4.0.0</mapper.version>
         <lombok.version>1.18.2</lombok.version>
+        <mybatis.generator.lombok>1.0</mybatis.generator.lombok>
     </properties>
 
     <dependencyManagement>
@@ -125,6 +126,12 @@
                         <groupId>tk.mybatis</groupId>
                         <artifactId>mapper</artifactId>
                         <version>${mapper.version}</version>
+                    </dependency>
+                    <!--mybatis-generator与lombok插件-->
+                    <dependency>
+                        <groupId>com.softwareloop</groupId>
+                        <artifactId>mybatis-generator-lombok-plugin</artifactId>
+                        <version>${mybatis.generator.lombok}</version>
                     </dependency>
                 </dependencies>
 

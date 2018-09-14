@@ -6,22 +6,37 @@
 
     <!-- MyBatis3Simple：不生成 Example相关类及方法 -->
     <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-        <property name="beginningDelimiter" value="`" />
-        <property name="endingDelimiter" value="`" />
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
 
         <!-- 指定生成 Mapper 的继承模板 -->
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.lamb.framework.adapter.database.IBaseMapper" />
+            <property name="mappers" value="com.lamb.framework.adapter.database.IBaseMapper"/>
         </plugin>
 
         <!-- 生成 JavaBean 对象重写 toString方法 -->
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
 
         <!-- 生成 JavaBean 对象继承 Serializable 类 -->
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
 
         <!-- 生成 JavaBean 对象重写 equals 和 hashCode 方法 -->
         <!-- <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> -->
+        <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
+            <!-- enable annotations -->
+            <property name="builder" value="true"/>
+            <!-- annotation's option(boolean) -->
+            <property name="builder.fluent" value="true"/>
+            <!-- annotation's option(String) -->
+            <property name="builder.builderMethodName" value="myBuilder"/>
+
+            <property name="accessors" value="true"/>
+            <!-- annotation's option(array of String) -->
+            <property name="accessors.prefix" value="m_, _"/>
+
+            <!-- disable annotations -->
+            <property name="allArgsConstructor" value="false"/>
+        </plugin>
 
         <!-- jdbc 连接配置 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
@@ -30,13 +45,14 @@
                         password="123456">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.lamb.app.gen.domain"
-                            targetProject="src/main/java" />
+        <javaModelGenerator targetPackage="com.lamb.gen.domain"
+                            targetProject="src/main/java"/>
 
         <sqlMapGenerator targetPackage="gen"
-                         targetProject="/Users/home/Desktop/HJ/pureJ/biz/mapper/mysql" />
+                         targetProject="/Users/home/Desktop/HJ/pureJ/biz/mapper/mysql"/>
 
-        <javaClientGenerator targetPackage="com.lamb.app.gen.dao"
+        <!--生成的Mapper接口文件，根包路径：com.**.gen.**.dao-->
+        <javaClientGenerator targetPackage="com.lamb.gen.dao"
                              targetProject="src/main/java" type="XMLMAPPER"/>
 
         <!-- Mysql 配置 -->
@@ -46,7 +62,7 @@
 
         <!-- tableName：数据库表名，domainObjectName：生成文件名 ，schema：数据源-->
         <table tableName="user_info" schema="test">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>

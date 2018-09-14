@@ -5,7 +5,7 @@
     <direct>true</direct>
     <directtype>database</directtype>
     <!--<id>userInfoMapper/insert</id>-->
-    <id>com.lamb.app.gen.dao.UserInfoMapper.insert</id>
+    <id>com.lamb.gen.dao.UserInfoMapper.insert</id>
     <input>
         <field name="name" type="S" regexp="" required="true" desc="姓名"/>
         <field name="age" type="I" regexp="" required="true" desc="年龄"/>

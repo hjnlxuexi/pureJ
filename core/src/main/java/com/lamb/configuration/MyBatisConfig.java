@@ -3,6 +3,7 @@ package com.lamb.configuration;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,7 +23,8 @@ import javax.sql.DataSource;
  * @version : 1.0
  */
 @Configuration
-@tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.**.gen"})
+@tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.**.gen.**.dao"})
+@MapperScan(basePackages = {"com.**.app.**.dao"})
 @EnableTransactionManagement
 public class MyBatisConfig {
     @Value("${jdbc.mapper.location}")

@@ -1,6 +1,6 @@
 package com.lamb.app.demoFlow;
 
-import com.lamb.app.gen.dao.UserInfoMapper;
+import com.lamb.gen.dao.UserInfoMapper;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.service.OP;
 import lombok.extern.slf4j.Slf4j;
