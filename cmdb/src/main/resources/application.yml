@@ -1,9 +1,0 @@
-#==========业务配置中心，系统配置主文件，只需要设置profiles即可==========
-
-#启用profile
-spring:
-  profiles:
-    #默认启用，核心配置core，系统消息配置message，尽量不要去掉。
-    #如果去掉，则需要将删除的配置copy到本文件中！！
-    #应用本身的配置往后追加，顺序不要改变。
-    active: core,message,cmdb
