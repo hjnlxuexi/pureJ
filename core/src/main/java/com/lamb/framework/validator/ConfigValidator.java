@@ -1,8 +1,11 @@
 package com.lamb.framework.validator;
 
-import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
+import com.lamb.framework.base.Framework;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
+import com.lamb.framework.validator.converter.ConverterConstants;
+import com.lamb.framework.validator.converter.FieldConverter;
+import com.lamb.framework.validator.converter.FieldConverterParser;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
@@ -32,6 +35,15 @@ public class ConfigValidator {
      */
     @SuppressWarnings("unchecked")
     public static Object validateField(Object value, Map field) {
+        //0、执行字段转换器
+        if (field.get(ConverterConstants.CONVERTER_PROP) !=null) {
+            FieldConverterParser fieldConverterParser = (FieldConverterParser) Framework.getBean("fieldConverterParser");
+            String converterName = field.get(ConverterConstants.CONVERTER_PROP).toString();
+            //转换器
+            FieldConverter converter = fieldConverterParser.parseConverterConfig(converterName);
+            //转换
+            value = converter.getRule(value);
+        }
         //1、必输项校验
         if (field.get(ServiceConfConstants.REQUIRED_PROP) != null
                 && Boolean.valueOf(field.get(ServiceConfConstants.REQUIRED_PROP).toString())
@@ -110,7 +122,7 @@ public class ConfigValidator {
                     Object v = record.get(name);
                     //递归验证字段值
                     v = validateField(v, f);
-                    Object target_name = f.get(AdapterConfConstants.TARGET_NAME_PROP);
+                    Object target_name = f.get(ServiceConfConstants.TARGET_NAME_PROP);
                     if (target_name != null && !target_name.toString().isEmpty()) name = target_name.toString();
                     newParam.put(name, v);
                 }

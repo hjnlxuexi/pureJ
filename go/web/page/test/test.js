@@ -99,7 +99,8 @@ $(document).ready(function () {
                 for (var j = 0; j < list.length; j++) {
                     var row = list[j];
                     var need = row.required && (row.required == "true");
-                    $head.append("<td>" + row.name + "["+row.desc+"]</td>");
+                    var converter = row.converter ? "->"+row.converter : "";
+                    $head.append("<td>" + row.name + "["+row.desc+"]"+converter+"</td>");
                     $tr.append("<td><input type='text' " +
                         "data-pname='"+f_in.name+"' data-name='"+row.name+"' data-required='" + need + "'></td>")
                 }
@@ -143,13 +144,14 @@ $(document).ready(function () {
          */
         parseField: function (field) {
             var name = field.name;
+            var converter = field.converter ? "->"+field.converter : "";
             var desc = field.desc || "";
             var type = this.getFieldType(field);
             var required = field.required || "";
             required = required && (required == "true") ? ",必要项" : "";
             var regexp = field.regexp || "" ? ",[" + field.regexp + "]" : "";
 
-            return "【" + name + "】{" + desc + type + required + regexp + "}"
+            return "【" + name + converter+"】{" + desc + type + required + regexp + "}"
         },
         /**
          * 获取字段类型

@@ -8,7 +8,7 @@
         <field name="p1" targetName="" type="T" regexp="yyyy-MM-dd" required="true" desc="条件参数-1"/>
         <field name="p2" targetName="" type="S" regexp="[a-z]*" required="true" desc="条件参数-2"/>
         <field name="p3" targetName="" type="E" regexp="" required="true" desc="列表参数">
-            <field name="p1" targetName="" type="S" regexp="" required="true" desc="条件参数-1"/>
+            <field name="p1" targetName="" converter="status" type="S" regexp="" required="true" desc="条件参数-1"/>
             <field name="p2" targetName="" type="S" regexp="" required="true" desc="条件参数-2"/>
         </field>
     </input>
@@ -18,6 +18,6 @@
             <field name="p1" targetName="L1" type="S" regexp="[1-9]\d{1,10}" required="true" desc="条件参数-1"/>
             <field name="p2" targetName="L2" type="S" regexp="" required="true" desc="条件参数-2"/>
         </field>
-        <field name="param2" targetName="" type="S" regexp="" required="true" desc="条件参数-2"/>
+        <field name="param2" targetName="" converter="status" type="S" regexp="" required="true" desc="条件参数-2"/>
     </output>
 </service>

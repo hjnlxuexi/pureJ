@@ -33,6 +33,8 @@ public class ServiceConfConstants {
     //==========数据域属性==========
     //字段名
     public static final String NAME_PROP = "name";
+    //目标字段名
+    public static final String TARGET_NAME_PROP = "targetName";
     //字段类型
     public static final String TYPE_PROP = "type";
     //字段校验，正则表达式

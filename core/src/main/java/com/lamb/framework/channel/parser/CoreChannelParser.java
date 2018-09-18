@@ -1,6 +1,5 @@
 package com.lamb.framework.channel.parser;
 
-import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.channel.constant.ServicePacketConstants;
@@ -131,7 +130,7 @@ public class CoreChannelParser implements ICoreChannelParser {
             value = ConfigValidator.validateField(value,field);
             //4、将字段键值对放入总线
 
-            Object target_name = field.get(AdapterConfConstants.TARGET_NAME_PROP);
+            Object target_name = field.get(ServiceConfConstants.TARGET_NAME_PROP);
             if (target_name!=null&&!target_name.toString().isEmpty()) //name --> targetName
                 name = target_name.toString();
             context.getParams().put(name,value);

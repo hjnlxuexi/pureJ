@@ -74,6 +74,7 @@ $(document).ready(function () {
                 $tr.find('.regexp').val(field['regexp']);
                 $tr.find(".in_name").val(field['name']);
                 $tr.find(".targetName").val(field['targetName']);
+                $tr.find(".converter").val(field['converter']);
                 $tr.find('.in_required').val(field['required'] || 'false');
                 $tr.find('.in_desc').val(field['desc']);
                 if (type == 'E') {
@@ -94,6 +95,7 @@ $(document).ready(function () {
                         $tr_subtr.find('.regexp').val(item['regexp']);
                         $tr_subtr.find(".in_name").val(item['name']);
                         $tr_subtr.find(".targetName").val(item['targetName']);
+                        $tr_subtr.find(".converter").val(item['converter']);
                         $tr_subtr.find('.in_required').val(item['required'] || 'false');
                         $tr_subtr.find('.in_desc').val(item['desc']);
                     }
@@ -227,6 +229,7 @@ $(document).ready(function () {
             var field = {};
             field['name'] = $el.find(".in_name").val();
             field['targetName'] = $el.find(".targetName").val();
+            field['converter'] = $el.find(".converter").val();
             field['type'] = $el.find(".in_type").val();
             field['required'] = $el.find(".in_required").val();
             field['desc'] = $el.find(".in_desc").val();
@@ -265,6 +268,7 @@ $(document).ready(function () {
         tr_tpl: ['<tr><td class="del-field">▬</td>',
             '<td><input type="text" class="in_name" placeholder="字段名称"></td>',
             '<td><input type="text" class="targetName" placeholder="目标字段名称"></td>',
+            '<td><input type="text" class="converter" placeholder="转换器名称"></td>',
             '<td>',
             '<select class="in_type">',
             '<option value="S">字符串型</option>',
@@ -288,12 +292,13 @@ $(document).ready(function () {
         /**
          * 列表字段信息，表格模板
          */
-        table_tpl: ['<tr class="sub"><td></td><td colspan="5" style="border: 1px solid #ddd;"><table>',
+        table_tpl: ['<tr class="sub"><td></td><td colspan="6" style="border: 1px solid #ddd;"><table>',
             '<thead>',
             '<tr>',
             '<td class="add-field second-level">✚</td>',
             '<td>字段名称</td>',
             '<td>目标字段名称</td>',
+            '<td>字段转换器</td>',
             '<td>字段类型</td>',
             '<td>正则表达式</td>',
             '<td>是否必需</td>',
@@ -305,6 +310,7 @@ $(document).ready(function () {
             '<td class="del-field">▬</td>',
             '<td><input type="text" class="in_name" placeholder="字段名称"></td>',
             '<td><input type="text" class="targetName" placeholder="目标字段名称"></td>',
+            '<td><input type="text" class="converter" placeholder="转换器名称"></td>',
             '<td>',
             '<select class="in_type">',
             '<option value="S">字符串型</option>',

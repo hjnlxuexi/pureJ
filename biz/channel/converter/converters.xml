@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--数据转换器，主要针对代码中的字典转换，
+使用：在服务配置时绑定到数据字段上进行转换-->
+<converters>
+    <!--状态转换器
+    注意：转换器节点名称为缓存的KEY，不能重复-->
+    <status>
+        <!--待处理-->
+        <rule from="pending" to="0"/>
+        <!--处理中-->
+        <rule from="processing" to="1"/>
+        <!--已处理-->
+        <rule from="processed" to="2"/>
+        <!--空-->
+        <rule from="" to="3"/>
+
+    </status>
+
+</converters>

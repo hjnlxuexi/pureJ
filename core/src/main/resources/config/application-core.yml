@@ -16,6 +16,7 @@ biz:
     path: /Users/home/Desktop/HJ/pureJ/biz/
     service: ${biz.conf.path}channel/service/
     flow: ${biz.conf.path}channel/flow/
+    converters: ${biz.conf.path}channel/converter/converters
     adapter: ${biz.conf.path}adapter/
 
 #渠道服务配置

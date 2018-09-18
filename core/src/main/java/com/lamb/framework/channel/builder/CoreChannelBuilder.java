@@ -1,6 +1,5 @@
 package com.lamb.framework.channel.builder;
 
-import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.channel.constant.ServiceConfConstants;
@@ -95,7 +94,7 @@ public class CoreChannelBuilder implements ICoreChannelBuilder {
             //4、验证字段值
             value = ConfigValidator.validateField(value, field);
             //5、将字段键值对放入总线
-            Object target_name = field.get(AdapterConfConstants.TARGET_NAME_PROP);
+            Object target_name = field.get(ServiceConfConstants.TARGET_NAME_PROP);
             if (target_name!=null&&!target_name.toString().isEmpty()) //name --> targetName
                 name = target_name.toString();
             body.put(name, value);

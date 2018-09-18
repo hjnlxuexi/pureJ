@@ -5,6 +5,7 @@ import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.channel.helper.ServiceConfigParser;
 import com.lamb.framework.service.flow.helper.FlowConfigParser;
+import com.lamb.framework.validator.converter.FieldConverterParser;
 
 import java.io.File;
 import java.util.TimerTask;
@@ -25,6 +26,13 @@ public class BizConfigHotLoading {
      */
     public final static String HTTP_PROTOCOL = "http";
     public final static String LOCAL_CONF_POSTFIX = ".xml";
+    /**
+     * 业务配置类型
+     */
+    public final static Integer BIZ_TYPE_SERVICE = 1;
+    public final static Integer BIZ_TYPE_FLOW = 2;
+    public final static Integer BIZ_TYPE_ADAPTER = 3;
+    public final static Integer BIZ_TYPE_CONVERTER = 4;
 
     /**
      * 启动热加载
@@ -53,15 +61,20 @@ public class BizConfigHotLoading {
     private static void refreshBizConf() {
         //1、加载service配置
         String servicePath = Framework.getProperty("biz.conf.service");
-        refresh(servicePath, 1);
+        refresh(servicePath, BIZ_TYPE_SERVICE);
 
         //2、加载Flow配置
         String flowPath = Framework.getProperty("biz.conf.flow");
-        refresh(flowPath, 2);
+        refresh(flowPath, BIZ_TYPE_FLOW);
 
         //3、加载adapter配置
         String adapterPath = Framework.getProperty("biz.conf.adapter");
-        refresh(adapterPath, 3);
+        refresh(adapterPath, BIZ_TYPE_ADAPTER);
+
+        //4、加载converter配置
+        String converterPath = Framework.getProperty("biz.conf.converters");
+        converterPath = converterPath.substring(0,converterPath.lastIndexOf("/"));
+        refresh(converterPath, BIZ_TYPE_CONVERTER);
 
     }
 
@@ -109,15 +122,20 @@ public class BizConfigHotLoading {
                 if (!strFileName.endsWith(LOCAL_CONF_POSTFIX)) continue;
                 Object config = null;
                 //2、解析文件
-                if (type == 1) {//服务配置
+                if (type == BIZ_TYPE_CONVERTER){//字段转换器配置
+                    FieldConverterParser fieldConverterParser = (FieldConverterParser) Framework.getBean("fieldConverterParser");
+                    fieldConverterParser.parseNodes(strFileName);
+                    continue;
+                }
+                if (type == BIZ_TYPE_SERVICE) {//服务配置
                     ServiceConfigParser serviceConfigParser = (ServiceConfigParser) Framework.getBean("serviceConfigParser");
-                    config = serviceConfigParser.parseNodes(file.getAbsolutePath());
-                } else if (type == 2) {//流程配置
+                    config = serviceConfigParser.parseNodes(strFileName);
+                } else if (type == BIZ_TYPE_FLOW) {//流程配置
                     FlowConfigParser flowConfigParser = (FlowConfigParser) Framework.getBean("flowConfigParser");
-                    config = flowConfigParser.parseNodes(file.getAbsolutePath());
-                } else if (type == 3) {//适配器配置
+                    config = flowConfigParser.parseNodes(strFileName);
+                } else if (type == BIZ_TYPE_ADAPTER) {//适配器配置
                     AdapterConfigParser adapterConfigParser = (AdapterConfigParser) Framework.getBean("adapterConfigParser");
-                    config = adapterConfigParser.parseNodes(file.getAbsolutePath());
+                    config = adapterConfigParser.parseNodes(strFileName);
                 }
                 //3、加入缓存
                 String serviceCode = strFileName.substring(0 , strFileName.indexOf(LOCAL_CONF_POSTFIX));
