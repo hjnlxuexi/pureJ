@@ -2,7 +2,6 @@ package com.lamb.framework.service.op;
 
 import com.lamb.framework.adapter.protocol.ProtocolBaseAdapter;
 import com.lamb.framework.base.Context;
-import com.lamb.framework.service.OP;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,7 +12,7 @@ import javax.annotation.Resource;
  * 日期: 2017/7/16
  */
 @Service
-public class ProtocolOP implements OP {
+public class ProtocolOP implements ReservedOP {
     /**
      * 外部服务调用适配器
      */

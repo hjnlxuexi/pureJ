@@ -16,10 +16,8 @@ public class ServiceConfConstants {
     public static final String NAME_TAG = "name";
     //服务描述标签
     public static final String DESC_TAG = "desc";
-    //过路交易标签
-    public static final String DIRECT_TAG = "direct";
     //过路交易类型标签
-    public static final String DIRECT_TYPE_TAG = "directtype";
+    public static final String TYPE_TAG = "type";
     //服务id标签
     public static final String ID_TAG = "id";
 
@@ -60,14 +58,16 @@ public class ServiceConfConstants {
     //列表
     public static final String FIELD_TYPE_E = "E";
 
-    //==========过路交易类型==========
+    //==========服务类型==========
     //数据库交易
-    public static final String DIRECT_TYPE_DB = "database";
+    public static final String TYPE_DB = "database";
     //外部服务交易
-    public static final String DIRECT_TYPE_PROTOCOL = "protocol";
+    public static final String TYPE_PROTOCOL = "protocol";
     //单节点服务，即只有一个OP原子操作的服务
-    public static final String DIRECT_TYPE_SINGLE = "single";
+    public static final String TYPE_SINGLE = "single";
+    //流程服务
+    public static final String TYPE_FLOW = "flow";
 
     //=========列表型字段============
-    public static final String FIELD_KEY_LIST = "list";
+    public static final String FIELD_KEY_LIST = "children";
 }

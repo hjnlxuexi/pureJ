@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>app</name>
+    <desc>app接口</desc>
+    <type>database</type>
+    <id>userInfoMapper/getAll</id>
+    <input/>
+    <output/>
+</service>

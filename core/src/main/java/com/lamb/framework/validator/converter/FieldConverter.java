@@ -20,14 +20,14 @@ public class FieldConverter implements Serializable{
 
     private String name;
 
-    private Map<Object , Object> rules = new ConcurrentHashMap<>();
+    private Map<String , String> rules = new ConcurrentHashMap<>();
 
     /**
      * 设置转换规则
      * @param from 原值
      * @param to 转换值
      */
-    public void putRule(Object from , Object to){
+    public void putRule(String from , String to){
         if (rules.containsKey(from)){
             log.warn("字段转换器【"+name+"】,存在重复的值【"+from+"】");
             return;
@@ -40,8 +40,8 @@ public class FieldConverter implements Serializable{
      * @param from 原值
      * @return 转换值
      */
-    public Object getRule(Object from){
-        Object to;
+    public String getRule(String from){
+        String to;
         if (from == null || String.valueOf(from).equals("")) {
             to = rules.get(ConverterConstants.NULL_SIGN);
         }else {

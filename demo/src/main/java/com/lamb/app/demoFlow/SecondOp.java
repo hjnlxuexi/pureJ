@@ -2,7 +2,7 @@ package com.lamb.app.demoFlow;
 
 import com.lamb.app.dao.TestDao;
 import com.lamb.framework.base.Context;
-import com.lamb.framework.service.OP;
+import com.lamb.framework.service.op.BaseOP;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class SecondOp implements OP {
+public class SecondOp implements BaseOP {
     @Resource
     private TestDao testDao;
     @Override

@@ -2,8 +2,7 @@
 <service>
     <name>新增用户</name>
     <desc>插入用户信息</desc>
-    <direct>true</direct>
-    <directtype>database</directtype>
+    <type>database</type>
     <!--<id>userInfoMapper/insert</id>-->
     <id>com.lamb.gen.dao.UserInfoMapper.insert</id>
     <input>

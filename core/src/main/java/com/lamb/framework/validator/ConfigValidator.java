@@ -42,7 +42,7 @@ public class ConfigValidator {
             //转换器
             FieldConverter converter = fieldConverterParser.parseConverterConfig(converterName);
             //转换
-            value = converter.getRule(value);
+            value = converter.getRule(value!=null?value.toString():null);
         }
         //1、必输项校验
         if (field.get(ServiceConfConstants.REQUIRED_PROP) != null

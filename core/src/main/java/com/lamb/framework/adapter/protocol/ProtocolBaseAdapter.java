@@ -33,7 +33,7 @@ public class ProtocolBaseAdapter {
     public void execute(Context context){
         //1、解析服务配置
         Map config = adapterConfigParser.parseAdapterConf(context);
-        Object net_tool = config.get(AdapterConfConstants.NETTOOL_TAG);
+        Object net_tool = config.get(AdapterConfConstants.NET_TOOL_TAG);
         if (net_tool==null)//外部服务配置必须包含netTool节点
             throw new ServiceRuntimeException("5001" , ProtocolBaseAdapter.class);
         String netToolStr = net_tool.toString();

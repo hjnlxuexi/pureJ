@@ -2,7 +2,6 @@ package com.lamb.framework.service.op;
 
 import com.lamb.framework.base.Context;
 import com.lamb.framework.exception.ServiceRuntimeException;
-import com.lamb.framework.service.OP;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author : hejie
  */
 @Service
-public class ExceptionOP implements OP {
+public class ExceptionOP implements ReservedOP {
     /**
      * 服务功能入口
      *

@@ -3,6 +3,7 @@ package com.lamb.framework.adapter.protocol.parser;
 import com.lamb.framework.adapter.protocol.constant.AdapterConfConstants;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.base.Framework;
+import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.channel.constant.ServicePacketConstants;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.validator.ConfigValidator;
@@ -76,7 +77,8 @@ public class ProtocolParser4Core implements IProtocolParser {
         List<Map> outputList = (List<Map>)outputObj;
 
         //1、过路交易清空动态内容
-        if (context.isDirect()) context.getParams().clear();
+        if (!context.getType().equals(ServiceConfConstants.TYPE_FLOW))
+            context.getParams().clear();
 
         //2、默认不过滤和验证输出数据
         if ( !Boolean.valueOf(Framework.getProperty("adapter.validate.output"))){

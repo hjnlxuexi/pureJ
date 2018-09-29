@@ -2,8 +2,7 @@
 <service>
     <name>过路服务</name>
     <desc>测试过路服务</desc>
-    <direct>true</direct>
-    <directtype>database</directtype>
+    <type>database</type>
     <!--<id>mysqlDao.getUser#ONE</id>-->
     <!--<id>userInfoMapper/getAll</id>-->
     <id>userInfoMapper/selectAll#ONE +  userInfoMapper/getAll</id>

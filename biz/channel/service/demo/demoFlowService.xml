@@ -2,7 +2,7 @@
 <service>
     <name>流程服务</name>
     <desc>流程服务描述</desc>
-    <direct>false</direct>
+    <type>flow</type>
     <id>demo/demoFlow</id>
     <input>
         <field name="p1" targetName="" type="T" regexp="yyyy-MM-dd" required="true" desc="条件参数-1"/>

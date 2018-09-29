@@ -48,6 +48,8 @@ public class AdapterConfigParser {
         log.debug("解析外部服务配置文件【"+serviceId+"】，开始...");
         //1、解析配置文档
         Map config = this.parseNodes(serviceId + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
+        if (config == null || config.isEmpty())
+            throw new ServiceRuntimeException("5004",this.getClass(),serviceId);
         //2、添加配置对象至缓存，并返回
         ConfigCache.addConfig(serviceId, config);
         long end = System.currentTimeMillis();

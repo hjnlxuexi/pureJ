@@ -9,13 +9,11 @@ package com.lamb.framework.adapter.protocol.constant;
  * @version : 1.0
  */
 public class AdapterConfConstants {
-    //==========服务标签定义==========
+    //==========适配器标签定义==========
     //根节点标签
     public static final String ROOT_TAG = "adapter";
     //外部服务名称标签
     public static final String NAME_TAG = "name";
-    //外部服务协议标签
-    public static final String PROTOCOL_TAG = "protocol";
     //外部服务地址标签
     public static final String HOST_TAG = "host";
     //连接超时标签
@@ -23,7 +21,7 @@ public class AdapterConfConstants {
     //响应超时标签
     public static final String RESPONSE_TIMEOUT_TAG = "responseTimeout";
     //通讯工具标签
-    public static final String NETTOOL_TAG = "netTool";
+    public static final String NET_TOOL_TAG = "netTool";
     //服务路径
     public static final String SERVICE_TAG = "service";
     //字符集
@@ -61,11 +59,13 @@ public class AdapterConfConstants {
     public static final String FIELD_TYPE_F = "F";
     //布尔值
     public static final String FIELD_TYPE_B = "B";
+    //时间类型
+    public static final String FIELD_TYPE_T = "T";
     //密文
     public static final String FIELD_TYPE_P = "P";
     //列表
     public static final String FIELD_TYPE_E = "E";
 
     //=========列表型字段key============
-    public static final String FIELD_KEY_LIST = "list";
+    public static final String FIELD_KEY_LIST = "children";
 }

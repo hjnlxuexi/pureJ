@@ -1,8 +1,8 @@
 package com.lamb.app.demoFlow;
 
-import com.lamb.gen.dao.UserInfoMapper;
 import com.lamb.framework.base.Context;
-import com.lamb.framework.service.OP;
+import com.lamb.framework.service.op.BaseOP;
+import com.lamb.gen.dao.UserInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class FirstOp implements OP{
+public class FirstOp implements BaseOP {
     @Resource
     private UserInfoMapper userInfoMapper;
     @Override
