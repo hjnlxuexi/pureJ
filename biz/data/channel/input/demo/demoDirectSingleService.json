@@ -1,0 +1,6 @@
+{
+  "header": {
+    "service": "demo/demoDirectSingleService"
+  },
+  "body": {}
+}

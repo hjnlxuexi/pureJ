@@ -12,7 +12,7 @@
           <el-input v-model="adapter.connectTimeout" placeholder="连接超时时间(ms)" class="inline prop"/>
           <el-input v-model="adapter.responseTimeout" placeholder="响应超时时间(ms)" class="inline prop"/>
           <el-input v-model="adapter.charset" placeholder="字符集" class="inline prop"/>
-          <el-input v-model="adapter.contentType" placeholder="数据格式(仅http)" class="inline prop"/>
+          <el-input v-model="adapter.contentType" placeholder="数据格式ContentType (仅http)" class="inline prop"/>
           <el-button type="success" @click="saveAdapterConf">保存</el-button>
         </div>
       </template>
@@ -22,14 +22,14 @@
             <div class="middle-container">
               ||<el-tag style="font-size: 16px;font-weight:800;color: #FFFFFF">服务请求</el-tag>
               <el-button class="primary" style="padding: 0 25px;line-height: 20px" @click="handleEditRequestData">编辑[json]</el-button>
-              <tree-table ref="requestTree" :columns="columns" border style="margin: 5px 0" expand-all/>
+              <tree-table ref="requestTree" border style="margin: 5px 0" expand-all/>
             </div>
           </template>
           <template slot="paneR">
             <div class="bottom-container">
               ||<el-tag style="font-size: 16px;font-weight:800;color: #FFFFFF">服务响应</el-tag>
               <el-button class="primary" style="padding: 0 25px;line-height: 20px" @click="handleEditResponseData">编辑[json]</el-button>
-              <tree-table ref="responseTree" :columns="columns" border style="margin: 5px 0" expand-all/>
+              <tree-table ref="responseTree" border style="margin: 5px 0" expand-all/>
             </div>
           </template>
         </split-pane>
@@ -43,7 +43,7 @@
 <script>
 import splitPane from 'vue-splitpane'
 import FieldDialog from './FieldDialog'
-import treeTable from './TreeTable'
+import treeTable from '@/components/FieldTreeTable'
 import bus from './bus'
 import request from '@/utils/request'
 
@@ -58,46 +58,16 @@ export default {
     return {
       path: this.$route.query.adapterPath,
       adapter: {},
-      defaults: {},
-      columns: [
-        {
-          text: '字段名称',
-          value: 'name'
-        },
-        {
-          text: '目标名称',
-          value: 'targetName'
-        },
-        {
-          text: '字段转换器',
-          value: 'converter'
-        },
-        {
-          text: '字段类型',
-          value: 'type'
-        },
-        {
-          text: '正则表达式',
-          value: 'regexp'
-        },
-        {
-          text: '是否必须',
-          value: 'required'
-        },
-        {
-          text: '描述',
-          value: 'desc'
-        }
-      ]
+      defaults: {}
     }
   },
   created() {
-    request.post('/loadAdapterDefaults', {})
+    request.post('/api/loadAdapterDefaults', {})
       .then(response => {
         this.defaults = response
       })
       .then(data => {
-        request.post('/loadAdapterConf', { adapter: this.path })
+        request.post('/api/loadAdapterConf', { adapter: this.path })
           .then(response => {
             this.adapter = response
             this.adapter.host = this.adapter.host || this.defaults.host
@@ -131,7 +101,7 @@ export default {
     saveAdapterConf() {
       const params = Object.assign({}, this.adapter)
       params.path = this.path
-      request.post('/saveAdapterConf', params)
+      request.post('/api/saveAdapterConf', params)
         .then(response => {
           this.$message.success('保存适配器配置成功')
         })

@@ -1,5 +1,5 @@
 {
-  "name": "vue-admin-template",
+  "name": "pureJ-launcher",
   "version": "3.8.0",
   "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
@@ -14,6 +14,7 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
+    "express": "^4.14.0",
     "axios": "0.18.0",
     "codemirror": "5.39.2",
     "element-ui": "2.4.6",
@@ -24,6 +25,7 @@
     "nprogress": "0.2.0",
     "qs": "^6.5.2",
     "vue": "2.5.17",
+    "vue-resource": "^1.5.1",
     "vue-router": "3.0.1",
     "vue-splitpane": "1.0.2",
     "vuedraggable": "^2.16.0",

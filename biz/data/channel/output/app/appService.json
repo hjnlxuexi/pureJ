@@ -1,0 +1,58 @@
+{
+  "header": {
+    "msg": "服务执行成功",
+    "status": "0000"
+  },
+  "body": {
+    "list": [
+      {
+        "sex": 1,
+        "name": "hejie"
+      },
+      {
+        "sex": 1,
+        "name": "hj"
+      },
+      {
+        "sex": 1,
+        "name": "jiehe"
+      },
+      {
+        "sex": 1,
+        "name": "jiehe2"
+      },
+      {
+        "sex": 1,
+        "name": "hh"
+      },
+      {
+        "sex": 1,
+        "name": "jjjj"
+      },
+      {
+        "sex": 1,
+        "name": "nnnnnnn"
+      },
+      {
+        "sex": 0,
+        "name": "hjnlxuexi"
+      },
+      {
+        "sex": 1,
+        "name": "hJhJ"
+      },
+      {
+        "sex": 1,
+        "name": "hJhJ_3"
+      },
+      {
+        "sex": 1,
+        "name": "hJhJ_5"
+      },
+      {
+        "sex": 1,
+        "name": "jjjjcccc"
+      }
+    ]
+  }
+}

@@ -34,12 +34,8 @@
 import treeToArray from './eval'
 export default {
   name: 'TreeTable',
+  /* eslint-disable */
   props: {
-    /* eslint-disable */
-    columns: {
-      type: Array,
-      default: () => []
-    },
     evalFunc: Function,
     evalArgs: Array,
     expandAll: {
@@ -47,7 +43,7 @@ export default {
       default: false
     }
   },
-  data(){
+  data() {
     return {
       f_types: {
         S: '字符串',
@@ -57,7 +53,37 @@ export default {
         T: '时间',
         E: '列表'
       },
-      data: []
+      data: [],
+      columns: [
+        {
+          text: '字段名称',
+          value: 'name'
+        },
+        {
+          text: '字段类型',
+          value: 'type'
+        },
+        {
+          text: '是否必须',
+          value: 'required'
+        },
+        {
+          text: '描述',
+          value: 'desc'
+        },
+        {
+          text: '正则表达式',
+          value: 'regexp'
+        },
+        {
+          text: '目标名称',
+          value: 'targetName'
+        },
+        {
+          text: '字段转换器',
+          value: 'converter'
+        }
+      ]
     }
   },
   methods: {
@@ -75,7 +101,7 @@ export default {
     iconShow(index, record) {
       return (index === 0 && record.children && record.children.length > 0)
     },
-    transformType: function (type) {
+    transformType: function(type) {
       return this.f_types[type]
     },
     freshData(data) {

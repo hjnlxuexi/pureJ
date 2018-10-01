@@ -1,13 +1,36 @@
 [
-    {"id":0, "pId":null, "name":"pureJ", "open":true},
-
-    {"id":1, "pId":0, "name":"测试服务", "open":true},
-    {"id":2, "pId":0, "name":"其他服务", "open":true},
-
-    {"id":101, "pId":1, "name":"过路服务", "service":"demo/demoDirectService"},
-    {"id":101, "pId":1, "name":"过路服务-单OP", "service":"demo/demoDirectSingleService"},
-    {"id":102, "pId":1, "name":"流程服务", "service":"demo/demoFlowService"},
-    {"id":103, "pId":1, "name":"新增用户", "service":"demo/userInfoService"},
-
-    {"id":201, "pId":2, "name":"过路外部服务", "service":"demo/demoOutService"}
+  {
+    "label": "测试服务",
+    "children": [
+      {
+        "label": "过路服务",
+        "code": "demo/demoDirectService"
+      },
+      {
+        "label": "过路服务-单OP",
+        "code": "demo/demoDirectSingleService"
+      },
+      {
+        "label": "流程服务",
+        "code": "demo/demoFlowService"
+      },
+      {
+        "label": "新增用户",
+        "code": "demo/userInfoService"
+      }
+    ]
+  },
+  {
+    "label": "其他服务",
+    "children": [
+      {
+        "label": "过路外部服务",
+        "code": "demo/demoOutService"
+      },
+      {
+        "label": "app",
+        "code": "app/appService"
+      }
+    ]
+  }
 ]

@@ -62,6 +62,21 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/unit-test',
+    name: '测试',
+    meta: { title: 'Test', icon: 'test' },
+    children: [
+      {
+        path: 'unit-test',
+        name: '单元测试',
+        component: () => import('@/views/unitTest/UnitTest'),
+        meta: { title: 'UnitTest', icon: 'test' }
+      }
+    ]
+  },
 
   { path: '*', redirect: '/404', hidden: true }
 ]

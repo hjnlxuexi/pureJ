@@ -20,7 +20,7 @@ export default {
       },
       done: [
         { name: '在线服务设计', id: 1, url: '/design/service' },
-        { name: '在线服务测试', id: 2, url: '' }
+        { name: '在线服务测试', id: 2, url: '/test/unit-test' }
       ],
       working: [
         { name: '项目脚手架引导', id: 3, url: '' },

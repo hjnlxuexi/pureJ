@@ -11,7 +11,7 @@
           <template slot="paneL">
             <div class="top-container">
               <el-input v-model="service.name" placeholder="服务名称" class="inline half"/>
-              <el-input v-model="service.code" placeholder="服务路径" class="inline half"/>
+              <el-input v-model="service.code" placeholder="服务路径" class="inline half" readonly/>
               <el-input v-model="service.desc" placeholder="服务描述" class="inline" />
               <el-input v-model="service.id" placeholder="服务ID" class="inline" />
               <div class="inline" style="text-align: left">
@@ -24,13 +24,13 @@
                   </el-radio>
                 </el-radio-group> ]
               </div>
-              <div v-if="service.type=='flow'" class="inline" style="background-color: white;padding: 0 10px;line-height: 35px">[
+              <div v-if="service.id && service.type=='flow'" class="inline" style="background-color: white;padding: 0 10px;line-height: 35px">[
                 <router-link :target="'_blank'" :to="'/design/flow?serviceFlowPath='+service.id" class="pan-btn light-blue-btn" style="padding: 0 36px;line-height: 20px">流程设计</router-link> ]
               </div>
-              <div v-if="service.type=='protocol'" class="inline" style="background-color: white;padding: 0 10px;line-height: 35px">[
+              <div v-if="service.id && service.type=='protocol'" class="inline" style="background-color: white;padding: 0 10px;line-height: 35px">[
                 <router-link :target="'_blank'" :to="'/design/adapter?adapterPath='+service.id" class="pan-btn light-blue-btn" style="padding: 0 36px;line-height: 20px">适配器定义</router-link> ]
               </div>
-              <el-button style="margin-left: 20px" type="success" @click="saveServiceConf">保存</el-button>
+              <el-button style="margin-left: 20px" type="success" class="el-icon-setting" @click="saveServiceConf">保存</el-button>
             </div>
           </template>
           <template slot="paneR">
@@ -38,16 +38,16 @@
               <template slot="paneL">
                 <div class="middle-container">
                   ||<el-tag style="font-size: 16px;font-weight:800;color: #FFFFFF">服务请求</el-tag>
-                  <el-button class="primary" style="padding: 0 25px;line-height: 20px" @click="handleEditRequestData">编辑[json]</el-button>
-                  <el-button class="primary" style="padding: 0 25px;line-height: 20px" @click="handleEditConverters">管理字段转换器</el-button>
-                  <tree-table ref="requestTree" :columns="columns" border style="margin: 5px 0" expand-all/>
+                  <el-button style="padding: 0 25px;line-height: 20px" @click="handleEditRequestData">编辑[json]</el-button>
+                  <el-button style="padding: 0 25px;line-height: 20px" @click="handleEditConverters">管理字段转换器</el-button>
+                  <tree-table ref="requestTree" border style="margin: 5px 0" expand-all/>
                 </div>
               </template>
               <template slot="paneR">
                 <div class="bottom-container">
                   ||<el-tag style="font-size: 16px;font-weight:800;color: #FFFFFF">服务响应</el-tag>
-                  <el-button class="primary" style="padding: 0 25px;line-height: 20px" @click="handleEditResponseData">编辑[json]</el-button>
-                  <tree-table ref="responseTree" :columns="columns" border style="margin: 5px 0" expand-all/>
+                  <el-button style="padding: 0 25px;line-height: 20px" @click="handleEditResponseData">编辑[json]</el-button>
+                  <tree-table ref="responseTree" border style="margin: 5px 0" expand-all/>
                 </div>
               </template>
             </split-pane>
@@ -63,9 +63,9 @@
 
 <script>
 import splitPane from 'vue-splitpane'
-import tree from './components/tree'
+import tree from '@/components/Tree'
 import FieldDialog from './components/FieldDialog'
-import treeTable from './components/TreeTable'
+import treeTable from '@/components/FieldTreeTable'
 import bus from './components/bus'
 import request from '@/utils/request'
 import ConverterDialog from './components/ConverterDialog'
@@ -89,41 +89,11 @@ export default {
         { value: 'flow', name: '流程服务' },
         { value: 'protocol', name: '外部接口' }
       ],
-      columns: [
-        {
-          text: '字段名称',
-          value: 'name'
-        },
-        {
-          text: '目标名称',
-          value: 'targetName'
-        },
-        {
-          text: '字段转换器',
-          value: 'converter'
-        },
-        {
-          text: '字段类型',
-          value: 'type'
-        },
-        {
-          text: '正则表达式',
-          value: 'regexp'
-        },
-        {
-          text: '是否必须',
-          value: 'required'
-        },
-        {
-          text: '描述',
-          value: 'desc'
-        }
-      ],
       converters: []
     }
   },
   created() {
-    request.post('/loadConverters', {})
+    request.post('/api/loadConverters', {})
       .then(response => {
         this.converters = response.converters
       })
@@ -141,7 +111,7 @@ export default {
         vm.converters = data
         const params = {}
         params.converters = data
-        request.post('/saveConverterConf', params)
+        request.post('/api/saveConverterConf', params)
           .then(response => {
             this.$message.success('保存字段转换器成功')
           })
@@ -153,7 +123,7 @@ export default {
       this.service = {}
       this.$set(this.service, 'code', service.code)
       this.$set(this.service, 'name', service.label)
-      request.post('/loadServiceConf', { service: this.service.code })
+      request.post('/api/loadServiceConf', { service: this.service.code })
         .then(response => {
           this.$set(this.service, 'name', response.name)
           this.$set(this.service, 'type', response.type)
@@ -175,7 +145,11 @@ export default {
       bus.$emit('converter', this.converters)
     },
     saveServiceConf() {
-      request.post('/saveServiceConf', this.service)
+      if (!this.service.id) {
+        this.$message.error('服务ID不能为空')
+        return
+      }
+      request.post('/api/saveServiceConf', this.service)
         .then(response => {
           this.$message.success('保存服务配置成功')
         })
