@@ -1,7 +1,6 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="text-align: center">
     <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom:5px;" />
-    <el-button type="warning" style="padding: 0 10px;line-height: 20px;margin: 5px 0" @click="handleEditMenu">编辑[json]</el-button>
     <el-tree
       ref="tree"
       :data="menuData"
@@ -12,6 +11,10 @@
       highlight-current
       @node-click="handleClick"
     />
+    <div v-if="designer">
+      <el-button type="primary" class="el-button--small el-icon-edit op-button" @click="handleEditMenu">编辑</el-button>
+      <el-button type="danger" class="el-button--small el-icon-refresh op-button">同步</el-button>
+    </div>
     <EditDialog/>
   </div>
 </template>
@@ -23,6 +26,13 @@ import bus from './components/bus'
 export default {
   components: {
     EditDialog
+  },
+  props: {
+    designer: {
+      type: Boolean,
+      default: false,
+      required: true
+    }
   },
 
   data() {
@@ -84,4 +94,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.op-button {
+  margin: 5px 10px;
+}
+</style>
 

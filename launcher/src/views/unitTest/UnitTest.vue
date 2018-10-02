@@ -1,9 +1,9 @@
 <template>
   <div class="components-container">
-    <split-pane :min-percent="15" :default-percent="15" split="vertical">
+    <split-pane :min-percent="15" :default-percent="18" split="vertical">
       <template slot="paneL">
         <div class="left-container">
-          <tree @chooseService="chooseService"/>
+          <tree :designer="false" @chooseService="chooseService"/>
         </div>
       </template>
       <template v-if="isShow" slot="paneR">

@@ -40,25 +40,28 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/design/service',
     name: '设计',
-    meta: { title: 'Design', icon: 'design' },
+    alwaysShow: true,
+    meta: { title: '设计', icon: 'design' },
     children: [
       {
         path: 'service',
         name: '服务设计',
         component: () => import('@/views/design/design'),
-        meta: { title: 'Service', icon: 'service' }
+        meta: { title: '服务设计', icon: 'service' }
       },
       {
         path: 'flow',
         name: '流程服务',
+        hidden: true,
         component: () => import('@/views/design/components/flow'),
-        meta: { title: 'Flow', icon: 'flow' }
+        meta: { title: '流程服务', icon: 'flow' }
       },
       {
         path: 'adapter',
         name: '外部服务',
+        hidden: true,
         component: () => import('@/views/design/components/adapter'),
-        meta: { title: 'Adapter', icon: 'adapter' }
+        meta: { title: '外部服务', icon: 'adapter' }
       }
     ]
   },
@@ -67,13 +70,14 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/test/unit-test',
     name: '测试',
-    meta: { title: 'Test', icon: 'test' },
+    alwaysShow: true,
+    meta: { title: '测试', icon: 'test' },
     children: [
       {
         path: 'unit-test',
         name: '单元测试',
         component: () => import('@/views/unitTest/UnitTest'),
-        meta: { title: 'UnitTest', icon: 'test' }
+        meta: { title: '单元测试', icon: 'monkey' }
       }
     ]
   },
