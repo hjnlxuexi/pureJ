@@ -185,6 +185,13 @@ export default {
       requestRaw.post('/api', this.req_value)
         .then(response => {
           this.resp_text = this.resp_value = response
+          return response
+        })
+        .then(data => {
+          // 测试通过，则直接保存测试数据
+          if (data.header && data.header.status === '0000') {
+            this.saveTestData()
+          }
         })
     },
     reset() {

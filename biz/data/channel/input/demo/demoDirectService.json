@@ -1,6 +1,6 @@
 {
-    "header": {
-        "service": "demo/demoDirectService"
-    },
-    "body": {}
+  "header": {
+    "service": "demo/demoDirectService"
+  },
+  "body": {}
 }

@@ -1,4 +1,11 @@
 {
-  "baseDir": "/Users/home/Desktop/HJ/pureJ/biz/data/",
-  "menu": "menu/tree.json"
+  "enable": "demo",
+  "demo": {
+    "code": "demo",
+    "name": "样例应用",
+    "projectDir": "/Users/home/Desktop/HJ/pureJ/",
+    "appUrl": "http://localhost:8080/demo",
+    "appBizDir": "/Users/home/Desktop/HJ/pureJ/biz/",
+    "baseDir": "/Users/home/Desktop/HJ/pureJ/biz/data/"
+  }
 }

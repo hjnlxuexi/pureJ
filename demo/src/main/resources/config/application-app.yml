@@ -22,4 +22,3 @@ jdbc:
   url: jdbc:mysql://172.16.193.200:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
   username: root
   password: 123456
-  driver-Class-Name: com.mysql.cj.jdbc.Driver

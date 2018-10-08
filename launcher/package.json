@@ -2,8 +2,8 @@
   "name": "pureJ-launcher",
   "version": "3.8.0",
   "license": "MIT",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "customization by vue-element-admin, see: https://github.com/PanJiaChen/vue-element-admin",
+  "author": "hejie <hjnlxuexi@126.com>",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -14,10 +14,10 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
-    "express": "^4.14.0",
     "axios": "0.18.0",
     "codemirror": "5.39.2",
     "element-ui": "2.4.6",
+    "express": "^4.14.0",
     "js-cookie": "2.2.0",
     "jsonlint": "1.6.3",
     "jsplumb": "^2.8.0",

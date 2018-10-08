@@ -23,61 +23,99 @@ import Layout from '../views/layout/Layout'
 **/
 export const constantRouterMap = [
   { path: '/404', component: () => import('@/views/404'), hidden: true },
-
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
+    redirect: '/guide',
+    name: 'Guide',
     hidden: true,
     children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
+      path: 'guide',
+      component: () => import('@/views/guide/index')
     }]
   },
   {
-    path: '/design',
+    path: '/dashboard',
     component: Layout,
-    redirect: '/design/service',
-    name: '设计',
-    alwaysShow: true,
-    meta: { title: '设计', icon: 'design' },
-    children: [
-      {
-        path: 'service',
-        name: '服务设计',
-        component: () => import('@/views/design/design'),
-        meta: { title: '服务设计', icon: 'service' }
-      },
-      {
-        path: 'flow',
-        name: '流程服务',
-        hidden: true,
-        component: () => import('@/views/design/components/flow'),
-        meta: { title: '流程服务', icon: 'flow' }
-      },
-      {
-        path: 'adapter',
-        name: '外部服务',
-        hidden: true,
-        component: () => import('@/views/design/components/adapter'),
-        meta: { title: '外部服务', icon: 'adapter' }
-      }
-    ]
+    redirect: '/dashboard',
+    name: 'Dashboard',
+    children: [{
+      path: '',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: '主页', icon: 'main' }
+    }]
   },
   {
-    path: '/test',
+    path: '/workbench',
     component: Layout,
-    redirect: '/test/unit-test',
-    name: '测试',
-    alwaysShow: true,
-    meta: { title: '测试', icon: 'test' },
+    redirect: '/workbench/my-apps',
+    name: 'Workbench',
+    meta: { title: '工作台', icon: 'workbench' },
     children: [
       {
-        path: 'unit-test',
-        name: '单元测试',
-        component: () => import('@/views/unitTest/UnitTest'),
-        meta: { title: '单元测试', icon: 'monkey' }
+        path: 'my-apps',
+        name: 'MyApps',
+        component: () => import('@/views/workbench/index'),
+        meta: { title: '我的应用', icon: 'project' }
+      },
+      {
+        path: 'capacity',
+        name: 'Capacity',
+        hidden: true,
+        component: () => import('@/views/capacity/index'),
+        meta: { title: '能力地图', icon: 'capacity' }
+      },
+      {
+        path: 'design',
+        component: () => import('@/views/design/index'),
+        redirect: '/workbench/design/service',
+        name: 'Design',
+        hidden: true,
+        meta: { title: '设计', icon: 'design' },
+        children: [
+          {
+            path: 'service',
+            name: 'Service',
+            component: () => import('@/views/design/design'),
+            meta: { title: '服务设计', icon: 'design' }
+          },
+          {
+            path: 'flow',
+            name: 'Flow',
+            hidden: true,
+            component: () => import('@/views/design/components/flow'),
+            meta: { title: '流程服务', icon: 'flow' }
+          },
+          {
+            path: 'adapter',
+            name: 'Adapter',
+            hidden: true,
+            component: () => import('@/views/design/components/adapter'),
+            meta: { title: '外部服务', icon: 'adapter' }
+          }
+        ]
+      },
+      {
+        path: 'test',
+        component: () => import('@/views/test/index'),
+        redirect: '/workbench/test/unit-test',
+        name: 'Test',
+        hidden: true,
+        meta: { title: '测试', icon: 'test' },
+        children: [
+          {
+            path: 'unit-test',
+            name: 'UnitTest',
+            component: () => import('@/views/test/unitTest/UnitTest'),
+            meta: { title: '服务测试', icon: 'monkey' }
+          }
+        ]
+      },
+      {
+        path: 'plan',
+        name: 'Plan',
+        component: () => import('@/views/plan/index'),
+        meta: { title: '项目计划', icon: 'plan' }
       }
     ]
   },

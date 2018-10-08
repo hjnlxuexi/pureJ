@@ -9,7 +9,7 @@
 import Kanban from '@/components/Kanban'
 
 export default {
-  name: 'Dashboard',
+  name: 'Plan',
   components: {
     Kanban
   },

@@ -78,6 +78,9 @@ export default {
         })
       })
   },
+  beforeDestroy() {
+    instance.reset()
+  },
   methods: {
     translateFlow(steps) {
       this.steps = []

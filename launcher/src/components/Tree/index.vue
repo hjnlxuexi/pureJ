@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" style="text-align: center">
+  <div class="app-container">
     <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom:5px;" />
     <el-tree
       ref="tree"
@@ -11,7 +11,7 @@
       highlight-current
       @node-click="handleClick"
     />
-    <div v-if="designer">
+    <div v-if="designer" style="text-align: center">
       <el-button type="primary" class="el-button--small el-icon-edit op-button" @click="handleEditMenu">编辑</el-button>
       <el-button type="danger" class="el-button--small el-icon-refresh op-button">同步</el-button>
     </div>
@@ -96,7 +96,7 @@ export default {
 </script>
 <style scoped>
 .op-button {
-  margin: 5px 10px;
+  margin: 5px 5px;
 }
 </style>
 

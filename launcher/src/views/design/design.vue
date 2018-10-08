@@ -25,10 +25,10 @@
                 </el-radio-group> ]
               </div>
               <div v-if="service.id && service.type=='flow'" class="inline" style="background-color: white;padding: 0 10px;line-height: 35px">[
-                <router-link :target="'_blank'" :to="'/design/flow?serviceFlowPath='+service.id" class="pan-btn light-blue-btn" style="padding: 0 36px;line-height: 20px">流程设计</router-link> ]
+                <router-link :target="'_blank'" :to="'/workbench/design/flow?serviceFlowPath='+service.id" class="pan-btn light-blue-btn" style="padding: 0 36px;line-height: 20px">流程设计</router-link> ]
               </div>
               <div v-if="service.id && service.type=='protocol'" class="inline" style="background-color: white;padding: 0 10px;line-height: 35px">[
-                <router-link :target="'_blank'" :to="'/design/adapter?adapterPath='+service.id" class="pan-btn light-blue-btn" style="padding: 0 36px;line-height: 20px">适配器定义</router-link> ]
+                <router-link :target="'_blank'" :to="'/workbench/design/adapter?adapterPath='+service.id" class="pan-btn light-blue-btn" style="padding: 0 36px;line-height: 20px">适配器定义</router-link> ]
               </div>
               <el-button style="margin-left: 20px" type="success" class="el-icon-setting" @click="saveServiceConf">保存</el-button>
             </div>
