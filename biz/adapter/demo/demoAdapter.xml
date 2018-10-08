@@ -8,9 +8,7 @@
     <responseTimeout>30000</responseTimeout>
     <charset>UTF-8</charset>
     <contentType>application/json</contentType>
-    <input>
-        <field name="NAME" type="S" required="true" desc="文"/>
-    </input>
+    <input/>
     <output>
         <field name="NAME" type="S" required="true" desc="文档名称1111111"/>
     </output>

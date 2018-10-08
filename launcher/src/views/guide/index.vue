@@ -2,7 +2,9 @@
   <div style="text-align: center">
     <div style="margin: 20px">
       <span style="font-size: 100px;font-weight: bold;color: #2ac06d;font-family: fantasy">W</span>
-      <span style="color: #97a8be;font-size: 50px">elcome!</span>
+      <span style="color: #97a8be;font-size: 50px">elcome &nbsp;&nbsp;</span>
+      <span style="color: #97a8be;font-size: 50px">pure</span>
+      <span style="font-size: 100px;font-weight: bold;color: #2ac06d;font-family: fantasy">J</span>
     </div>
     <div style="margin: 20px 20px 0 20px">
       <span style="font-size: 100px;font-weight: bold;color: #2ac06d;font-family: fantasy">Y</span>
@@ -20,14 +22,14 @@
       <span style="color: #97a8be;font-size: 20px">hi ~</span>
     </div>
     <div>
-      <el-input ref="projectDir" v-model="currentApp.projectDir" placeholder="输入你项目的位置" style="width: 500px;"/>
+      <el-input ref="projectDir" v-model="currentApp.projectDir" placeholder="输入你项目的位置,如:/Users/home/Desktop/HJ/pureJ/" style="width: 500px;"/>
     </div>
     <div style="margin-top: 30px;line-height: 35px">
       <span style="color: #f9944a;font-size: 30px;font-weight:bold;font-family: fantasy">W</span>
-      <span style="color: #97a8be;font-size: 16px">arning!!! 请确保已经安装jdk 8+, maven 3+; </span>
+      <span style="color: #97a8be;font-size: 16px">arning~~~ 请确保已经安装jdk 8+, maven 3+; </span>
       <span style="color: #97a8be;font-size: 16px"> 否则, 你的机器将会爆炸！！！</span>
       <br>
-      <span style="color: #97a8be;font-size: 16px">下一步, 你应该把项目里的demo启动。 如果已经启动, 那就轻点下面的按钮！</span>
+      <span style="color: #97a8be;font-size: 16px">下一步, 你应该启动项目里的demo模块。 如果已经启动, 那就轻点下面的按钮！</span>
     </div>
     <div v-if="currentApp.projectDir" style="margin-top: 30px">
       <el-button type="success" class="el-icon-caret-right" style="font-weight:bold; font-size: 30px" @click="launcher">Hello World</el-button>
@@ -40,13 +42,21 @@ export default {
   name: 'Guide',
   data() {
     return {
-      currentApp: {}
+      currentApp: {
+        'code': 'demo',
+        'name': '样例应用',
+        'appUrl': 'http://localhost:8080/demo'
+      }
     }
   },
   created() {
-    requestRaw.post('/activeApp', {})
-      .then(response => {
-        this.currentApp = response
+    requestRaw.post('/getAppConfig', {})
+      .then(appConfig => {
+        const app = appConfig[appConfig.enable]
+        // 如果已经初始化，则直接跳转我的应用
+        if (app) {
+          this.$router.push('/workbench/my-apps')
+        }
       })
   },
   mounted() {

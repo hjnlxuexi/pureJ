@@ -1,20 +1,24 @@
 <template>
   <div>
-    <div style="text-align: center">
+    <div style="text-align: center; margin: 20px 0">
       <el-button type="success" class="el-icon-caret-right" style="font-weight:800;margin: 10px" @click="enterActive">进入Active应用</el-button>
       <span @click="showHelp = !showHelp"><svg-icon icon-class="icon-question" class="help"/></span>
       <div class="help-block">
         <div v-if="showHelp" style="color: #aaa;">
-          {{&nbsp;&nbsp;
+          { {&nbsp;&nbsp;
           <strong style="color: #409EFF;">如何切换Active应用？</strong>&nbsp;&nbsp;
-          ① 编辑 src/appConfig.json，设置 "enable": "新的应用编码"；&nbsp;&nbsp;② 执行：npm run dev
-          &nbsp;&nbsp;}}
+          ① 当前已创建多个应用&nbsp;&nbsp;
+          ② 编辑 src/appConfig.json，设置 "enable": "新的应用编码"；&nbsp;&nbsp;③ 执行：npm run dev
+          &nbsp;&nbsp;} }
+        </div>
+        <div v-else style="color: #aaa;">
+          { {&nbsp;&nbsp;建议:  在demo应用的基础上Get Started &nbsp;&nbsp;} }
         </div>
       </div>
     </div>
     <hr>
     <div class="container">
-      <div class="split"/>
+      <div v-if="appList.length>0" class="split"/>
       <div v-for="app in appList" v-if="activeApp == app.code" :key="app.code" class="app active" @click="chooseApp(app)">
         <svg-icon icon-class="active" class="tag"/>
         <div class="diamonds">
@@ -36,7 +40,7 @@
           <p>{{ app.appUrl }}</p>
         </div>
       </div>
-      <div class="split"/>
+      <div v-if="appList.length>0" class="split"/>
       <div class="app" style="background-color: white;">
         <div class="diamonds" style="color: #42b983">
           <svg-icon icon-class="plus"/>
@@ -94,23 +98,27 @@ export default {
     }
   },
   created() {
-    requestRaw.post('/activeApp', {})
-      .then(response => {
-        this.activeApp = response.code
-        this.currentApp = response
-      })
-      .then(data => {
-        requestRaw.post('/appList', {})
-          .then(response => {
-            if (!response.status) {
-              this.$message.error('获取应用列表失败!')
-              return
-            }
-            for (const app of response.data) {
-              app.icon = 'app' + (Math.floor(Math.random() * 100) % 4 + 1)
-              this.appList.push(app)
-            }
-          })
+    requestRaw.post('/getAppConfig', {})
+      .then(appConfig => {
+        const app = appConfig[appConfig.enable]
+        // 未初始化
+        if (!app) {
+          this.$router.push('/')
+          return
+        }
+        this.activeApp = app.code
+        this.currentApp = app
+
+        const appList = []
+        for (const key in appConfig) {
+          if (key === 'enable') {
+            continue
+          }
+          const app = Object.assign({}, appConfig[key])
+          app.icon = 'app' + (Math.floor(Math.random() * 100) % 4 + 1)
+          appList.push(app)
+        }
+        this.appList = appList
       })
   },
   methods: {

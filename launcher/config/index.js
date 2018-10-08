@@ -3,27 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-
-const fs = require('fs')
-const bodyParser = require('body-parser')
-const express = require('express')
-const apiRoutes = express.Router()
-const appConfig = require('../src/appConfig')
-
-function createFile(filePath, fs) { // 文件写入
-  const sep = path.sep
-  const folders = path.dirname(filePath).split(sep)
-  let p = ''
-  // 1、创建目录
-  while (folders.length) {
-    p += folders.shift() + sep
-    if (!fs.existsSync(p)) {
-      fs.mkdirSync(p)
-    }
-  }
-  // 2、创建文件
-  fs.createWriteStream(filePath)
-}
+const server = require('./dev.server')
 
 module.exports = {
   dev: {
@@ -32,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: appConfig[appConfig.enable].appUrl,
+        target: server.appUrl,
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
@@ -69,104 +49,7 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
-    before(app) {
-      app.use('/', apiRoutes)
-      // app.use(bodyParser.urlencoded({extended: true}))
-      app.post('/activeApp', bodyParser.json(), (req, res) => {
-        res.json(appConfig[appConfig.enable])
-      })
-      const menuPath = 'menu/tree.json'
-      app.post('/appList', bodyParser.json(), (req, res) => {
-        const filePath = path.resolve(__dirname, '../src/appConfig.json')
-        let result = { status: true }
-        try {
-          const data = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf-8' }))
-          const appList = []
-          for (const key in data) {
-            if (key === 'enable') {
-              continue
-            }
-            const app = Object.assign({}, data[key])
-            appList.push(app)
-          }
-          result.data = appList
-        } catch (e) {
-          console.error(e)
-          result = { status: false, msg: filePath + '获取数据失败' }
-        }
-        res.json(result)
-      })
-      app.post('/saveAppConfig', bodyParser.json(), (req, res) => {
-        const filePath = path.resolve(__dirname, '../src/appConfig.json')
-        const content = req.body.appConfig
-        fs.exists(filePath, function(exist) {
-          // 文件不存在，则创建文件
-          if (!exist) createFile(filePath, fs)
-          // 写入内容
-          fs.writeFile(filePath, content, function(err) {
-            if (err) {
-              res.json({ status: false, msg: filePath + '保存失败' })
-            }
-            res.json({ status: true, msg: '' })
-          })
-        })
-      })
-      app.post('/getMenu', bodyParser.json(), (req, res) => {
-        const filePath = appConfig[appConfig.enable].baseDir + menuPath
-        let result = { status: true }
-        try {
-          result.data = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf-8' }))
-        } catch (e) {
-          result = { status: false, msg: filePath + '获取数据失败' }
-        }
-        res.json(result)
-      })
-      app.post('/saveMenu', bodyParser.json(), (req, res) => {
-        let filePath = appConfig[appConfig.enable].baseDir + menuPath
-        let content = req.body.content
-        if (req.body.create) {
-          filePath = appConfig[appConfig.enable].baseDir + menuPath
-          content = '[]'
-        }
-        fs.exists(filePath, function(exist) {
-          // 文件不存在，则创建文件
-          if (!exist) createFile(filePath, fs)
-          // 写入内容
-          console.error(content)
-          fs.writeFile(filePath, content, function(err) {
-            if (err) {
-              res.json({ status: false, msg: filePath + 'menu保存失败' })
-            }
-            res.json({ status: true, msg: '' })
-          })
-        })
-      })
-      app.post('/getJson', bodyParser.json(), (req, res) => {
-        const filePath = appConfig[appConfig.enable].baseDir + req.body.jsonPath
-        let result = { status: true }
-        try {
-          result.data = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf-8' }))
-        } catch (e) {
-          result = { status: false, msg: filePath + '获取数据失败' }
-        }
-        res.json(result)
-      })
-      app.post('/saveJson', bodyParser.json(), (req, res) => {
-        const filePath = appConfig[appConfig.enable].baseDir + req.body.jsonPath
-        const content = req.body.content
-        fs.exists(filePath, function(exist) {
-          // 文件不存在，则创建文件
-          if (!exist) createFile(filePath, fs)
-          // 写入内容
-          fs.writeFile(filePath, content, function(err) {
-            if (err) {
-              res.json({ status: false, msg: filePath + '保存失败' })
-            }
-            res.json({ status: true, msg: '' })
-          })
-        })
-      })
-    }
+    before: server.before
   },
 
   build: {
