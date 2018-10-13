@@ -67,7 +67,7 @@ export default {
   },
   mounted() {
     const vm = this
-    request.post('/api/loadFlowConf', { serviceFlowPath: this.flowPath })
+    request.post('/api', { serviceFlowPath: this.flowPath, _path: '/loadFlowConf' })
       .then(response => {
         this.flow = response
         this.title = response.title
@@ -122,7 +122,7 @@ export default {
       }
     },
     opList() {
-      request.post('/api/loadOPList', {})
+      request.post('/api', { _path: '/loadOPList' })
         .then(response => {
           bus.$emit('opList', response)
         })
@@ -152,7 +152,8 @@ export default {
 
           const param = Object.assign({}, JSON.parse(this.flow))
           param.path = this.flowPath
-          request.post('/api/saveFlowConf', param)
+          param['_path'] = '/saveFlowConf'
+          request.post('/api', param)
             .then(response => {
               this.$message.success('保存流程配置成功！')
             })

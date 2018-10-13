@@ -62,12 +62,12 @@ export default {
     }
   },
   created() {
-    request.post('/api/loadAdapterDefaults', {})
+    request.post('/api', { _path: '/loadAdapterDefaults' })
       .then(response => {
         this.defaults = response
       })
       .then(data => {
-        request.post('/api/loadAdapterConf', { adapter: this.path })
+        request.post('/api', { adapter: this.path, _path: '/loadAdapterConf' })
           .then(response => {
             this.adapter = response
             this.adapter.host = this.adapter.host || this.defaults.host
@@ -101,7 +101,8 @@ export default {
     saveAdapterConf() {
       const params = Object.assign({}, this.adapter)
       params.path = this.path
-      request.post('/api/saveAdapterConf', params)
+      params['_path'] = '/saveAdapterConf'
+      request.post('/api', params)
         .then(response => {
           this.$message.success('保存适配器配置成功')
         })

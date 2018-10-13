@@ -1,3 +1,20 @@
 {
-  "enable": false
+  "enable": "demo",
+  "demo": {
+    "code": "demo",
+    "name": "样例应用",
+    "appUrl": "http://localhost:8080/demo",
+    "projectDir": "/Users/home/Desktop/HJ/pureJ/",
+    "appBizDir": "/Users/home/Desktop/HJ/pureJ/biz/",
+    "baseDir": "/Users/home/Desktop/HJ/pureJ/biz/data/"
+  },
+  "app": {
+    "name": "我自定义的应用",
+    "code": "app",
+    "projectDir": "/Users/home/Desktop/HJ/www/",
+    "appBizDir": "/Users/home/Desktop/HJ/www/biz/",
+    "baseDir": "/Users/home/Desktop/HJ/www/data/",
+    "port": "9999",
+    "appUrl": "http://localhost:9999/app"
+  }
 }

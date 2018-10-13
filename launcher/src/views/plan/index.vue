@@ -20,15 +20,15 @@ export default {
       },
       done: [
         { name: '在线服务设计', id: 1, url: '' },
-        { name: '在线服务测试', id: 2, url: '' }
+        { name: '在线服务测试', id: 2, url: '' },
+        { name: '项目脚手架引导', id: 3, url: '' }
       ],
       working: [
-        { name: '项目脚手架引导', id: 3, url: '' },
         { name: 'GetStart文档', id: 4, url: '' },
-        { name: '白皮书', id: 5, url: '' }
+        { name: '白皮书', id: 5, url: '' },
+        { name: '回归测试', id: 6, url: '' }
       ],
       todo: [
-        { name: '回归测试', id: 6, url: '' },
         { name: 'API生成', id: 7, url: '' },
         { name: '测试/进度报告生成', id: 8, url: '' },
         { name: '压力测试', id: 9, url: '' },

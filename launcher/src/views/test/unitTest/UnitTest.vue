@@ -116,7 +116,7 @@ export default {
       this.service = {}
       this.$set(this.service, 'code', service.code)
       this.$set(this.service, 'name', service.label)
-      request.post('/api/loadServiceConf', { service: this.service.code })
+      request.post('/api', { service: this.service.code, _path: '/loadServiceConf' })
         .then(response => {
           this.$set(this.service, 'name', response.name)
           this.$set(this.service, 'type', response.type)

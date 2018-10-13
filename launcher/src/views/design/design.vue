@@ -93,7 +93,7 @@ export default {
     }
   },
   created() {
-    request.post('/api/loadConverters', {})
+    request.post('/api', { _path: '/loadConverters' })
       .then(response => {
         this.converters = response.converters
       })
@@ -111,7 +111,8 @@ export default {
         vm.converters = data
         const params = {}
         params.converters = data
-        request.post('/api/saveConverterConf', params)
+        params['_path'] = '/saveConverterConf'
+        request.post('/api', params)
           .then(response => {
             this.$message.success('保存字段转换器成功')
           })
@@ -123,7 +124,7 @@ export default {
       this.service = {}
       this.$set(this.service, 'code', service.code)
       this.$set(this.service, 'name', service.label)
-      request.post('/api/loadServiceConf', { service: this.service.code })
+      request.post('/api', { service: this.service.code, _path: '/loadServiceConf' })
         .then(response => {
           this.$set(this.service, 'name', response.name)
           this.$set(this.service, 'type', response.type)
@@ -149,7 +150,9 @@ export default {
         this.$message.error('服务ID不能为空')
         return
       }
-      request.post('/api/saveServiceConf', this.service)
+      const param = Object.assign({}, this.service)
+      param['_path'] = '/saveServiceConf'
+      request.post('/api', param)
         .then(response => {
           this.$message.success('保存服务配置成功')
         })
