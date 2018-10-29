@@ -45,17 +45,17 @@
 
 如果你的日常工作内容就是上面的模式，那你需要看看pureJ。因为在这样的环境对你很不利。今天你能这样机械地（ctrl+c/v）工作，明天还可以吗？你应该摆脱这样的工作内容和模式，需要去思考和创造计算机做不到的事情，而不是像计算机那样思考。至少，pureJ会尽量让你更关注业务，关注设计。
 
-**而技术应该用在真正需要技术的地方。**你现在付出的，可能不是你的技术，而是你的体力。
+技术应该用在真正需要技术的地方。你现在付出的，可能不是你的技术，而是你的体力。
 
 ## ScreenShot
 
-![screen-1](https://github.com/hjnlxuexi/pureJ/doc/screenshot/screen-1.png)
+![screen-1](doc/screenshot/screen-1.png)
 
-![screen-2](https://github.com/hjnlxuexi/pureJ/doc/screenshot/screen-2.png)
+![screen-2](doc/screenshot/screen-2.png)
 
-![screen-3](https://github.com/hjnlxuexi/pureJ/doc/screenshot/screen-3.png)
+![screen-3](doc/screenshot/screen-3.png)
 
-![screen-4](https://github.com/hjnlxuexi/pureJ/doc/screenshot/screen-4.png)
+![screen-4](doc/screenshot/screen-4.png)
 
-![screen-5](https://github.com/hjnlxuexi/pureJ/doc/screenshot/screen-5.png)
+![screen-5](doc/screenshot/screen-5.png)
 
