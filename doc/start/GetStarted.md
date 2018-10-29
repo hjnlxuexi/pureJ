@@ -59,6 +59,6 @@ comment '用户'
 
 ![conf-1](../screenshot/conf-1.png)
 
-启动后台应用
+启动demo应用
 
 ![conf-2](../screenshot/conf-2.png)
