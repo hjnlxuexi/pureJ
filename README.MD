@@ -1,4 +1,4 @@
-## [Start](https://github.com/hjnlxuexi/pureJ/doc/start/GetStarted.md)
+## [Start](doc/start/GetStarted.md)
 
 ```tex
                                          / / /
