@@ -2,7 +2,7 @@
   <div style="text-align: center">
     <div style="margin: 20px">
       <span style="font-size: 100px;font-weight: bold;color: #2ac06d;font-family: fantasy">W</span>
-      <span style="color: #97a8be;font-size: 50px">elcome &nbsp;&nbsp;</span>
+      <span style="color: #97a8be;font-size: 50px">elcome &nbsp;&nbsp; to &nbsp;&nbsp; </span>
       <span style="color: #97a8be;font-size: 50px">pure</span>
       <span style="font-size: 100px;font-weight: bold;color: #2ac06d;font-family: fantasy">J</span>
     </div>
