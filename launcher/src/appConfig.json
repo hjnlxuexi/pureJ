@@ -1,11 +1,3 @@
 {
-  "enable": "demo",
-  "demo": {
-    "code": "demo",
-    "name": "样例应用",
-    "appUrl": "http://localhost:8080/demo",
-    "projectDir": "/Users/home/Desktop/HJ/pureJ/",
-    "appBizDir": "/Users/home/Desktop/HJ/pureJ/biz/",
-    "baseDir": "/Users/home/Desktop/HJ/pureJ/biz/data/"
-  }
+  "enable": false
 }
