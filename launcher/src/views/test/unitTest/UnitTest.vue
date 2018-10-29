@@ -7,7 +7,7 @@
         </div>
       </template>
       <template v-if="isShow" slot="paneR">
-        <split-pane :min-percent="15" :default-percent="16" split="horizontal">
+        <split-pane :min-percent="0" :default-percent="16" split="horizontal">
           <template slot="paneL">
             <div class="top-container">
               <div class="inline block">
@@ -38,7 +38,7 @@
             </div>
           </template>
           <template slot="paneR">
-            <split-pane :min-percent="30" :default-percent="40" split="horizontal">
+            <split-pane :min-percent="0" :default-percent="40" split="horizontal">
               <template slot="paneL">
                 <div class="middle-container">
                   ||

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>顺序流程</name>
+    <desc>顺序执行各个流程节点</desc>
+    <type>flow</type>
+    <id>demo/sequenceFlow</id>
+    <input>
+        <field name="p1" type="S" desc="条件参数-1"/>
+        <field name="p2" type="S" desc="条件参数-2"/>
+    </input>
+    <output>
+        <field name="param" type="S" desc="返回参数-1"/>
+    </output>
+</service>

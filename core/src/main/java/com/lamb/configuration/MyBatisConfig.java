@@ -22,8 +22,7 @@ import javax.sql.DataSource;
  * @version : 1.0
  */
 @Configuration
-@tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.**.gen.**.dao"})
-@MapperScan(basePackages = {"com.**.app.**.dao"})
+@MapperScan(basePackages = {"com.**.dao","com.**.mapper"})
 @EnableTransactionManagement
 public class MyBatisConfig {
     /**

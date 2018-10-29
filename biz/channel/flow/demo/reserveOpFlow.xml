@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow title="预留OP流程">
+    <step index="1" ref="dataBaseOP:demoDao.selectUser#ONE" desc="查询第一条用户信息" next="2"/>
+    <step index="2" ref="sampleOp" desc="普通OP" next="3"/>
+    <step index="3" ref="exceptionOP:0001" desc="异常处理OP"/>
+</flow>

@@ -7,7 +7,7 @@
         </div>
       </template>
       <template v-if="isShow" slot="paneR">
-        <split-pane :min-percent="15" :default-percent="18" split="horizontal">
+        <split-pane :min-percent="0" :default-percent="18" split="horizontal">
           <template slot="paneL">
             <div class="top-container">
               <el-input v-model="service.name" placeholder="服务名称" class="inline half"/>
@@ -34,7 +34,7 @@
             </div>
           </template>
           <template slot="paneR">
-            <split-pane :min-percent="20" :default-percent="32" split="horizontal">
+            <split-pane :min-percent="0" :default-percent="32" split="horizontal">
               <template slot="paneL">
                 <div class="middle-container">
                   ||<el-tag style="font-size: 16px;font-weight:800;color: #FFFFFF">服务请求</el-tag>

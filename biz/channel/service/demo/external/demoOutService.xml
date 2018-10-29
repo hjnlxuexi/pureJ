@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<adapter>
-    <name>外部接口调用测试</name>
-    <host>http://localhost:8080/demo/</host>
-    <netTool>core</netTool>
-    <service>demo/sample/listService</service>
-    <connectTimeout>5000</connectTimeout>
-    <responseTimeout>30000</responseTimeout>
-    <charset>UTF-8</charset>
-    <contentType>application/json</contentType>
+<service>
+    <name>外部接口服务</name>
+    <desc>通过网络接口调用第三方服务</desc>
+    <type>protocol</type>
+    <id>demo/demoAdapter</id>
     <input>
         <field name="name" type="S" desc="用户名"/>
     </input>
@@ -18,4 +14,4 @@
             <field name="sex" type="I" required="false" desc="性别：1-男、2-女"/>
         </field>
     </output>
-</adapter>
+</service>

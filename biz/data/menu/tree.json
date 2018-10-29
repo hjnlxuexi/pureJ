@@ -1,22 +1,52 @@
 [
   {
-    "label": "测试服务",
+    "label": "样例服务",
     "children": [
       {
-        "label": "过路服务",
-        "code": "demo/demoDirectService"
+        "label": "sql服务",
+        "code": "demo/sample/normalSqlService"
       },
       {
-        "label": "过路服务-单OP",
-        "code": "demo/demoDirectSingleService"
+        "label": "列表查询",
+        "code": "demo/sample/listService"
       },
       {
-        "label": "流程服务",
-        "code": "demo/demoFlowService"
+        "label": "查询单条数据",
+        "code": "demo/sample/selectOneService"
       },
       {
-        "label": "新增用户",
-        "code": "demo/userInfoService"
+        "label": "多sql服务",
+        "code": "demo/sample/multiSqlService"
+      },
+      {
+        "label": "原子服务",
+        "code": "demo/atomic/singleOpService"
+      }
+    ]
+  },
+  {
+    "label": "流程服务",
+    "children": [
+      {
+        "label": "顺序流程",
+        "code": "demo/flow/sequenceFlowService"
+      },
+      {
+        "label": "分支判断流程",
+        "code": "demo/flow/judgeFlowService"
+      },
+      {
+        "label": "使用预留OP作为节点",
+        "code": "demo/flow/reserveFlowService"
+      }
+    ]
+  },
+  {
+    "label": "外部服务",
+    "children": [
+      {
+        "label": "外部接口服务",
+        "code": "demo/external/demoOutService"
       }
     ]
   },
@@ -24,12 +54,8 @@
     "label": "其他服务",
     "children": [
       {
-        "label": "过路外部服务",
-        "code": "demo/demoOutService"
-      },
-      {
-        "label": "app",
-        "code": "app/appService"
+        "label": "字段别名",
+        "code": "demo/other/alasField"
       }
     ]
   }

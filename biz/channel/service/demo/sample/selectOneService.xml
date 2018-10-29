@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>查询单条数据</name>
+    <desc>查询第一条用户数据</desc>
+    <type>database</type>
+    <id>demoDao.selectUser#ONE</id>
+    <input/>
+    <output>
+        <field name="name" type="S" required="true" desc="用户名"/>
+        <field name="age" type="I" required="false" desc="年龄"/>
+        <field name="sex" type="I" required="false" desc="性别：1-男、2-女"/>
+    </output>
+</service>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demoDao">
+	<!--插入用户信息-->
+	<insert id="insertUser" parameterType="map">
+		INSERT INTO user_info (name, age, sex) VALUES (#{name}, #{age}, #{sex})
+	</insert>
+	<!--查询用户数据-->
+	<sql id="getUsers">
+		SELECT name,age,sex FROM user_info
+		WHERE 1=1
+		<if test="name != null and name != ''">
+			AND name LIKE CONCAT('%', #{name}, '%')
+		</if>
+	</sql>
+	<select id="selectUser" parameterType="map" resultType="map">
+		<include refid="getUsers"/>
+	</select>
+	<!--分页查询用户数据-->
+	<select id="selectUserTotal" parameterType="map" resultType="map">
+		SELECT count(*) as total FROM (
+		<include refid="getUsers"/>
+		) t
+	</select>
+	<select id="selectUserByPage" parameterType="map" resultType="map">
+		<include refid="getUsers"/>
+		LIMIT #{start},#{pageSize}
+	</select>
+</mapper>

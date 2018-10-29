@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>分支判断流程</name>
+    <desc>通过条件表达式判断执行节点</desc>
+    <type>flow</type>
+    <id>demo/judgeFlow</id>
+    <input>
+        <field name="p1" type="S" desc="条件参数-1"/>
+        <field name="p2" type="B" required="true" desc="条件参数-2"/>
+    </input>
+    <output>
+        <field name="branch" type="B" desc="最后执行分支的标识"/>
+    </output>
+</service>

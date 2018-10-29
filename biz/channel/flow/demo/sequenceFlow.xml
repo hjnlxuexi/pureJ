@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow title="顺序流程">
+    <step index="1" ref="firstOp" desc="步骤-1" next="2"/>
+    <step index="2" ref="secondOp" desc="步骤-2" next="3"/>
+    <step index="3" ref="thirdOp" desc="步骤-3"/>
+</flow>

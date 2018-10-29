@@ -5,7 +5,7 @@ server:
   context-path: /${{code}}
   config:
     #是否开启系统配置热加载，默认false，不开启
-    hotLoading: true
+    hotLoading: false
     #指定热加载的配置文件路径
     path: ${biz.conf.path}conf/${{code}}.yml
 
