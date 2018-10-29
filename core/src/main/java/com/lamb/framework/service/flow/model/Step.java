@@ -32,14 +32,6 @@ public class Step {
      */
     private String desc;
     /**
-     * 左偏移（绘图）
-     */
-    private String left;
-    /**
-     * 上偏移（绘图）
-     */
-    private String top;
-    /**
      * 步骤跳转映射列表
      */
     private List<Forward> mapping = new ArrayList<>();

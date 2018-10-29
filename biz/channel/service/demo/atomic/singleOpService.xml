@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>原子服务</name>
+    <desc>一个简单的原子服务</desc>
+    <type>single</type>
+    <id>sampleOp</id>
+    <input>
+        <field name="param" type="S" desc="参数"/>
+    </input>
+    <output>
+        <field name="opName" type="S" required="true" desc="用户名"/>
+    </output>
+</service>

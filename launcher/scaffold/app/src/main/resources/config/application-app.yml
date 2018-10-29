@@ -1,0 +1,24 @@
+#==========当需要修改框架默认参数时，可以复制 application-core.yml 中对应的配置内容进行修改==========
+server:
+  display-name: ${{code}}
+  port: ${{port}}
+  context-path: /${{code}}
+  config:
+    #是否开启系统配置热加载，默认false，不开启
+    hotLoading: false
+    #指定热加载的配置文件路径
+    path: ${biz.conf.path}conf/${{code}}.yml
+
+#业务配置路径
+biz:
+  conf:
+    path: ${{appBizDir}}
+
+#数据库类型：oracle、mysql、db2
+jdbc:
+  database:
+    type: mysql
+  #数据库连接
+  url: jdbc:mysql://172.16.193.200:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
+  username: root
+  password: 123456

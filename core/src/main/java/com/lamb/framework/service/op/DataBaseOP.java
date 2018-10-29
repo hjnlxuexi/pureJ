@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.lamb.framework.base.Context;
 import com.lamb.framework.base.Framework;
 import com.lamb.framework.channel.constant.ServicePacketConstants;
-import com.lamb.framework.service.OP;
 import com.lamb.framework.util.MyBatisMapperProxyUtil;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.Map;
  * 日期: 2017/7/16
  */
 @Service
-public class DataBaseOP implements OP{
+public class DataBaseOP implements ReservedOP{
     /**
      * 多条sql连接符
      */

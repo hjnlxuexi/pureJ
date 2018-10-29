@@ -55,11 +55,7 @@ public class Context {
      */
     private String serviceName;
     /**
-     * 是否过路服务，默认false
+     * 服务类型，默认数据库服务
      */
-    private boolean direct = false;
-    /**
-     * 过路交易类型，默认数据库交易
-     */
-    private String directType = ServiceConfConstants.DIRECT_TYPE_DB;
+    private String type = ServiceConfConstants.TYPE_DB;
 }

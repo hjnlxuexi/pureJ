@@ -1,9 +1,14 @@
 package com.lamb.framework.base;
 
-import com.lamb.framework.service.OP;
+import com.lamb.framework.adapter.protocol.nettool.IProtocolTool;
+import com.lamb.framework.service.op.BaseOP;
+import com.lamb.framework.service.op.ReservedOP;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>Title : 框架类</p>
@@ -47,10 +52,23 @@ public class Framework {
 
     /**
      * 获取上下文中所有原子服务类
-     * @return 原子服务市里名称数组
+     * @return 原子服务名称数组
      */
-    public static String[] getBeanNames4OP(){
-        return springCtx.getBeanNamesForType(OP.class);
+    public static Map<String,String[]> getBeanNames4OP(){
+        String[] reservedList = springCtx.getBeanNamesForType(ReservedOP.class);
+        String[] customList = springCtx.getBeanNamesForType(BaseOP.class);
+        Map<String,String[]> opList = new HashMap<>();
+        opList.put("reservedList", reservedList);
+        opList.put("customList", customList);
+        return opList;
+    }
+
+    /**
+     * 获取适配器工具集合
+     * @return 适配器工具beanName数组
+     */
+    public static String[] getAdapterNetTools(){
+        return springCtx.getBeanNamesForType(IProtocolTool.class);
     }
 
     /**

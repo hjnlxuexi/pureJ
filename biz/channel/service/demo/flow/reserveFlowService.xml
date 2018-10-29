@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>使用预留OP作为节点</name>
+    <desc>数据库OP、异常处理OP、外部服务OP</desc>
+    <type>flow</type>
+    <id>demo/reserveOpFlow</id>
+    <input/>
+    <output/>
+</service>

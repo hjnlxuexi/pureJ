@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>单sql服务</name>
+    <desc>插入一条用户信息</desc>
+    <type>database</type>
+    <id>demoDao.insertUser</id>
+    <input>
+        <field name="name" type="S" required="true" desc="用户名"/>
+        <field name="age" type="I" required="false" desc="年龄"/>
+        <field name="sex" type="I" required="false" desc="性别：1-男、2-女"/>
+    </input>
+    <output/>
+</service>

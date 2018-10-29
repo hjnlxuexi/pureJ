@@ -52,6 +52,8 @@ public class FlowConfigParser {
         log.debug("解析流程配置文件【"+serviceId+"】，开始...");
         //2、解析配置文档
         Flow config = this.parseNodes(serviceId + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
+        if (config == null || config.getTitle()==null)
+            throw new ServiceRuntimeException("2007",this.getClass(),serviceId);
         //3、添加至缓存
         ConfigCache.addConfig(serviceId, config);
         long end = System.currentTimeMillis();
@@ -112,12 +114,6 @@ public class FlowConfigParser {
                 //步骤描述
                 if (attrName.equals(FlowConfigConstants.STEP_DESC))
                     step.setDesc(attrValue);
-                //左偏移
-                if (attrName.equals(FlowConfigConstants.STEP_LEFT))
-                    step.setLeft(attrValue);
-                //上偏移
-                if (attrName.equals(FlowConfigConstants.STEP_TOP))
-                    step.setTop(attrValue);
             }
             //3、解析转向实例
             Iterator<Element> iter = e.elementIterator();

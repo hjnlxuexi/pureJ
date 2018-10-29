@@ -42,11 +42,15 @@ public class PropertySourceHotLoading {
             public void run() {
                 try {
                     AbstractEnvironment environment = (AbstractEnvironment) Framework.getEnvironment();
+                    File file = new File( Framework.getProperty("server.config.path") );
+                    if (!file.exists()){
+                        log.error(Framework.getProperty("server.config.path") + "，文件不存在！");
+                        return;
+                    }
                     //更新系统配置到环境参数中   todo 通过配置中心加载系统配置
                     environment.getPropertySources().addFirst(
                             new PropertySourcesLoader().load(
-                                    new FileSystemResource(
-                                            new File( Framework.getProperty("server.config.path") )),DYNAMIC_CONFIG_NAME,null)
+                                    new FileSystemResource( file ),DYNAMIC_CONFIG_NAME,null)
                     );
                 } catch (IOException e) {
                     log.error("【系统配置】热加载失败！");

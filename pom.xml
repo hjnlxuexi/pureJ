@@ -17,17 +17,12 @@
     <properties>
         <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
-
         <springboot>1.5.9.RELEASE</springboot>
         <mybatis.starter>1.1.1</mybatis.starter>
         <fastjson>1.2.4</fastjson>
         <druid>1.0.12</druid>
         <mysql.connector.version>8.0.11</mysql.connector.version>
-        <mybatis-generator.version>1.3.6</mybatis-generator.version>
-        <mybatis-tk.version>2.0.4</mybatis-tk.version>
-        <mapper.version>4.0.0</mapper.version>
         <lombok.version>1.18.2</lombok.version>
-        <mybatis.generator.lombok>1.0</mybatis.generator.lombok>
     </properties>
 
     <dependencyManagement>
@@ -70,19 +65,6 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
-
-            <!-- SpringBoot - MyBatis 逆向工程 -->
-            <dependency>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-core</artifactId>
-                <version>${mybatis-generator.version}</version>
-            </dependency>
-            <!-- MyBatis 通用 Mapper -->
-            <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>${mybatis-tk.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -108,41 +90,6 @@
                     <fork>true</fork>
                     <!--启动入口类-->
                     <mainClass>com.Application</mainClass>
-                </configuration>
-            </plugin>
-            <!-- MyBatis 逆向工程 插件 -->
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>${mybatis-generator.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysql.connector.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>tk.mybatis</groupId>
-                        <artifactId>mapper</artifactId>
-                        <version>${mapper.version}</version>
-                    </dependency>
-                    <!--mybatis-generator与lombok插件-->
-                    <dependency>
-                        <groupId>com.softwareloop</groupId>
-                        <artifactId>mybatis-generator-lombok-plugin</artifactId>
-                        <version>${mybatis.generator.lombok}</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <!-- 允许移动生成的文件 -->
-                    <verbose>true</verbose>
-                    <!-- 是否覆盖 -->
-                    <overwrite>true</overwrite>
-                    <!-- 配置文件 -->
-                    <configurationFile>
-                        /Users/home/Desktop/HJ/pureJ/biz/conf/generatorConfig.xml
-                    </configurationFile>
                 </configuration>
             </plugin>
             <!--跳过单元测试-->

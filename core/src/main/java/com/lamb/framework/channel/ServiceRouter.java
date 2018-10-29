@@ -2,6 +2,7 @@ package com.lamb.framework.channel;
 
 import com.lamb.framework.base.Context;
 import com.lamb.framework.channel.builder.ICoreChannelBuilder;
+import com.lamb.framework.channel.constant.ServiceConfConstants;
 import com.lamb.framework.channel.parser.ICoreChannelParser;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.listener.IListener;
@@ -40,7 +41,7 @@ public class ServiceRouter {
      * 过路交易服务类
      */
     @Resource
-    private IService directService;
+    private IService simpledService;
     /**
      * 流程服务
      */
@@ -69,7 +70,8 @@ public class ServiceRouter {
             this.before(context);
             log.debug("执行服务【" + context.getServiceCode() + "】，开始...");
             //2、服务路由判断
-            IService service = context.isDirect() ? directService : flowEngineService;
+            String type = context.getType();
+            IService service = ServiceConfConstants.TYPE_FLOW.equals(type) ? flowEngineService : simpledService;
             //3、执行服务
             service.execute(context);
             //4、后置处理

@@ -48,6 +48,8 @@ public class ServiceConfigParser {
         log.debug("解析服务配置文件【"+serviceCode+"】，开始...");
         //1、解析配置文档
         Map config = this.parseNodes(serviceCode + BizConfigHotLoading.LOCAL_CONF_POSTFIX);
+        if (config == null || config.isEmpty())
+            throw new ServiceRuntimeException("1010",this.getClass(),serviceCode);
         //2、添加配置对象至缓存，并返回
         ConfigCache.addConfig(serviceCode, config);
         long end = System.currentTimeMillis();

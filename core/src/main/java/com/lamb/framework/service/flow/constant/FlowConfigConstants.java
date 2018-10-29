@@ -28,10 +28,6 @@ public class FlowConfigConstants {
     public static final String STEP_NEXT = "next";
     //步骤描述
     public static final String STEP_DESC = "desc";
-    //节点左偏移位置（绘图）
-    public static final String STEP_LEFT = "left";
-    //节点上偏移位置（绘图）
-    public static final String STEP_TOP = "top";
     //转向条件
     public static final String FORWARD_CONDITION = "condition";
     //转向步骤索引

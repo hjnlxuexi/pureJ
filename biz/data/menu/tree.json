@@ -1,13 +1,62 @@
 [
-    {"id":0, "pId":null, "name":"pureJ", "open":true},
-
-    {"id":1, "pId":0, "name":"测试服务", "open":true},
-    {"id":2, "pId":0, "name":"其他服务", "open":true},
-
-    {"id":101, "pId":1, "name":"过路服务", "service":"demo/demoDirectService"},
-    {"id":101, "pId":1, "name":"过路服务-单OP", "service":"demo/demoDirectSingleService"},
-    {"id":102, "pId":1, "name":"流程服务", "service":"demo/demoFlowService"},
-    {"id":103, "pId":1, "name":"新增用户", "service":"demo/userInfoService"},
-
-    {"id":201, "pId":2, "name":"过路外部服务", "service":"demo/demoOutService"}
+  {
+    "label": "样例服务",
+    "children": [
+      {
+        "label": "sql服务",
+        "code": "demo/sample/normalSqlService"
+      },
+      {
+        "label": "列表查询",
+        "code": "demo/sample/listService"
+      },
+      {
+        "label": "查询单条数据",
+        "code": "demo/sample/selectOneService"
+      },
+      {
+        "label": "多sql服务",
+        "code": "demo/sample/multiSqlService"
+      },
+      {
+        "label": "原子服务",
+        "code": "demo/atomic/singleOpService"
+      }
+    ]
+  },
+  {
+    "label": "流程服务",
+    "children": [
+      {
+        "label": "顺序流程",
+        "code": "demo/flow/sequenceFlowService"
+      },
+      {
+        "label": "分支判断流程",
+        "code": "demo/flow/judgeFlowService"
+      },
+      {
+        "label": "使用预留OP作为节点",
+        "code": "demo/flow/reserveFlowService"
+      }
+    ]
+  },
+  {
+    "label": "外部服务",
+    "children": [
+      {
+        "label": "外部接口服务",
+        "code": "demo/external/demoOutService"
+      }
+    ]
+  },
+  {
+    "label": "其他服务",
+    "children": [
+      {
+        "label": "字段别名",
+        "code": "demo/other/alasField"
+      }
+    ]
+  }
 ]

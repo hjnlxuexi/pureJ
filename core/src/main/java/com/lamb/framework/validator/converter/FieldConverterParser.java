@@ -4,6 +4,7 @@ import com.lamb.framework.base.Framework;
 import com.lamb.framework.cache.ConfigCache;
 import com.lamb.framework.exception.ServiceRuntimeException;
 import com.lamb.framework.util.BizConfigHotLoading;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -13,6 +14,7 @@ import org.dom4j.io.SAXReader;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,7 +27,10 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@Data
 public class FieldConverterParser {
+
+    private final List<FieldConverter> converters = new ArrayList<>();
 
     /**
      * 解析字段转换配置
@@ -61,6 +66,7 @@ public class FieldConverterParser {
      */
     @SuppressWarnings("unchecked")
     public void parseNodes(String path) {
+        List<FieldConverter> _converters = new ArrayList<>();
         //1、获取配置内容
         Element root = getFlowConfDoc(path);
 
@@ -82,8 +88,8 @@ public class FieldConverterParser {
                 if (!el.getName().equals(ConverterConstants.RULE_TAG))//流程文档结构不正确
                     throw new ServiceRuntimeException("1012" , this.getClass());
                 List<Attribute> list = el.attributes();
-                Object from = null;
-                Object to = null;
+                String from = null;
+                String to = null;
                 for (Attribute attribute : list){
                     String attrName = attribute.getName();
                     String attrValue = attribute.getValue();
@@ -96,14 +102,17 @@ public class FieldConverterParser {
                         to = (attrValue == null || attrValue.equals("")) ? ConverterConstants.NULL_SIGN : attrValue;
                     }
                 }
-                //转换前后不能同时为空
+                //转换前后不能为空
                 if (from==null || to==null) throw new ServiceRuntimeException("1013" , this.getClass());
                 //添加转换规则
                 converter.putRule(from , to);
             }
             //4、将每个转换器加入到缓存
             ConfigCache.addConfig(Framework.getProperty("biz.conf.converters")+"/"+converterName, converter);
+            _converters.add(converter);
         }
+        this.converters.clear();
+        this.converters.addAll(_converters);
     }
 
 

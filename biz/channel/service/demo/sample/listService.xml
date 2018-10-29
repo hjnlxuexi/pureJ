@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>列表查询</name>
+    <desc>查询用户列表</desc>
+    <type>database</type>
+    <id>demoDao.selectUser</id>
+    <input>
+        <field name="name" type="S" desc="用户名"/>
+    </input>
+    <output>
+        <field name="list" type="E" required="true" desc="列表">
+            <field name="name" type="S" required="true" desc="用户名"/>
+            <field name="age" type="I" required="false" desc="年龄"/>
+            <field name="sex" type="I" required="false" desc="性别：1-男、2-女"/>
+        </field>
+    </output>
+</service>

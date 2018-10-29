@@ -1,7 +1,1 @@
 #==========可热加载的配置内容==========
-
-
-#业务配置路径
-biz:
-  conf:
-    path: /Users/home/Desktop/HJ/pureJ/biz/

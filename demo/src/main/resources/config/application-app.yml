@@ -5,6 +5,8 @@ server:
   port: 8080
   context-path: /demo
   config:
+    #是否开启系统配置热加载，默认false，不开启
+    hotLoading: false
     #指定热加载的配置文件路径
     path: ${biz.conf.path}conf/demo.yml
 
@@ -22,4 +24,3 @@ jdbc:
   url: jdbc:mysql://172.16.193.200:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
   username: root
   password: 123456
-  driver-Class-Name: com.mysql.cj.jdbc.Driver

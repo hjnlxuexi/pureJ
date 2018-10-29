@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>多sql服务</name>
+    <desc>分页查询</desc>
+    <type>database</type>
+    <id>demoDao.selectUserTotal#ONE + demoDao.selectUserByPage</id>
+    <input>
+        <field name="name" type="S" desc="用户名"/>
+        <field name="start" type="I" required="true" desc="起始行号"/>
+        <field name="pageSize" type="I" required="true" desc="每页条数"/>
+    </input>
+    <output>
+        <field name="total" type="S" required="true" desc="总条数"/>
+        <field name="list" type="E" required="true" desc="分页列表">
+            <field name="name" type="S" required="true" desc="用户名"/>
+            <field name="age" type="I" required="false" desc="年龄"/>
+            <field name="sex" type="I" required="false" desc="性别：1-男、2-女"/>
+        </field>
+    </output>
+</service>

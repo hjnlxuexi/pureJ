@@ -254,9 +254,8 @@ public class FlowEngineService implements IService {
      * @param context  总线
      */
     private void checkLoopbackCall(Step current, Step next, Context context) {
-
         if (
-            //1、起始及诶按被再次调用时，则产生回环
+            //1、起始节点被再次调用时，则产生回环
             next.getIndex().equals(Framework.getProperty("channel.flow.start.index")) ||
             //2、下一节点之前被调用过，则产生回环
             next.getPreviousStep() != null

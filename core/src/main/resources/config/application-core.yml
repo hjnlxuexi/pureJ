@@ -3,9 +3,9 @@ server:
   port: 8080
   context-path: /pureJ
   config:
-    #是否开启系统配置热加载，默认true，开启
-    hotLoading: true
-    #热加载的配置文件路径
+    #是否开启系统配置热加载，默认false，不开启
+    hotLoading: false
+    #指定热加载的配置文件路径
     path: ${biz.conf.path}conf/app.yml
 
 #业务配置路径

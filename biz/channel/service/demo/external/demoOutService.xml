@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <name>外部接口服务</name>
+    <desc>通过网络接口调用第三方服务</desc>
+    <type>protocol</type>
+    <id>demo/demoAdapter</id>
+    <input>
+        <field name="name" type="S" desc="用户名"/>
+    </input>
+    <output>
+        <field name="list" type="E" required="true" desc="列表">
+            <field name="name" type="S" required="true" desc="用户名"/>
+            <field name="age" type="I" required="false" desc="年龄"/>
+            <field name="sex" type="I" required="false" desc="性别：1-男、2-女"/>
+        </field>
+    </output>
+</service>
