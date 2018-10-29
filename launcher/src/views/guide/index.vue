@@ -29,7 +29,11 @@
       <span style="color: #97a8be;font-size: 16px">arning~~~ 请确保已经安装jdk 8+, maven 3+; </span>
       <span style="color: #97a8be;font-size: 16px"> 否则, 你的机器将会爆炸！！！</span>
       <br>
-      <span style="color: #97a8be;font-size: 16px">下一步, 你应该启动项目里的demo模块。 如果已经启动, 那就轻点下面的按钮！</span>
+      <span style="color: #888;font-size: 20px;font-weight: 600">下一步</span>
+      <span style="color: #97a8be;font-size: 16px">, 你应该启动项目里的demo模块
+        <a href="https://github.com/hjnlxuexi/pureJ/blob/master/doc/start/GetStarted.md#配置&启动demo" style="color: red">[如何启动?]</a>。
+        <br> 如果已经启动, 那就轻点下面的按钮！
+      </span>
     </div>
     <div v-if="currentApp.projectDir" style="margin-top: 30px">
       <el-button type="success" class="el-icon-caret-right" style="font-weight:bold; font-size: 30px" @click="launcher">Hello World</el-button>
