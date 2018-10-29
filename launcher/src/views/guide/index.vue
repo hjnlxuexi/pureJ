@@ -31,7 +31,7 @@
       <br>
       <span style="color: #888;font-size: 20px;font-weight: 600">下一步</span>
       <span style="color: #97a8be;font-size: 16px">, 你应该启动项目里的demo模块
-        <a href="https://github.com/hjnlxuexi/pureJ/blob/master/doc/start/GetStarted.md#配置启动demo" style="color: red">[如何启动?]</a>。
+        <a href="https://github.com/hjnlxuexi/pureJ/blob/master/doc/start/GetStarted.md#启动demo" target="_blank" style="color: red">[如何启动?]</a>。
         <br> 如果已经启动, 那就轻点下面的按钮！
       </span>
     </div>
