@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 /**
- * <p>Title : 公共过路服务</p>
+ * <p>Title : 公共简易服务</p>
  * <p>Description : 无需任何业务处理，直接请求外部数据并返回</p>
  * <p>Date : 2017/2/28 17:44</p>
  *
@@ -61,7 +61,7 @@ public class SimpledService implements IService {
                     OP op = (OP) Framework.getBean(serviceId);
                     op.execute(context);
                     break;
-                //4、过路类型不合法
+                //4、服务类型不合法
                 default:
                     throw new ServiceRuntimeException("1011", this.getClass(), context.getServiceName(), type);
             }

@@ -1,4 +1,4 @@
-## [Start](doc/start/GetStarted.md)
+## [Start](doc/start/GetStarted.md) · [DeveloperGuide](doc/developers/DeveloperGuide.md)
 
 ```tex
                                          / / /
