@@ -21,10 +21,10 @@ export default {
       done: [
         { name: '在线服务设计', id: 1, url: '' },
         { name: '在线服务测试', id: 2, url: '' },
-        { name: '项目脚手架引导', id: 3, url: '' }
+        { name: '项目脚手架引导', id: 3, url: '' },
+        { name: 'GetStart文档', id: 4, url: '' }
       ],
       working: [
-        { name: 'GetStart文档', id: 4, url: '' },
         { name: '白皮书', id: 5, url: '' },
         { name: '回归测试', id: 6, url: '' }
       ],
