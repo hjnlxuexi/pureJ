@@ -30,6 +30,10 @@ npm run dev
 
 ## 启动demo
 
+***<u>注意</u>***：如果项目出现编译错误，如：代码中log为定义，请为你的IDE安装lombok插件。以idea为例：
+
+![conf-3](../screenshot/screen-18.png)
+
 修改业务配置路径
 
 ![conf-3](../screenshot/conf-3.png)
