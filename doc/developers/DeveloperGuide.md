@@ -102,6 +102,8 @@ OP列表：展示可选的ref值，为流程节点的具体处理单元。
 
 在launcher服务设计页面，服务类型为“外部接口”时，可对其适配器进行设计。
 
+也可直接编辑对应biz/adapter目录下的xml配置文件，具体配置规范：[外部服务定义](../config/外部服务定义.md)。
+
 ![screen-6](../screenshot/screen-15.png)
 
 ![screen-6](../screenshot/screen-16.png)
