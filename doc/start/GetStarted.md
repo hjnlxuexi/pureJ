@@ -38,7 +38,7 @@ npm run dev
 
 ![conf-3](../screenshot/conf-3.png)
 
-默认支持mysql数据库，其他数据库自行扩展。数据库连接：
+默认支持mysql-8数据库，其他数据库自行扩展。数据库连接：
 
 ![conf-4](../screenshot/conf-4.png)
 
