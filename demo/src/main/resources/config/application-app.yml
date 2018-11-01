@@ -14,6 +14,7 @@ server:
 #业务配置路径
 biz:
   conf:
+    #请一定要保留目录的结束符'/'或'\'
     path: /Users/home/Desktop/HJ/pureJ/biz/
 
 #数据库类型：oracle、mysql、db2
@@ -24,3 +25,5 @@ jdbc:
   url: jdbc:mysql://172.16.193.200:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
   username: root
   password: 123456
+  #默认为mysql-8，如需其他版本请自行添加maven依赖，并修改DriverClass
+  driver-Class-Name: com.mysql.cj.jdbc.Driver
