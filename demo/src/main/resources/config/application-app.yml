@@ -14,6 +14,7 @@ server:
 #业务配置路径
 biz:
   conf:
+    #请一定要保留目录的结束符'/'或'\'
     path: /Users/home/Desktop/HJ/pureJ/biz/
 
 #数据库类型：oracle、mysql、db2
