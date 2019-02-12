@@ -1,5 +1,5 @@
 {
-  "name": "pureJ-launcher",
+  "name": "launcher",
   "version": "3.8.0",
   "license": "MIT",
   "description": "customization by vue-element-admin, see: https://github.com/PanJiaChen/vue-element-admin",
@@ -78,7 +78,7 @@
     "webpack": "4.16.5",
     "webpack-bundle-analyzer": "2.13.1",
     "webpack-cli": "3.1.0",
-    "webpack-dev-server": "3.1.5",
+    "webpack-dev-server": ">=3.1.11",
     "webpack-merge": "4.1.4"
   },
   "engines": {
