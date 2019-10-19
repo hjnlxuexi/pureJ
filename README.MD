@@ -1,4 +1,3 @@
-## [Start](doc/start/GetStarted.md) · [DeveloperGuide](doc/developers/DeveloperGuide.md)
 
 ```tex
                                          / / /
@@ -10,6 +9,12 @@
 ```
 
 ----
+
+
+
+## [Start](doc/start/GetStarted.md) · [DeveloperGuide](doc/developers/DeveloperGuide.md)
+
+
 
 ## What?
 
