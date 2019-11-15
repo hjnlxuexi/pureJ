@@ -12,11 +12,11 @@
 
 
 
-## [Start](doc/start/GetStarted.md)
+## [快速开始](doc/start/GetStarted.md) 
 
 
 
-## [Developer Guide](doc/developers/DeveloperGuide.md)
+## [开发指南](doc/developers/DeveloperGuide.md)
 
 
 
