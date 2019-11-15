@@ -12,7 +12,11 @@
 
 
 
-## [Start](doc/start/GetStarted.md) · [DeveloperGuide](doc/developers/DeveloperGuide.md)
+## [Start](doc/start/GetStarted.md)
+
+
+
+## [Developer Guide](doc/developers/DeveloperGuide.md)
 
 
 
