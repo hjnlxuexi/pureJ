@@ -21,7 +21,7 @@
         <mybatis.starter>1.1.1</mybatis.starter>
         <fastjson>1.2.31</fastjson>
         <druid>1.0.12</druid>
-        <mysql.connector.version>8.0.11</mysql.connector.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
         <lombok.version>1.18.2</lombok.version>
     </properties>
 
