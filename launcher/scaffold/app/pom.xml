@@ -17,7 +17,7 @@
     <druid>1.0.12</druid>
     <fastjson>1.2.31</fastjson>
     <dom4j.version>1.6.1</dom4j.version>
-    <mysql.connector.version>8.0.11</mysql.connector.version>
+    <mysql.connector.version>8.0.16</mysql.connector.version>
     <lombok.version>1.18.2</lombok.version>
   </properties>
 
