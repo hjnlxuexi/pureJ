@@ -12,7 +12,7 @@
   <properties>
     <java.version>1.8</java.version>
     <java.encoding>UTF-8</java.encoding>
-    <springboot>1.5.9.RELEASE</springboot>
+    <springboot>2.5.12</springboot>
     <mybatis.starter>1.1.1</mybatis.starter>
     <druid>1.0.12</druid>
     <fastjson>1.2.31</fastjson>
